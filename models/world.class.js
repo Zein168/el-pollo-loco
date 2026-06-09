@@ -8,6 +8,7 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     throwableObjects = [];
+    collectedCoins = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -26,11 +27,12 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkCoinCollisions();
         }, 200);
     }
 
-    checkThrowObjects(){
-        if(this.keyboard.D) {
+    checkThrowObjects() {
+        if (this.keyboard.D) {
             let bottle = new ThrowableObjects(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
         }
@@ -45,33 +47,33 @@ class World {
         });
     }
 
-    draw(){
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.translate(this.camera_x, 0);
-            this.addObjectsToMap(this.level.backgroundObjects);
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.backgroundObjects);
 
-            this.ctx.translate(-this.camera_x, 0);
-            this.addToMap(this.statusBar);
-            this.ctx.translate(this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0);
 
-            this.ctx.translate(-this.camera_x, 0);
-            this.addToMap(this.coinBar);
-            this.ctx.translate(this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.coinBar);
+        this.ctx.translate(this.camera_x, 0);
 
 
-            this.addToMap(this.character);
-            this.addObjectsToMap(this.level.clouds);
-            this.addObjectsToMap(this.level.enemies);
-             this.addObjectsToMap(this.level.coins);
-            this.addObjectsToMap(this.throwableObjects);
-            this.ctx.translate(- this.camera_x, 0);
-           
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.throwableObjects);
+        this.ctx.translate(- this.camera_x, 0);
 
-            // Draw wird immer wieder aufgerufen, damit die Bewegungen sichtbar werden
-            let self = this;
-            requestAnimationFrame(function() {
-                self.draw();
-            });
+
+        // Draw wird immer wieder aufgerufen, damit die Bewegungen sichtbar werden
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
     }
 
 
@@ -103,6 +105,19 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    checkCoinCollisions() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+
+                this.level.coins.splice(index, 1); // Coin entfernen
+
+                this.collectedCoins++; // Counter erhöhen
+
+                this.coinBar.setPercentage(this.collectedCoins * 10);
+            }
+        });
     }
 
 
