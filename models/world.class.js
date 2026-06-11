@@ -9,6 +9,7 @@ class World {
     coinBar = new CoinBar();
     throwableObjects = [];
     collectedCoins = 0;
+    collectedBottles = 0;   
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,6 +29,7 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkCoinCollisions();
+            this.checkBottleCollisions();
         }, 200);
     }
 
@@ -123,6 +125,14 @@ class World {
         });
     }
 
+    checkBottleCollisions() {
+    this.level.bottles.forEach((bottle, index) => {
+        if (this.character.isColliding(bottle)) {
+            this.level.bottles.splice(index, 1); 
+            this.collectedBottles++; 
+        }
+    });
+}    
 
 
 }
