@@ -10,6 +10,7 @@ class World {
     throwableObjects = [];
     collectedCoins = 0;
     collectedBottles = 0;   
+    bottleBar = new BottleBar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -60,7 +61,11 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
+
+       
+
 
 
         this.addToMap(this.character);
