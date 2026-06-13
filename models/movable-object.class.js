@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject{
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    isDead = false;
 
 
     applyGravity(){
@@ -75,6 +76,11 @@ class MovableObject extends DrawableObject{
 
     isDead(){
         return this.energy == 0;
+    }
+
+    die() {
+    this.isDead = true;
+    this.speed = 0;
     }
 
 
