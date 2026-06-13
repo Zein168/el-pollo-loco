@@ -64,10 +64,6 @@ class World {
         this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
 
-
-
-
-
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
@@ -75,9 +71,6 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(- this.camera_x, 0);
-
-
-
 
         // Draw wird immer wieder aufgerufen, damit die Bewegungen sichtbar werden
         let self = this;
