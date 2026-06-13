@@ -9,7 +9,7 @@ class World {
     coinBar = new CoinBar();
     throwableObjects = [];
     collectedCoins = 0;
-    collectedBottles = 0;   
+    collectedBottles = 0;
     bottleBar = new BottleBar();
 
     constructor(canvas, keyboard) {
@@ -64,7 +64,7 @@ class World {
         this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
 
-       
+
 
 
 
@@ -76,7 +76,7 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(- this.camera_x, 0);
 
-        
+
 
 
         // Draw wird immer wieder aufgerufen, damit die Bewegungen sichtbar werden
@@ -120,24 +120,24 @@ class World {
     checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-
-                this.level.coins.splice(index, 1); // Coin entfernen
-
-                this.collectedCoins++; // Counter erhöhen
-
-                this.coinBar.setPercentage(this.collectedCoins * 10);
+                this.level.coins.splice(index, 1);
+                this.collectedCoins++;
+                let percent = this.collectedCoins * 10;
+                this.coinBar.setPercentage(Math.min(100, percent));
             }
         });
     }
 
     checkBottleCollisions() {
-    this.level.bottles.forEach((bottle, index) => {
-        if (this.character.isColliding(bottle)) {
-            this.level.bottles.splice(index, 1); 
-            this.collectedBottles++; 
-        }
-    });
-}    
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(index, 1);
+                this.collectedBottles++;
+                let percent = this.collectedBottles * 10;
+                this.bottleBar.setPercentage(Math.min(100, percent));
+            }
+        });
+    }
 
 
 }
