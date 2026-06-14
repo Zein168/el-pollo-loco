@@ -44,9 +44,10 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.speedY < 0 && this.character.y < enemy.y) {
-                    enemy.die(); 
-                    this.character.speedY = 10; 
+                if (this.character.speedY < 0 &&
+                    this.character.y + this.character.height - 10 < enemy.y + enemy.height / 2) {
+                    enemy.die();
+                    this.character.speedY = 10;
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
