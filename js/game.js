@@ -1,6 +1,9 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let healthIconImg = new Image();
+healthIconImg.src = "img/7_statusbars/3_icons/icon_health.png";
+let healthIcons = [];
 
 
 function init() {
