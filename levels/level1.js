@@ -10,6 +10,18 @@ function createCoins() {
     return coins;
 }
 
+function createBottles() {
+    let bottles = [];
+
+    for (let x = 600; x <= 4200; x += 800) {
+        bottles.push(new Bottles(x));
+        bottles.push(new Bottles(x + 60));
+        bottles.push(new Bottles(x + 120));
+    }
+
+    return bottles;
+}
+
 const level1 = new Level(
     [
         new Chicken(800),
@@ -84,25 +96,17 @@ const level1 = new Level(
     ],
 
     [
-        ...createCoins(),  
+        ...createCoins(),
         new Coin(1500, 150),
     ],
 
 
     [
-        new Bottles(300),
-        new Bottles(500),
-        new Bottles(700),
-        new Bottles(400),
-        new Bottles(600),
-        new Bottles(900),
-        new Bottles(500),
-        new Bottles(330),
-        new Bottles(550),
-        new Bottles(380),
-        new Bottles(580),
-        new Bottles(350),
-        new Bottles(510),
+        ...createBottles(),
+        new Bottles(1500),
+        new Bottles(3000),
+
+
     ],
 
 
