@@ -45,7 +45,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 &&
-                    this.character.y + this.character.height - 10 < enemy.y + enemy.height / 2) {
+                    this.character.y + this.character.height - 10 < enemy.y + enemy.height ) {
                     enemy.die();
                     this.character.speedY = 10;
                 } else {
