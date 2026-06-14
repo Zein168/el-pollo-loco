@@ -44,27 +44,25 @@ class World {
         }
     }
 
-    checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                if (this.character.speedY < 0 &&
-                    this.character.y + this.character.height - 10 < enemy.y + enemy.height) {
-                    enemy.die();
-                    this.character.speedY = 10;
-                    this.healthIcons.push({
-                        x: enemy.x,
-                        y: enemy.y,
-                        width: 30,
-                        height: 30
-                    });
-                } else {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
-                }
-            }
-        });
-    }
+checkCollisions() {
+    this.level.enemies.forEach((enemy) => {
 
+        if (this.character.isColliding(enemy)) {
+            if (
+                this.character.speedY < 0 &&
+                this.character.y + this.character.height - 10 < enemy.y + enemy.height
+            ) {
+                enemy.die();
+                this.character.speedY = 10;
+                this.level.hearts.push(new Heart(enemy.x, enemy.y));
+
+            } else {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        }
+    });
+}
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -82,8 +80,8 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-        this.drawHealthIcons();
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.hearts);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(- this.camera_x, 0);
@@ -146,17 +144,7 @@ class World {
         });
     }
 
-    drawHealthIcons() {
-        this.healthIcons.forEach(icon => {
-            this.ctx.drawImage(
-                healthIconImg,
-                icon.x,
-                icon.y,
-                60,
-                60
-            );
-        });
-    }
+
 
 
 }
