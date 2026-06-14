@@ -11,7 +11,7 @@ class World {
     collectedCoins = 0;
     collectedBottles = 0;
     bottleBar = new BottleBar();
-    healthIcons = [];
+
 
 
 
@@ -34,6 +34,7 @@ class World {
             this.checkThrowObjects();
             this.checkCoinCollisions();
             this.checkBottleCollisions();
+            this.checkHeartCollisions();
         }, 200);
     }
 
@@ -44,43 +45,42 @@ class World {
         }
     }
 
-checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
 
-        if (this.character.isColliding(enemy)) {
-            if (
-                this.character.speedY < 0 &&
-                this.character.y + this.character.height - 10 < enemy.y + enemy.height
-            ) {
-                enemy.die();
-                this.character.speedY = 10;
-                this.level.hearts.push(new Heart(enemy.x, enemy.y));
+            if (this.character.isColliding(enemy)) {
+                if (
+                    this.character.speedY < 0 &&
+                    this.character.y + this.character.height - 10 < enemy.y + enemy.height
+                ) {
+                    enemy.die();
+                    this.character.speedY = 10;
+                    this.level.hearts.push(new Heart(enemy.x, enemy.y));
 
-            } else {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+                } else {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                }
             }
-        }
-    });
-}
+        });
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
-
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0);
-
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
-
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
+        this.level.hearts.forEach(h => h.update());
         this.addObjectsToMap(this.level.hearts);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
@@ -144,7 +144,16 @@ checkCollisions() {
         });
     }
 
-
+    checkHeartCollisions() {
+        this.level.hearts.forEach((heart, index) => {
+            if (heart.collectable && this.character.isColliding(heart)) {
+                this.level.hearts.splice(index, 1);
+                this.character.energy += 20;
+                this.character.energy = Math.min(100, this.character.energy);
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
 
 
 }

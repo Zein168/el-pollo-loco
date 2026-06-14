@@ -8,15 +8,18 @@ class Heart {
 
         this.img = new Image();
         this.img.src = "img/7_statusbars/3_icons/icon_health.png";
+
+        this.spawnTime = Date.now();
+        this.collectable = false;    
     }
 
     draw(ctx) {
-        ctx.drawImage(
-            this.img,
-            this.x,
-            this.y,
-            this.width,
-            this.height
-        );
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    update() {
+        if (Date.now() - this.spawnTime > 300) {
+            this.collectable = true;
+        }
     }
 }
