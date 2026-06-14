@@ -1,3 +1,15 @@
+function createCoins() {
+    let coins = [];
+
+    for (let x = 300; x <= 4800; x += 200) {
+        for (let y = 100; y <= 250; y += 80) {
+            coins.push(new Coin(x, y));
+        }
+    }
+
+    return coins;
+}
+
 const level1 = new Level(
     [
         new Chicken(800),
@@ -72,19 +84,8 @@ const level1 = new Level(
     ],
 
     [
-        new Coin(300, 150),
-        new Coin(500, 150),
-        new Coin(700, 150),
-        new Coin(400, 150),
-        new Coin(600, 150),
-        new Coin(900, 150),
-        new Coin(500, 150),
-        new Coin(330, 150),
-        new Coin(550, 150),
-        new Coin(380, 150),
-        new Coin(580, 150),
-        new Coin(350, 150),
-        new Coin(510, 150),
+        ...createCoins(),  
+        new Coin(1500, 150),
     ],
 
 
