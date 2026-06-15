@@ -101,7 +101,7 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(- this.camera_x, 0);
 
-        // Draw wird immer wieder aufgerufen, damit die Bewegungen sichtbar werden
+        // draw is repeatedly called so that the movements become visible
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -150,6 +150,9 @@ class World {
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
+                if (this.bottlesLeft >= this.maxBottles) {
+                    return; 
+                }
                 this.level.bottles.splice(index, 1);
                 if (this.bottlesLeft < this.maxBottles) {
                     this.bottlesLeft++;
