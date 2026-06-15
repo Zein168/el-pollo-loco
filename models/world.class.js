@@ -52,9 +52,9 @@ class World {
             );
             this.throwableObjects.push(bottle);
             this.bottlesLeft--;
+            this.bottleBar.setPercentage((this.bottlesLeft / 5) * 100);
             this.dKeyPressed = true;
         }
-
         if (!this.keyboard.D) {
             this.dKeyPressed = false;
         }
