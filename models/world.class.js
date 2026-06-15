@@ -11,6 +11,8 @@ class World {
     collectedCoins = 0;
     collectedBottles = 0;
     bottleBar = new BottleBar();
+    maxBottles = 5;
+    bottlesLeft = 5;
 
 
 
@@ -39,9 +41,22 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObjects(this.character.x + 100, this.character.y + 100);
+        if (this.keyboard.D && !this.dKeyPressed) {
+
+            if (this.bottlesLeft <= 0) {
+                return;
+            }
+            let bottle = new ThrowableObjects(
+                this.character.x + 100,
+                this.character.y + 100
+            );
             this.throwableObjects.push(bottle);
+            this.bottlesLeft--;
+            this.dKeyPressed = true;
+        }
+
+        if (!this.keyboard.D) {
+            this.dKeyPressed = false;
         }
     }
 
@@ -132,14 +147,15 @@ class World {
             }
         });
     }
-
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(index, 1);
-                this.collectedBottles++;
-                let percent = this.collectedBottles * 10;
-                this.bottleBar.setPercentage(Math.min(100, percent));
+                if (this.bottlesLeft < this.maxBottles) {
+                    this.bottlesLeft++;
+                }
+                let percent = (this.bottlesLeft / this.maxBottles) * 100;
+                this.bottleBar.setPercentage(percent);
             }
         });
     }
