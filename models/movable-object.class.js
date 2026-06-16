@@ -26,8 +26,6 @@ class MovableObject extends DrawableObject {
 
     }
 
-
-
     isColliding(mo) {
         return this.x + this.width > mo.x &&
             this.y + this.height > mo.y &&
@@ -46,13 +44,10 @@ class MovableObject extends DrawableObject {
     moveRight() {
         console.log("Moving right")
         this.x += this.speed;
-
     }
 
     moveLeft() {
         this.x -= this.speed;
-
-
     }
 
     jump() {
@@ -85,6 +80,5 @@ class MovableObject extends DrawableObject {
             this.y = 1000;
         }, 500);
     }
-
 
 }

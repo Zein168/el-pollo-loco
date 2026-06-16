@@ -15,9 +15,6 @@ class World {
     maxBottles = 5;
     bottlesLeft = 5;
 
-
-
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -29,6 +26,10 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach(enemy => {
+            enemy.world = this;
+            enemy.animate();
+        });
     }
 
     run() {
