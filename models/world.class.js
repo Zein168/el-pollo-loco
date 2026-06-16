@@ -9,6 +9,7 @@ class World {
     coinBar = new CoinBar();
     throwableObjects = [];
     collectedCoins = 0;
+    maxCoins = 5;
     collectedBottles = 0;
     bottleBar = new BottleBar();
     maxBottles = 5;
@@ -140,18 +141,25 @@ class World {
     checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
+
+                if (this.collectedCoins >= this.maxCoins) {
+                    return;
+                }
+
                 this.level.coins.splice(index, 1);
                 this.collectedCoins++;
-                let percent = this.collectedCoins * 10;
-                this.coinBar.setPercentage(Math.min(100, percent));
+
+                let percent = (this.collectedCoins / this.maxCoins) * 100;
+                this.coinBar.setPercentage(percent);
             }
         });
     }
+
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
                 if (this.bottlesLeft >= this.maxBottles) {
-                    return; 
+                    return;
                 }
                 this.level.bottles.splice(index, 1);
                 if (this.bottlesLeft < this.maxBottles) {
