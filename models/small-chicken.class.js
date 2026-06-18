@@ -20,12 +20,17 @@ class SmallChicken extends MovableObject {
         this.y = 370;
         this.speed = 0.15 + Math.random() * 0.5;
         this.isDead = false
-        this.animate();
+      
     }
 
     animate() {
         setInterval(() => {
-            if (!this.isDead) {
+               const distance = this.world.character.x - this.x;
+            if (distance > 10) {
+                this.otherDirection = true;
+                this.moveRight();
+            } else if (distance < -10) {
+                this.otherDirection = false;
                 this.moveLeft();
             }
         }, 1000 / 60);

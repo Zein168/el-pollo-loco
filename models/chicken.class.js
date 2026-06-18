@@ -26,7 +26,6 @@ class Chicken extends MovableObject {
     animate() {
         setInterval(() => {
             const distance = this.world.character.x - this.x;
-
             if (distance > 10) {
                 this.otherDirection = true;
                 this.moveRight();
