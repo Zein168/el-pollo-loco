@@ -39,6 +39,7 @@ class World {
             this.checkCoinCollisions();
             this.checkBottleCollisions();
             this.checkHeartCollisions();
+            this.checkBottleHitsEnemy();
         }, 200);
     }
 
@@ -180,6 +181,17 @@ class World {
                 this.character.energy = Math.min(100, this.character.energy);
                 this.statusBar.setPercentage(this.character.energy);
             }
+        });
+    }
+
+    checkBottleHitsEnemy() {
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    enemy.die();
+                    this.throwableObjects.splice(bottleIndex, 1);
+                }
+            });
         });
     }
 
