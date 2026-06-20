@@ -54,9 +54,10 @@ class Character extends MovableObject {
 
     animate(){
         setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < 4710) {
                 this.moveRight();
                 this.otherDirection = false;
+                 console.log(this.x);
             }
 
             if (this.world.keyboard.LEFT && this.x > 0 ) {
