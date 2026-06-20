@@ -14,14 +14,14 @@ class World {
     bottleBar = new BottleBar();
     maxBottles = 5;
     bottlesLeft = 5;
-    endbossBar = new EndbossBar();
+    endbossBar;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
         this.setWorld();
+        this.draw();
         this.run();
     }
 
@@ -29,6 +29,9 @@ class World {
         this.character.world = this;
         this.level.enemies.forEach(enemy => {
             enemy.world = this;
+            if (enemy instanceof Endboss) {
+                this.endbossBar = new EndbossBar(enemy);
+            }
             enemy.animate();
         });
     }
@@ -98,8 +101,11 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.endbossBar);
         this.addToMap(this.character);
+        if (this.endbossBar) {
+            this.endbossBar.updatePosition();
+            this.addToMap(this.endbossBar);
+        }
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
