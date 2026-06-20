@@ -67,9 +67,7 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-
                 if (enemy instanceof Endboss) {
-
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
                     return;
@@ -84,7 +82,6 @@ class World {
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
-
                 }
             }
         });
@@ -196,9 +193,10 @@ class World {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
-
                     if (enemy instanceof Endboss) {
                         enemy.hit();
+                        console.log(enemy.energy);
+                        this.endbossBar.setPercentage(enemy.energy);
                     } else {
                         enemy.die();
                     }

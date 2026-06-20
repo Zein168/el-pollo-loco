@@ -40,7 +40,6 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
-
     animate() {
         setInterval(() => {
 
