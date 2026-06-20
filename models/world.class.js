@@ -190,12 +190,16 @@ class World {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
-                    enemy.die();
+
+                    if (enemy instanceof Endboss) {
+                        enemy.hit();
+                    } else {
+                        enemy.die();
+                    }
                     this.throwableObjects.splice(bottleIndex, 1);
                 }
             });
         });
     }
-
 
 }
