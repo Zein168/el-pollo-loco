@@ -13,16 +13,16 @@ class Character extends MovableObject {
     ];
 
     IMAGES_JUMPING = [
-    'img/2_character_pepe/3_jump/J-31.png',
-    'img/2_character_pepe/3_jump/J-32.png',
-    'img/2_character_pepe/3_jump/J-33.png',
-    'img/2_character_pepe/3_jump/J-34.png',
-    'img/2_character_pepe/3_jump/J-35.png',
-    'img/2_character_pepe/3_jump/J-36.png',
-    'img/2_character_pepe/3_jump/J-37.png',
-    'img/2_character_pepe/3_jump/J-38.png',
-    'img/2_character_pepe/3_jump/J-39.png',
-    ];      
+        'img/2_character_pepe/3_jump/J-31.png',
+        'img/2_character_pepe/3_jump/J-32.png',
+        'img/2_character_pepe/3_jump/J-33.png',
+        'img/2_character_pepe/3_jump/J-34.png',
+        'img/2_character_pepe/3_jump/J-35.png',
+        'img/2_character_pepe/3_jump/J-36.png',
+        'img/2_character_pepe/3_jump/J-37.png',
+        'img/2_character_pepe/3_jump/J-38.png',
+        'img/2_character_pepe/3_jump/J-39.png',
+    ];
 
     IMAGES_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
@@ -40,9 +40,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
 
+
     world;
 
-    constructor(){
+    constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
@@ -52,17 +53,16 @@ class Character extends MovableObject {
         this.animate();
     }
 
-    animate(){
+    animate() {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < 4710) {
                 this.moveRight();
                 this.otherDirection = false;
-                 console.log(this.x);
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0 ) {
-              this.moveLeft();
-              this.otherDirection = true;
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.moveLeft();
+                this.otherDirection = true;
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
@@ -73,11 +73,11 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if(this.isDead) {
+            if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if(this.isHurt()) {
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            }else if (this.isAboveGround()){
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
 
@@ -85,10 +85,10 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
-        }, 50 );
+        }, 50);
     }
 
-    jump(){
+    jump() {
         this.speedY = 30;
     }
 }
