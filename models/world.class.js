@@ -14,6 +14,7 @@ class World {
     bottleBar = new BottleBar();
     maxBottles = 5;
     bottlesLeft = 5;
+    endbossBar = new EndbossBar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -94,6 +95,7 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
+        this.addToMap(this.endbossBar);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
