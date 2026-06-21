@@ -80,7 +80,7 @@ class Endboss extends MovableObject {
                 if (this.world.character.x < this.x - 20) {
                     this.x -= this.speed;
                     this.otherDirection = false;
-                } else if (this.world.character.x > this.x + 20) {
+                } else if (this.world.character.x > this.x + 150) {
                     this.x += this.speed;
                     this.otherDirection = true;
                 }
