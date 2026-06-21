@@ -118,14 +118,14 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(- this.camera_x, 0);
         if (this.gameWon) {
-    this.ctx.drawImage(
-        this.winImage,
-        5,
-        105,
-        650,
-        400
-    );
-}
+            this.ctx.drawImage(
+                this.winImage,
+                5,
+                105,
+                650,
+                400
+            );
+        }
 
         // draw is repeatedly called so that the movements become visible
         let self = this;
@@ -211,8 +211,6 @@ class World {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
-                    let newBottle = new Bottles(enemy.x);
-                    this.level.bottles.push(newBottle);
                     if (enemy instanceof Endboss) {
                         enemy.hit();
                         this.endbossBar.setPercentage(enemy.energy);
@@ -220,6 +218,8 @@ class World {
                             this.gameWon = true;
                         }
                     } else {
+                        let newBottle = new Bottles(enemy.x);
+                        this.level.bottles.push(newBottle);
                         enemy.die();
                     }
                     this.throwableObjects.splice(bottleIndex, 1);
