@@ -49,13 +49,13 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && !this.dKeyPressed) {
-
             if (this.bottlesLeft <= 0) {
                 return;
             }
             let bottle = new ThrowableObjects(
                 this.character.x + 100,
-                this.character.y + 100
+                this.character.y + 100,
+                this.character.otherDirection
             );
             this.throwableObjects.push(bottle);
             this.bottlesLeft--;
