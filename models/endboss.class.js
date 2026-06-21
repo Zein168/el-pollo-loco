@@ -77,10 +77,10 @@ class Endboss extends MovableObject {
                 }, 1500);
             }
             if (this.isActivated && !this.isAlert && this.energy > 0) {
-                if (this.world.character.x < this.x - 100) {
+                if (this.world.character.x < this.x - 20) {
                     this.x -= this.speed;
                     this.otherDirection = false;
-                } else if (this.world.character.x > this.x + 100) {
+                } else if (this.world.character.x > this.x + 20) {
                     this.x += this.speed;
                     this.otherDirection = true;
                 }
