@@ -16,16 +16,20 @@ class World {
     bottlesLeft = 5;
     endbossBar;
     gameWon = false;
+    gameLost = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+
+        this.winImage = new Image();
+        this.winImage.src = 'img/You won, you lost/You won A.png';
+        this.loseImage = new Image();
+        this.loseImage.src = 'img/You won, you lost/Game Over.png';
         this.setWorld();
         this.draw();
         this.run();
-        this.winImage = new Image();
-        this.winImage.src = 'img/You won, you lost/You won A.png';
     }
 
     setWorld() {
@@ -41,12 +45,18 @@ class World {
 
     run() {
         setInterval(() => {
+            if (this.gameWon || this.gameLost) {
+                return;
+            }
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkCoinCollisions();
             this.checkBottleCollisions();
             this.checkHeartCollisions();
             this.checkBottleHitsEnemy();
+            if (this.character.energy <= 0) {
+                this.gameLost = true;
+            }
         }, 200);
     }
 
@@ -122,6 +132,15 @@ class World {
                 this.winImage,
                 5,
                 105,
+                650,
+                400
+            );
+        }
+        if (this.gameLost) {
+            this.ctx.drawImage(
+                this.loseImage,
+                5,
+                80,
                 650,
                 400
             );
