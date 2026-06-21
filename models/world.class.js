@@ -15,6 +15,7 @@ class World {
     maxBottles = 5;
     bottlesLeft = 5;
     endbossBar;
+    gameWon = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -23,6 +24,8 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
+        this.winImage = new Image();
+        this.winImage.src = 'img/You won, you lost/You won A.png';
     }
 
     setWorld() {
@@ -114,6 +117,15 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(- this.camera_x, 0);
+        if (this.gameWon) {
+    this.ctx.drawImage(
+        this.winImage,
+        5,
+        105,
+        650,
+        400
+    );
+}
 
         // draw is repeatedly called so that the movements become visible
         let self = this;
@@ -203,8 +215,10 @@ class World {
                     this.level.bottles.push(newBottle);
                     if (enemy instanceof Endboss) {
                         enemy.hit();
-                        console.log(enemy.energy);
                         this.endbossBar.setPercentage(enemy.energy);
+                        if (enemy.energy <= 0) {
+                            this.gameWon = true;
+                        }
                     } else {
                         enemy.die();
                     }
