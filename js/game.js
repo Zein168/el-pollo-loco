@@ -67,7 +67,15 @@ window.addEventListener("keyup", (e) => {
 });
 
 window.addEventListener("load", () => {
+
     document.getElementById("restartBtn").addEventListener("click", () => {
         location.reload();
     });
+
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+        world.showIntro = false;
+        document.getElementById("startBtn").style.display = "none";
+    });
+
 });
