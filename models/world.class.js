@@ -17,16 +17,18 @@ class World {
     endbossBar;
     gameWon = false;
     gameLost = false;
+    introImage = new Image();
+    showIntro = true;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-
         this.winImage = new Image();
         this.winImage.src = 'img/You won, you lost/You won A.png';
         this.loseImage = new Image();
         this.loseImage.src = 'img/You won, you lost/Game Over.png';
+        this.introImage.src = "img/9_intro_outro_screens/start/startscreen_1.png";
         this.setWorld();
         this.draw();
         this.run();
@@ -105,6 +107,17 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.showIntro) {
+            this.ctx.drawImage(
+                this.introImage,
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
+            );
+            requestAnimationFrame(() => this.draw());
+            return;
+        }
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
@@ -185,14 +198,11 @@ class World {
     checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-
                 if (this.collectedCoins >= this.maxCoins) {
                     return;
                 }
-
                 this.level.coins.splice(index, 1);
                 this.collectedCoins++;
-
                 let percent = (this.collectedCoins / this.maxCoins) * 100;
                 this.coinBar.setPercentage(percent);
             }
