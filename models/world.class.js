@@ -157,7 +157,9 @@ class World {
                 650,
                 400
             );
+            document.getElementById("restartBtn2").style.display = "block";
         }
+
 
         // draw is repeatedly called so that the movements become visible
         let self = this;
