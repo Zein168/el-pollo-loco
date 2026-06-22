@@ -6,7 +6,6 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-
     console.log("my Character is", world.character);
 }
 
@@ -65,4 +64,10 @@ window.addEventListener("keyup", (e) => {
     }
 
     console.log(e);
+});
+
+window.addEventListener("load", () => {
+    document.getElementById("restartBtn").addEventListener("click", () => {
+        location.reload();
+    });
 });
