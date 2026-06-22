@@ -17,3 +17,16 @@ h1 {
     gap: 10px;
     margin-top: 20px;
 }
+
+.intro-container {
+    position: relative;
+}
+
+#startBtn {
+    position: absolute;
+    top: 350px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    font-size: 20px;
+}
