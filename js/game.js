@@ -72,6 +72,9 @@ window.addEventListener("load", () => {
         location.reload();
     });
 
+       document.getElementById("restartBtn2").addEventListener("click", () => {
+        location.reload();
+    });
 
     document.getElementById("startBtn").addEventListener("click", () => {
         world.showIntro = false;
