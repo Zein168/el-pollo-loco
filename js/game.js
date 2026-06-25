@@ -72,8 +72,14 @@ window.addEventListener("load", () => {
         location.reload();
     });
 
-       document.getElementById("restartBtn2").addEventListener("click", () => {
-        location.reload();
+    document.getElementById("restartBtn2").addEventListener("click", () => {
+        console.log("dsfsdf");
+
+       world = new World(canvas, keyboard);
+
+       world.showIntro = false;
+
+        document.getElementById("restartBtn2").style.display = "none";
     });
 
     document.getElementById("startBtn").addEventListener("click", () => {

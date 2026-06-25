@@ -157,7 +157,9 @@ class World {
                 650,
                 400
             );
-            document.getElementById("restartBtn2").style.display = "block";
+                if (this === world) {
+        document.getElementById("restartBtn2").style.display = "block";
+    }
         }
 
 
@@ -258,5 +260,7 @@ class World {
             });
         });
     }
+
+
 
 }
