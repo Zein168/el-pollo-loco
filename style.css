@@ -34,7 +34,18 @@ h1 {
 #restartBtn2 {
     display: block;
     position: absolute;
-    left: 50%;
+    left: 32%;
+    top: 350px;
+    transform: translateX(-50%);
+    padding: 10px 40px;
+    font-size: 25px;
+    border-radius: 15px;
+}
+
+#homePage {
+    display: block;
+    position: absolute;
+    left: 60%;
     top: 350px;
     transform: translateX(-50%);
     padding: 10px 40px;
