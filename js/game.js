@@ -73,15 +73,16 @@ window.addEventListener("load", () => {
     });
 
     document.getElementById("restartBtn2").addEventListener("click", () => {
-        console.log("dsfsdf");
-
-       world = new World(canvas, keyboard);
-
-       world.showIntro = false;
-
+        world = new World(canvas, keyboard);
+        world.showIntro = false;
         document.getElementById("restartBtn2").style.display = "none";
     });
 
+    document.getElementById("homePage").addEventListener("click", () => {
+        console.log("homePage");
+        location.reload();
+        document.getElementById("homePage").style.display = "none";
+    });
     document.getElementById("startBtn").addEventListener("click", () => {
         world.showIntro = false;
         document.getElementById("startBtn").style.display = "none";

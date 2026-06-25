@@ -157,9 +157,10 @@ class World {
                 650,
                 400
             );
-                if (this === world) {
-        document.getElementById("restartBtn2").style.display = "block";
-    }
+            if (this === world) {
+                document.getElementById("restartBtn2").style.display = "block";
+                document.getElementById("homePage").style.display = "block";
+            }
         }
 
 
