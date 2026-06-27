@@ -76,6 +76,7 @@ window.addEventListener("load", () => {
         world = new World(canvas, keyboard);
         world.showIntro = false;
         document.getElementById("restartBtn2").style.display = "none";
+        document.getElementById("homePage").style.display = "none";
     });
 
     document.getElementById("homePage").addEventListener("click", () => {
