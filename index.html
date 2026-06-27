@@ -27,6 +27,7 @@
     <script src="models/world.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
   </head>
   <body onload="init()">
     <h1>El Pollo Loco</h1>
@@ -34,17 +35,25 @@
       <div class="intro-container">
         <canvas id="canvas" width="720" height="480"> </canvas>
         <button id="startBtn">Start Game</button>
-        <button id="restartBtn2" style="display:none;">Restart</button>
-        <button id="homePage" style="display:none;">HomePage</button>
-        
+        <button id="restartBtn2" style="display: none">Restart</button>
+        <button id="homePage" style="display: none">HomePage</button>
       </div>
       <div class="game-buttons">
         <button id="restartBtn">Restart</button>
-        <button></button>
+        <button id="howToPlayBtn">How to Play</button>
         <button></button>
         <button></button>
         <button></button>
       </div>
+    </div>
+    <div id="howToPlay" class="hidden">
+      <h2>How to Play</h2>
+      <p>➡️ Right Arrow: Move right</p>
+      <p>⬅️ Left Arrow: Move left</p>
+      <p>⬆️ Up Arrow: Jump</p>
+      <p>Space: Throw bottle</p>
+
+      <button id="closeHowToPlay">Close</button>
     </div>
   </body>
 </html>
