@@ -2,6 +2,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('img/desert.jpg');
 }
 
 canvas {
