@@ -19,3 +19,43 @@ window.addEventListener("load", () => {
         storyContainer.classList.add("hidden");
     });
 });
+
+function toggleFullscreen() {
+    const elem = document.getElementById("fullscreen");
+
+    if (!document.fullscreenElement) {
+        openFullscreen(elem);
+    } else {
+        closeFullscreen();
+    }
+}
+
+function openFullscreen(elem) {
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+}
+
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+}
+
+document.addEventListener("fullscreenchange", () => {
+    const icon = document.getElementById("fullscreenIcon");
+
+    if (document.fullscreenElement) {
+        icon.src = "img/fullscreen_exit.png"; 
+    } else {
+        icon.src = "img/fullscreen.png";      
+    }
+});

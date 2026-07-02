@@ -30,62 +30,68 @@
     <script src="js/script.js"></script>
   </head>
   <body onload="init()">
-    <h1>El Pollo Loco</h1>
-    <div class="game-container">
-      <div class="intro-container">
-        <canvas id="canvas" width="720" height="480"> </canvas>
-        <button id="startBtn">Start Game</button>
-        <button id="restartBtn2" style="display: none">Restart</button>
-        <button id="homePage" style="display: none">HomePage</button>
+    <div id="fullscreen">
+      <h1>El Pollo Loco</h1>
+      <div class="game-container">
+        <div class="intro-container">
+          <canvas id="canvas" width="720" height="480"> </canvas>
+          <button id="startBtn">Start Game</button>
+          <button id="restartBtn2" style="display: none">Restart</button>
+          <button id="homePage" style="display: none">HomePage</button>
+        </div>
+        <div class="game-buttons">
+          <button id="restartBtn">Restart</button>
+          <button id="howToPlayBtn">How to Play</button>
+          <button id="story">Story</button>
+          <button></button>
+          <button></button>
+        </div>
       </div>
-      <div class="game-buttons">
-        <button id="restartBtn">Restart</button>
-        <button id="howToPlayBtn">How to Play</button>
-        <button id="story">Story</button>
-        <button></button>
-        <button></button>
+      <div id="howToPlay" class="hidden">
+        <h2>How to Play</h2>
+        <p>➡️ Right Arrow: Move right</p>
+        <p>⬅️ Left Arrow: Move left</p>
+        <p>⬆️ Up Arrow: Jump</p>
+        <p>Space: Throw bottle</p>
+
+        <button id="closeHowToPlay">Close</button>
       </div>
-    </div>
-    <div id="howToPlay" class="hidden">
-      <h2>How to Play</h2>
-      <p>➡️ Right Arrow: Move right</p>
-      <p>⬅️ Left Arrow: Move left</p>
-      <p>⬆️ Up Arrow: Jump</p>
-      <p>Space: Throw bottle</p>
+      <div id="storyContainer" class="hidden">
+        <h2>Story</h2>
 
-      <button id="closeHowToPlay">Close</button>
-    </div>
-    <div id="storyContainer" class="hidden">
-      <h2>Story</h2>
-
-      <p>
-        Pepe lebt ein ruhiges Leben in einem kleinen Dorf in Mexiko. Er liebt
-        scharfes Essen und ist besonders stolz auf seine selbstgemachten
-        Salsa-Flaschen.
-      </p>
-      <p>
-        Eines Morgens stellt er fest, dass alle seine wertvollen Salsa-Flaschen
-        verschwunden sind. Die Spuren führen direkt in die Wüste.
-      </p>
-      <p>
-        Entschlossen macht sich Pepe auf den Weg, um die gestohlenen Flaschen
-        zurückzuholen. Auf seiner Reise begegnet er vielen wilden Hühnern, die
-        ihm den Weg versperren.
-      </p>
-      <p>
-        Unterwegs sammelt Pepe Münzen, um seinen Mut zu beweisen, und findet
-        neue Flaschen, die er als Waffe gegen seine Gegner einsetzen kann.
-      </p>
-      <p>
-        Je näher er seinem Ziel kommt, desto gefährlicher werden die Feinde.
-        Schließlich erreicht er das Versteck des mächtigen Endbosses.
-      </p>
-      <p>
-        Nur wenn Pepe geschickt springt, den Angriffen ausweicht und seine
-        Flaschen klug einsetzt, kann er den Endboss besiegen und den Frieden in
-        seinem Dorf wiederherstellen.
-      </p>
-      <button id="closeStory">Close</button>
+        <p>
+          Pepe lebt ein ruhiges Leben in einem kleinen Dorf in Mexiko. Er liebt
+          scharfes Essen und ist besonders stolz auf seine selbstgemachten
+          Salsa-Flaschen.
+        </p>
+        <p>
+          Eines Morgens stellt er fest, dass alle seine wertvollen
+          Salsa-Flaschen verschwunden sind. Die Spuren führen direkt in die
+          Wüste.
+        </p>
+        <p>
+          Entschlossen macht sich Pepe auf den Weg, um die gestohlenen Flaschen
+          zurückzuholen. Auf seiner Reise begegnet er vielen wilden Hühnern, die
+          ihm den Weg versperren.
+        </p>
+        <p>
+          Unterwegs sammelt Pepe Münzen, um seinen Mut zu beweisen, und findet
+          neue Flaschen, die er als Waffe gegen seine Gegner einsetzen kann.
+        </p>
+        <p>
+          Je näher er seinem Ziel kommt, desto gefährlicher werden die Feinde.
+          Schließlich erreicht er das Versteck des mächtigen Endbosses.
+        </p>
+        <p>
+          Nur wenn Pepe geschickt springt, den Angriffen ausweicht und seine
+          Flaschen klug einsetzt, kann er den Endboss besiegen und den Frieden
+          in seinem Dorf wiederherstellen.
+        </p>
+        <button id="closeStory">Close</button>
+      </div>
+      <button onclick="toggleFullscreen()">
+        <img id="fullscreenIcon" src="img/fullscreen.png" alt="Fullscreen" />
+      </button>
     </div>
   </body>
 </html>
