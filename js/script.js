@@ -52,10 +52,13 @@ function closeFullscreen() {
 
 document.addEventListener("fullscreenchange", () => {
     const icon = document.getElementById("fullscreenIcon");
+    const gameButtons = document.querySelector(".game-buttons");
 
     if (document.fullscreenElement) {
-        icon.src = "img/fullscreen_exit.png"; 
+        icon.src = "img/fullscreen_exit.png";
+        gameButtons.classList.add("hidden");
     } else {
-        icon.src = "img/fullscreen.png";      
+        icon.src = "img/fullscreen.png";
+        gameButtons.classList.remove("hidden");
     }
 });
