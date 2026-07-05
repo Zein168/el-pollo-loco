@@ -62,3 +62,16 @@ document.addEventListener("fullscreenchange", () => {
         gameButtons.classList.remove("hidden");
     }
 });
+
+window.addEventListener("load", () => {
+
+    const impressum = document.getElementById("impressumContainer");
+    document.getElementById("impressum").addEventListener("click", () => {
+        impressum.classList.remove("hidden");
+    });
+
+    document.getElementById("closeImpressum").addEventListener("click", () => {
+        impressum.classList.add("hidden");
+    });
+
+});
