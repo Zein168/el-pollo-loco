@@ -172,3 +172,8 @@ h1 {
 
 }
 
+#fullscreen:fullscreen #startBtn {
+    bottom: 90px;
+    top: auto;
+}
+
