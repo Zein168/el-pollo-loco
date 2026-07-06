@@ -75,3 +75,17 @@ window.addEventListener("load", () => {
     });
 
 });
+
+
+window.addEventListener("load", () => {
+
+    const privacy = document.getElementById("privacyContainer");
+    document.getElementById("privacyBtn").addEventListener("click", () => {
+        privacy.classList.remove("hidden");
+    });
+
+    document.getElementById("closePrivacy").addEventListener("click", () => {
+        privacy.classList.add("hidden");
+    });
+
+});
