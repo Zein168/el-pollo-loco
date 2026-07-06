@@ -51,14 +51,19 @@ function closeFullscreen() {
 }
 
 document.addEventListener("fullscreenchange", () => {
-    const icon = document.getElementById("fullscreenIcon");
+    const enterIcon = document.getElementById("fullscreenIcon");
+    const exitIcon = document.getElementById("fullscreenIcon_exit");
     const gameButtons = document.querySelector(".game-buttons");
 
     if (document.fullscreenElement) {
-        icon.src = "img/fullscreen_exit.png";
+        enterIcon.classList.add("hidden");
+        exitIcon.classList.remove("hidden");
+
         gameButtons.classList.add("hidden");
     } else {
-        icon.src = "img/fullscreen.png";
+        enterIcon.classList.remove("hidden");
+        exitIcon.classList.add("hidden");
+
         gameButtons.classList.remove("hidden");
     }
 });

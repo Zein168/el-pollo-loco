@@ -121,14 +121,7 @@ h1 {
     }
 }
 
-#fullscreen:fullscreen {
-    position: fixed;
-    inset: 0;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 #fullscreen:fullscreen .game-container,
 #fullscreen:fullscreen .intro-container {
     position: fixed;
@@ -145,11 +138,21 @@ h1 {
     object-fit: contain;
 }
 
-#fullscreenBtn {
+#fullscreenIcon {
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 999;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#fullscreenIcon_exit {
+    position: fixed;
+    top: 10px;
+    right: 250px;
+
     background: transparent;
     border: none;
     cursor: pointer;
@@ -168,3 +171,4 @@ h1 {
     height: 100%;
 
 }
+

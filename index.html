@@ -41,9 +41,10 @@
           <div class="canvas-wrapper">
             <canvas id="canvas" width="720" height="480"></canvas>
 
-            <button id="fullscreenBtn" onclick="toggleFullscreen()">
+            <div id="fullscreenBtn" onclick="toggleFullscreen()">
               <img id="fullscreenIcon" src="img/fullscreen.png" alt="Fullscreen"/>
-            </button>
+              <img class="hidden" id="fullscreenIcon_exit" src="img/fullscreen_exit.png" alt="Exit Fullscreen"/>
+            </div>
           </div>
           <button id="startBtn">Start Game</button>
           <button id="restartBtn2" style="display: none">Restart</button>
