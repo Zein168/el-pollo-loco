@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
 
 window.addEventListener("load", () => {
     const storyContainer = document.getElementById("storyContainer");
-    document.getElementById("story").addEventListener("click", () => {
+    document.getElementById("storyBtn").addEventListener("click", () => {
         storyContainer.classList.remove("hidden");
     });
     document.getElementById("closeStory").addEventListener("click", () => {
@@ -66,7 +66,7 @@ document.addEventListener("fullscreenchange", () => {
 window.addEventListener("load", () => {
 
     const impressum = document.getElementById("impressumContainer");
-    document.getElementById("impressum").addEventListener("click", () => {
+    document.getElementById("impressumBtn").addEventListener("click", () => {
         impressum.classList.remove("hidden");
     });
 
