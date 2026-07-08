@@ -6,12 +6,12 @@ body {
     margin: 0;
     background-image: url('img/desert.jpg');
     background-position: center;
-    font-family: 'kablammo', Arial, Helvetica, sans-serif;
+    font-family: 'Bangers', Arial, Helvetica, sans-serif;
 }
 
 @font-face {
-    font-family: 'kablammo';
-    src: url('fonts/kablammo.ttf') format('truetype');
+    font-family: 'Bangers';
+    src: url('fonts/Bangers.ttf') format('truetype');
 }
 
 
