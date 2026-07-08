@@ -102,12 +102,30 @@ h1 {
     transform: translate(-50%, -50%);
     width: 500px;
     height: 300px;
-    background: white;
     padding: 20px;
     border: 2px solid black;
     border-radius: 10px;
     z-index: 1000;
     overflow-y: auto;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #A0220A;
+    border-radius: 10px;
+    color: #FFCC19;
+}
+
+#storyContainer::-webkit-scrollbar,
+#howToPlay::-webkit-scrollbar,
+#impressumContainer::-webkit-scrollbar,
+#privacyContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+#storyContainer::-webkit-scrollbar-thumb,
+#howToPlay::-webkit-scrollbar-thumb,
+#impressumContainer::-webkit-scrollbar-thumb,
+#privacyContainer::-webkit-scrollbar-thumb {
+    background: #FFCC19;
+    border-radius: 10px;
 }
 
 @media only screen and (max-width:720px) {
@@ -176,4 +194,5 @@ h1 {
     bottom: 90px;
     top: auto;
 }
+
 
