@@ -63,7 +63,7 @@ h1 {
     display: block;
     position: absolute;
     left: 32%;
-    top: 350px;
+    bottom: 2px;
     transform: translateX(-50%);
     padding: 10px 40px;
     font-size: 25px;
@@ -79,7 +79,7 @@ h1 {
     display: block;
     position: absolute;
     left: 60%;
-    top: 350px;
+    bottom: 2px;
     transform: translateX(-50%);
     padding: 10px 40px;
     font-size: 25px;
@@ -199,6 +199,11 @@ h1 {
 
 #fullscreen:fullscreen #startBtn {
     bottom: 20px;
+    top: auto;
+}
+
+#fullscreen:fullscreen #restartBtn2, #fullscreen:fullscreen #homePage {
+    bottom: 2px;
     top: auto;
 }
 
