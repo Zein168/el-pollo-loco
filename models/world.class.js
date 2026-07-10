@@ -21,6 +21,7 @@ class World {
     showIntro = true;
     winSound = new Audio('audio/victory.mp3');
     winSoundPlayed = false;
+    throwSound = new Audio('audio/bottle-throw.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -75,6 +76,7 @@ class World {
                 this.character.otherDirection
             );
             this.throwableObjects.push(bottle);
+            this.throwSound.play();
             this.bottlesLeft--;
             this.bottleBar.setPercentage((this.bottlesLeft / 5) * 100);
             this.dKeyPressed = true;
