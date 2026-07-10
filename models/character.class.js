@@ -78,6 +78,8 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.jumpSound = new Audio('audio/jump-sound.mp3');
+        this.deathSound = new Audio('audio/gameover.mp3');
+        this.deathSoundPlayed = false;
         this.applyGravity();
         this.animate();
     }
@@ -108,6 +110,10 @@ class Character extends MovableObject {
 
             if (this.energy <= 0) {
                 this.playAnimation(this.IMAGES_DEAD);
+                if (!this.deathSoundPlayed) {
+                    this.deathSound.play();
+                    this.deathSoundPlayed = true;
+                }
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
