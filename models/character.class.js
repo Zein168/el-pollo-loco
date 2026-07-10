@@ -78,9 +78,6 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.jumpSound = new Audio('audio/jump-sound.mp3');
-
-
-
         this.applyGravity();
         this.animate();
     }
