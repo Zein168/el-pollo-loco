@@ -80,6 +80,8 @@ class Character extends MovableObject {
         this.jumpSound = new Audio('audio/jump-sound.mp3');
         this.deathSound = new Audio('audio/gameover.mp3');
         this.deathSoundPlayed = false;
+        this.hurtSound = new Audio('audio/hurt.mp3');
+        this.hurtSoundPlayed = false;
         this.applyGravity();
         this.animate();
     }
@@ -116,6 +118,10 @@ class Character extends MovableObject {
                 }
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                if (!this.hurtSoundPlayed) {
+                    this.hurtSound.play();
+                    this.hurtSoundPlayed = true;
+                }
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
