@@ -19,6 +19,8 @@ class World {
     gameLost = false;
     introImage = new Image();
     showIntro = true;
+    winSound = new Audio('audio/victory.mp3');
+    winSoundPlayed = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -254,6 +256,10 @@ class World {
                         this.endbossBar.setPercentage(enemy.energy);
                         if (enemy.energy <= 0) {
                             this.gameWon = true;
+                            if (!this.winSoundPlayed) {
+                                this.winSound.play();
+                                this.winSoundPlayed = true;
+                            }
                         }
                     } else {
                         let newBottle = new Bottles(enemy.x);

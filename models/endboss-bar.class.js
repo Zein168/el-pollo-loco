@@ -18,6 +18,7 @@ class EndbossBar extends DrawableObject {
         this.height = 70;
         this.updatePosition();
         this.setPercentage(100);
+
     }
 
 
