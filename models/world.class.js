@@ -22,6 +22,7 @@ class World {
     winSound = new Audio('audio/victory.mp3');
     winSoundPlayed = false;
     throwSound = new Audio('audio/bottle-throw.mp3');
+    backgroundSound = new Audio('audio/background-music.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -32,9 +33,13 @@ class World {
         this.loseImage = new Image();
         this.loseImage.src = 'img/You won, you lost/Game Over.png';
         this.introImage.src = "img/9_intro_outro_screens/start/startscreen_1.png";
+        this.backgroundSound.loop = true;
+        this.backgroundSound.volume = 0.3;
+        this.backgroundSound.play();
         this.setWorld();
         this.draw();
         this.run();
+
     }
 
     setWorld() {
