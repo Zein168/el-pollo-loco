@@ -59,31 +59,19 @@ h1 {
     color: #FFCC19;
 }
 
-#restartBtn2 {
-    display: block;
+.end-buttons {
     position: absolute;
-    left: 32%;
     bottom: 2px;
+    left: 50%;
     transform: translateX(-50%);
-    padding: 10px 40px;
-    font-size: 25px;
-    border-radius: 15px;
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.5);
-    border: 3px solid #A0220A;
-    border-radius: 10px;
-    color: #FFCC19;
+    display: flex;
+    gap: 20px;
 }
 
+#restartBtn2,
 #homePage {
-    display: block;
-    position: absolute;
-    left: 60%;
-    bottom: 2px;
-    transform: translateX(-50%);
     padding: 10px 40px;
     font-size: 25px;
-    border-radius: 15px;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
     border: 3px solid #A0220A;

@@ -42,13 +42,24 @@
             <canvas id="canvas" width="720" height="480"></canvas>
 
             <div id="fullscreenBtn" onclick="toggleFullscreen()">
-              <img id="fullscreenIcon" src="img/fullscreen.png" alt="Fullscreen"/>
-              <img class="hidden" id="fullscreenIcon_exit" src="img/fullscreen_exit.png" alt="Exit Fullscreen"/>
+              <img
+                id="fullscreenIcon"
+                src="img/fullscreen.png"
+                alt="Fullscreen"
+              />
+              <img
+                class="hidden"
+                id="fullscreenIcon_exit"
+                src="img/fullscreen_exit.png"
+                alt="Exit Fullscreen"
+              />
             </div>
           </div>
           <button id="startBtn">Start Game</button>
-          <button id="restartBtn2" style="display: none">Restart</button>
-          <button id="homePage" style="display: none">HomePage</button>
+          <div class="end-buttons">
+            <button id="restartBtn2" style="display: none">Restart</button>
+            <button id="homePage" style="display: none">HomePage</button>
+          </div>
         </div>
         <div class="game-buttons">
           <button id="restartBtn">Restart</button>
