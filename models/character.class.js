@@ -77,6 +77,8 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        this.jumpSound = new Audio('audio/jump-sound.mp3');
+
 
 
         this.applyGravity();
@@ -126,6 +128,8 @@ class Character extends MovableObject {
 
     jump() {
         this.speedY = 30;
+        this.jumpSound.currentTime = 0;
+        this.jumpSound.play();
     }
 
     isLongIdle() {
