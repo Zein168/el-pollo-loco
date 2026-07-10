@@ -20,7 +20,8 @@ class SmallChicken extends MovableObject {
         this.y = 370;
         this.speed = 0.15 + Math.random() * 0.5;
         this.isDead = false
-      
+        this.jumpSound = new Audio('audio/baby-chick.mp3');
+        this.deathSoundPlayed = false;
     }
 
     animate() {
@@ -38,6 +39,10 @@ class SmallChicken extends MovableObject {
         setInterval(() => {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
+                if (!this.deathSoundPlayed) {
+                    this.jumpSound.play();
+                    this.deathSoundPlayed = true;
+                }
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
