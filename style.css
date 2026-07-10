@@ -38,7 +38,7 @@ h1 {
     gap: 10px;
     margin-top: 20px;
     justify-content: center;
-    
+
 }
 
 .intro-container {
@@ -72,8 +72,9 @@ h1 {
 
 #restartBtn2,
 #homePage {
-    padding: 10px 40px;
-    font-size: 25px;
+    width: 103px;
+    height: 38px;
+    font-size: 16px;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
     border: 3px solid #A0220A;
@@ -172,12 +173,17 @@ h1 {
     border: none;
     cursor: pointer;
 }
-#restartBtn, #howToPlayBtn, #storyBtn, #impressumBtn, #privacyBtn {
+
+#restartBtn,
+#howToPlayBtn,
+#storyBtn,
+#impressumBtn,
+#privacyBtn {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
     border: 3px solid #A0220A;
     border-radius: 10px;
-    color: #FFCC19;    
+    color: #FFCC19;
     font-size: 16px;
 
 }
@@ -194,13 +200,17 @@ h1 {
     top: auto;
 }
 
-#fullscreen:fullscreen #restartBtn2, #fullscreen:fullscreen #homePage {
+#fullscreen:fullscreen #restartBtn2,
+#fullscreen:fullscreen #homePage {
     bottom: 2px;
     top: auto;
 }
 
-#closeImpressum, #closePrivacy, #closeStory, #closeHowToPlay {
-   margin-top: 65px;
+#closeImpressum,
+#closePrivacy,
+#closeStory,
+#closeHowToPlay {
+    margin-top: 65px;
     align-self: flex-start;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
