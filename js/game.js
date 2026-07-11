@@ -66,29 +66,4 @@ window.addEventListener("keyup", (e) => {
     console.log(e);
 });
 
-window.addEventListener("load", () => {
-
-    document.getElementById("restartBtn").addEventListener("click", () => {
-        location.reload();
-    });
-
-    document.getElementById("restartBtn2").addEventListener("click", () => {
-        world = new World(canvas, keyboard);
-        world.showIntro = false;
-        document.getElementById("restartBtn2").style.display = "none";
-        document.getElementById("homePage").style.display = "none";
-    });
-
-    document.getElementById("homePage").addEventListener("click", () => {
-        console.log("homePage");
-        location.reload();
-        document.getElementById("homePage").style.display = "none";
-    });
-    document.getElementById("startBtn").addEventListener("click", () => {
-        world.showIntro = false;
-        world.backgroundSound.play();
-        document.getElementById("startBtn").style.display = "none";
-    });
-
-});
 
