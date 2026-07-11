@@ -1,25 +1,3 @@
-window.addEventListener("load", () => {
-    const howToPlay = document.getElementById("howToPlay");
-    document.getElementById("howToPlayBtn").addEventListener("click", () => {
-        howToPlay.classList.remove("hidden");
-    });
-
-    document.getElementById("closeHowToPlay").addEventListener("click", () => {
-        howToPlay.classList.add("hidden");
-    });
-
-});
-
-window.addEventListener("load", () => {
-    const storyContainer = document.getElementById("storyContainer");
-    document.getElementById("storyBtn").addEventListener("click", () => {
-        storyContainer.classList.remove("hidden");
-    });
-    document.getElementById("closeStory").addEventListener("click", () => {
-        storyContainer.classList.add("hidden");
-    });
-});
-
 function toggleFullscreen() {
     const elem = document.getElementById("fullscreen");
 
@@ -50,74 +28,96 @@ function closeFullscreen() {
     }
 }
 
-document.addEventListener("fullscreenchange", () => {
-    const enterIcon = document.getElementById("fullscreenIcon");
-    const exitIcon = document.getElementById("fullscreenIcon_exit");
-    const gameButtons = document.querySelector(".game-buttons");
-
-    if (document.fullscreenElement) {
-        enterIcon.classList.add("hidden");
-        exitIcon.classList.remove("hidden");
-
-        gameButtons.classList.add("hidden");
-    } else {
-        enterIcon.classList.remove("hidden");
-        exitIcon.classList.add("hidden");
-
-        gameButtons.classList.remove("hidden");
-    }
+window.addEventListener("load", () => {
+    initHowToPlay();
+    initStory();
+    initFullscreen();
+    initImpressum();
+    initPrivacy();
+    initGameButtons();
 });
 
-window.addEventListener("load", () => {
+function initHowToPlay() {
+    const howToPlay = document.getElementById("howToPlay");
+    document.getElementById("howToPlayBtn").addEventListener("click", () => {
+        howToPlay.classList.remove("hidden");
+    });
+    document.getElementById("closeHowToPlay").addEventListener("click", () => {
+        howToPlay.classList.add("hidden");
+    });
+}
 
+function initStory() {
+    const storyContainer = document.getElementById("storyContainer");
+    document.getElementById("storyBtn").addEventListener("click", () => {
+        storyContainer.classList.remove("hidden");
+    });
+    document.getElementById("closeStory").addEventListener("click", () => {
+        storyContainer.classList.add("hidden");
+    });
+}
+
+function initFullscreen() {
+    document.addEventListener("fullscreenchange", () => {
+        const enterIcon = document.getElementById("fullscreenIcon");
+        const exitIcon = document.getElementById("fullscreenIcon_exit");
+        const gameButtons = document.querySelector(".game-buttons");
+        if (document.fullscreenElement) {
+            enterIcon.classList.add("hidden");
+            exitIcon.classList.remove("hidden");
+            gameButtons.classList.add("hidden");
+        } else {
+            enterIcon.classList.remove("hidden");
+            exitIcon.classList.add("hidden");
+            gameButtons.classList.remove("hidden");
+        }
+    });
+}
+
+function initImpressum() {
     const impressum = document.getElementById("impressumContainer");
     document.getElementById("impressumBtn").addEventListener("click", () => {
         impressum.classList.remove("hidden");
     });
-
     document.getElementById("closeImpressum").addEventListener("click", () => {
         impressum.classList.add("hidden");
     });
+}
 
-});
-
-
-window.addEventListener("load", () => {
-
+function initPrivacy() {
     const privacy = document.getElementById("privacyContainer");
     document.getElementById("privacyBtn").addEventListener("click", () => {
         privacy.classList.remove("hidden");
     });
-
     document.getElementById("closePrivacy").addEventListener("click", () => {
         privacy.classList.add("hidden");
     });
+}
 
-});
-
-
-window.addEventListener("load", () => {
-
+function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
         location.reload();
     });
-
     document.getElementById("restartBtn2").addEventListener("click", () => {
-        world = new World(canvas, keyboard);
-        world.showIntro = false;
-        document.getElementById("restartBtn2").style.display = "none";
-        document.getElementById("homePage").style.display = "none";
+        restartGame();
     });
-
     document.getElementById("homePage").addEventListener("click", () => {
-        console.log("homePage");
         location.reload();
-        document.getElementById("homePage").style.display = "none";
     });
     document.getElementById("startBtn").addEventListener("click", () => {
-        world.showIntro = false;
-        world.backgroundSound.play();
-        document.getElementById("startBtn").style.display = "none";
+        startGame();
     });
+}
 
-});
+function startGame() {
+    world.showIntro = false;
+    world.backgroundSound.play();
+    document.getElementById("startBtn").style.display = "none";
+}
+
+function restartGame() {
+    world = new World(canvas, keyboard);
+    world.showIntro = false;
+    document.getElementById("restartBtn2").style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+}
