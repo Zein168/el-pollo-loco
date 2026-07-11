@@ -86,6 +86,7 @@ window.addEventListener("load", () => {
     });
     document.getElementById("startBtn").addEventListener("click", () => {
         world.showIntro = false;
+        world.backgroundSound.play();
         document.getElementById("startBtn").style.display = "none";
     });
 

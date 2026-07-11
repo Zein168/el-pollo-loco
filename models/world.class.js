@@ -35,7 +35,6 @@ class World {
         this.introImage.src = "img/9_intro_outro_screens/start/startscreen_1.png";
         this.backgroundSound.loop = true;
         this.backgroundSound.volume = 0.3;
-        this.backgroundSound.play();
         this.setWorld();
         this.draw();
         this.run();
