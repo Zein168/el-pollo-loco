@@ -112,7 +112,6 @@ function initGameButtons() {
 
 function startGame() {
     world.showIntro = false;
-    world.gameStarted = true;
     world.startEnemies();
     if (world.musicOn) {
         world.backgroundSound.play();
@@ -121,8 +120,10 @@ function startGame() {
 }
 
 function restartGame() {
-    world = new World(canvas, keyboard, level1);
+    initLevel1();
+    world = new World(canvas, keyboard);
     world.showIntro = false;
+    world.startEnemies();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
 }

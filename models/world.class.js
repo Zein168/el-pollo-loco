@@ -51,6 +51,7 @@ class World {
         if (enemy instanceof Endboss) {
             this.endbossBar = new EndbossBar(enemy);
         }
+
     });
 }
 
@@ -59,6 +60,7 @@ class World {
             enemy.animate();
         });
     }
+    
 
     run() {
         setInterval(() => {
