@@ -23,6 +23,7 @@ class World {
     winSoundPlayed = false;
     throwSound = new Audio('audio/bottle-throw.mp3');
     backgroundSound = new Audio('audio/background-music.mp3');
+    coinSound = new Audio('audio/coin.mp3');
     musicOn = true;
     effectsOn = true;
     gameStarted = false;
@@ -234,6 +235,10 @@ class World {
                 }
                 this.level.coins.splice(index, 1);
                 this.collectedCoins++;
+                if (this.effectsOn) {
+                    this.coinSound.currentTime = 0;
+                    this.coinSound.play();
+                }
                 let percent = (this.collectedCoins / this.maxCoins) * 100;
                 this.coinBar.setPercentage(percent);
             }
