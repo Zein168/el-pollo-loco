@@ -111,13 +111,15 @@ function initGameButtons() {
 
 function startGame() {
     world.showIntro = false;
+    world.startEnemies();
     world.backgroundSound.play();
     document.getElementById("startBtn").style.display = "none";
 }
 
 function restartGame() {
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, level1);
     world.showIntro = false;
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
 }
+

@@ -48,6 +48,14 @@ class World {
             if (enemy instanceof Endboss) {
                 this.endbossBar = new EndbossBar(enemy);
             }
+            if (!this.showIntro) {
+                enemy.animate();
+            }
+        });
+    }
+
+    startEnemies() {
+        this.level.enemies.forEach(enemy => {
             enemy.animate();
         });
     }
