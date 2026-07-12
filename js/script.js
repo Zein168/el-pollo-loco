@@ -35,6 +35,7 @@ window.addEventListener("load", () => {
     initImpressum();
     initPrivacy();
     initGameButtons();
+    initSoundButtons(); 
 });
 
 function initHowToPlay() {
@@ -123,3 +124,16 @@ function restartGame() {
     document.getElementById("homePage").style.display = "none";
 }
 
+function initSoundButtons() {
+    document.getElementById("musicIcon").addEventListener("click", () => {
+        world.musicOn = !world.musicOn;
+        if (world.musicOn) {
+            world.backgroundSound.play();
+            document.getElementById("musicIcon").src = "img/volume_up.svg";
+        } else {
+            world.backgroundSound.pause();
+            document.getElementById("musicIcon").src = "img/volume_off.svg";
+        }
+    });
+
+}
