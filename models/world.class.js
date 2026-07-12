@@ -44,23 +44,23 @@ class World {
 
     }
 
-  setWorld() {
-    this.character.world = this;
-    this.level.enemies.forEach(enemy => {
-        enemy.world = this;
-        if (enemy instanceof Endboss) {
-            this.endbossBar = new EndbossBar(enemy);
-        }
+    setWorld() {
+        this.character.world = this;
+        this.level.enemies.forEach(enemy => {
+            enemy.world = this;
+            if (enemy instanceof Endboss) {
+                this.endbossBar = new EndbossBar(enemy);
+            }
 
-    });
-}
+        });
+    }
 
     startEnemies() {
         this.level.enemies.forEach(enemy => {
             enemy.animate();
         });
     }
-    
+
 
     run() {
         setInterval(() => {
@@ -91,7 +91,9 @@ class World {
             );
             this.throwableObjects.push(bottle);
             if (this.effectsOn) {
-                this.throwSound.play();
+                if (this.effectsOn) {
+                    this.throwSound.play();
+                }
             }
             this.bottlesLeft--;
             this.bottleBar.setPercentage((this.bottlesLeft / 5) * 100);

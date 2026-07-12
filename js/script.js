@@ -141,4 +141,13 @@ function initSoundButtons() {
             document.getElementById("musicIcon").src = "img/volume_off.svg";
         }
     });
+    document.getElementById("effectIcon").addEventListener("click", () => {
+        world.effectsOn = !world.effectsOn;
+
+        if (world.effectsOn) {
+            document.getElementById("effectIcon").src = "img/music_note.svg";
+        } else {
+            document.getElementById("effectIcon").src = "img/music_off.svg";
+        }
+    });
 }

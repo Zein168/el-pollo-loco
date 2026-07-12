@@ -21,7 +21,7 @@ class Chicken extends MovableObject {
         this.world = world;
         this.speed = 0.15 + Math.random() * 0.5;
         this.isDead = false;
-        this.chickenSound  = new Audio('audio/chicken-noise.mp3');
+        this.chickenSound = new Audio('audio/chicken-noise.mp3');
         this.chickenSoundPlayed = false;
     }
 
@@ -41,7 +41,9 @@ class Chicken extends MovableObject {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
                 if (!this.chickenSoundPlayed) {
-                    this.chickenSound.play();
+                    if (this.world.effectsOn) {
+                        this.chickenSound.play();
+                    }
                     this.chickenSoundPlayed = true;
                 }
             } else {

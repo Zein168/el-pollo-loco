@@ -9,7 +9,7 @@ class SmallChicken extends MovableObject {
     ];
 
     IMAGES_DEAD = [
-    'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
+        'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
     constructor(x) {
@@ -26,7 +26,7 @@ class SmallChicken extends MovableObject {
 
     animate() {
         setInterval(() => {
-               const distance = this.world.character.x - this.x;
+            const distance = this.world.character.x - this.x;
             if (distance > 10) {
                 this.otherDirection = true;
                 this.moveRight();
@@ -40,7 +40,9 @@ class SmallChicken extends MovableObject {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
                 if (!this.chickenSoundPlayed) {
-                    this.chickenSound.play();
+                    if (this.effectsOn) {
+                        this.chickenSound.play();
+                    }
                     this.chickenSoundPlayed = true;
                 }
             } else {

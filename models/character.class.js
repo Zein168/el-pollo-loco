@@ -119,7 +119,9 @@ class Character extends MovableObject {
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!this.hurtSoundPlayed) {
-                    this.hurtSound.play();
+                    if (this.world.effectsOn) {
+                        this.hurtSound.play();
+                    }
                     this.hurtSoundPlayed = true;
                 }
             } else if (this.isAboveGround()) {
@@ -138,7 +140,9 @@ class Character extends MovableObject {
     jump() {
         this.speedY = 30;
         this.jumpSound.currentTime = 0;
-        this.jumpSound.play();
+        if (this.world.effectsOn) {
+            this.jumpSound.play();
+        }
     }
 
     isLongIdle() {
