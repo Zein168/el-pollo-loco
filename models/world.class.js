@@ -25,6 +25,7 @@ class World {
     backgroundSound = new Audio('audio/background-music.mp3');
     musicOn = true;
     effectsOn = true;
+    gameStarted = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -43,18 +44,15 @@ class World {
 
     }
 
-    setWorld() {
-        this.character.world = this;
-        this.level.enemies.forEach(enemy => {
-            enemy.world = this;
-            if (enemy instanceof Endboss) {
-                this.endbossBar = new EndbossBar(enemy);
-            }
-            if (!this.showIntro) {
-                enemy.animate();
-            }
-        });
-    }
+  setWorld() {
+    this.character.world = this;
+    this.level.enemies.forEach(enemy => {
+        enemy.world = this;
+        if (enemy instanceof Endboss) {
+            this.endbossBar = new EndbossBar(enemy);
+        }
+    });
+}
 
     startEnemies() {
         this.level.enemies.forEach(enemy => {

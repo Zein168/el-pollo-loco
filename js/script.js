@@ -35,7 +35,7 @@ window.addEventListener("load", () => {
     initImpressum();
     initPrivacy();
     initGameButtons();
-    initSoundButtons(); 
+    initSoundButtons();
 });
 
 function initHowToPlay() {
@@ -112,8 +112,11 @@ function initGameButtons() {
 
 function startGame() {
     world.showIntro = false;
+    world.gameStarted = true;
     world.startEnemies();
-    world.backgroundSound.play();
+    if (world.musicOn) {
+        world.backgroundSound.play();
+    }
     document.getElementById("startBtn").style.display = "none";
 }
 
@@ -128,12 +131,13 @@ function initSoundButtons() {
     document.getElementById("musicIcon").addEventListener("click", () => {
         world.musicOn = !world.musicOn;
         if (world.musicOn) {
-            world.backgroundSound.play();
+            if (world.gameStarted) {
+                world.backgroundSound.play();
+            }
             document.getElementById("musicIcon").src = "img/volume_up.svg";
         } else {
             world.backgroundSound.pause();
             document.getElementById("musicIcon").src = "img/volume_off.svg";
         }
     });
-
 }
