@@ -1,6 +1,5 @@
 function toggleFullscreen() {
     const elem = document.getElementById("fullscreen");
-
     if (!document.fullscreenElement) {
         openFullscreen(elem);
     } else {
@@ -36,28 +35,26 @@ window.addEventListener("load", () => {
     initPrivacy();
     initGameButtons();
     initSoundButtons();
+    initOutsideClickClose();
 });
 
 function initHowToPlay() {
     const howToPlay = document.getElementById("howToPlay");
-
     document.getElementById("howToPlayBtn").addEventListener("click", () => {
         closeAllMenus();
         openWithAnimation(howToPlay);
     });
-
     document.getElementById("closeHowToPlay").addEventListener("click", () => {
         closeWithAnimation(howToPlay);
     });
 }
+
 function initStory() {
     const storyContainer = document.getElementById("storyContainer");
-
     document.getElementById("storyBtn").addEventListener("click", () => {
         closeAllMenus();
         openWithAnimation(storyContainer);
     });
-
     document.getElementById("closeStory").addEventListener("click", () => {
         closeWithAnimation(storyContainer);
     });
@@ -82,12 +79,10 @@ function initFullscreen() {
 
 function initImpressum() {
     const impressum = document.getElementById("impressumContainer");
-
     document.getElementById("impressumBtn").addEventListener("click", () => {
         closeAllMenus();
         openWithAnimation(impressum);
     });
-
     document.getElementById("closeImpressum").addEventListener("click", () => {
         closeWithAnimation(impressum);
     });
@@ -95,16 +90,15 @@ function initImpressum() {
 
 function initPrivacy() {
     const privacy = document.getElementById("privacyContainer");
-
     document.getElementById("privacyBtn").addEventListener("click", () => {
         closeAllMenus();
         openWithAnimation(privacy);
     });
-
     document.getElementById("closePrivacy").addEventListener("click", () => {
         closeWithAnimation(privacy);
     });
 }
+
 function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
         location.reload();
@@ -196,5 +190,25 @@ function closeAllMenus() {
         menu.classList.add("hidden");
         menu.classList.remove("slide-in");
         menu.classList.remove("slide-out");
+    });
+}
+
+function initOutsideClickClose() {
+    const menus = document.querySelectorAll(
+        "#howToPlay, #storyContainer, #impressumContainer, #privacyContainer"
+    );
+    const buttons = document.querySelectorAll(
+        "#howToPlayBtn, #storyBtn, #impressumBtn, #privacyBtn"
+    );
+    document.addEventListener("click", (event) => {
+        const clickedButton = [...buttons].some(button =>
+            button.contains(event.target)
+        );
+        if (clickedButton) return;
+        menus.forEach(menu => {
+            if (!menu.classList.contains("hidden") && !menu.contains(event.target)) {
+                closeWithAnimation(menu);
+            }
+        });
     });
 }
