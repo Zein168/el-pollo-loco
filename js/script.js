@@ -163,16 +163,22 @@ function initSoundButtons() {
 }
 
 
+let autoScroll;
+
 function openWithAnimation(element) {
     element.classList.remove("hidden");
     element.classList.remove("slide-out");
     element.classList.add("slide-in");
+    element.scrollTop = 0;
+    autoScroll = setInterval(() => {
+        element.scrollTop += 1;
+    }, 50);
 }
 
 function closeWithAnimation(element) {
+    clearInterval(autoScroll);
     element.classList.remove("slide-in");
     element.classList.add("slide-out");
-
     setTimeout(() => {
         element.classList.add("hidden");
         element.classList.remove("slide-out");
