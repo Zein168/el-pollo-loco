@@ -40,21 +40,25 @@ window.addEventListener("load", () => {
 
 function initHowToPlay() {
     const howToPlay = document.getElementById("howToPlay");
+
     document.getElementById("howToPlayBtn").addEventListener("click", () => {
-        howToPlay.classList.remove("hidden");
+        openWithAnimation(howToPlay);
     });
+
     document.getElementById("closeHowToPlay").addEventListener("click", () => {
-        howToPlay.classList.add("hidden");
+        closeWithAnimation(howToPlay);
     });
 }
 
 function initStory() {
     const storyContainer = document.getElementById("storyContainer");
+
     document.getElementById("storyBtn").addEventListener("click", () => {
-        storyContainer.classList.remove("hidden");
+        openWithAnimation(storyContainer);
     });
+
     document.getElementById("closeStory").addEventListener("click", () => {
-        storyContainer.classList.add("hidden");
+        closeWithAnimation(storyContainer);
     });
 }
 
@@ -77,24 +81,27 @@ function initFullscreen() {
 
 function initImpressum() {
     const impressum = document.getElementById("impressumContainer");
+
     document.getElementById("impressumBtn").addEventListener("click", () => {
-        impressum.classList.remove("hidden");
+        openWithAnimation(impressum);
     });
+
     document.getElementById("closeImpressum").addEventListener("click", () => {
-        impressum.classList.add("hidden");
+        closeWithAnimation(impressum);
     });
 }
 
 function initPrivacy() {
     const privacy = document.getElementById("privacyContainer");
+
     document.getElementById("privacyBtn").addEventListener("click", () => {
-        privacy.classList.remove("hidden");
+        openWithAnimation(privacy);
     });
+
     document.getElementById("closePrivacy").addEventListener("click", () => {
-        privacy.classList.add("hidden");
+        closeWithAnimation(privacy);
     });
 }
-
 function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
         location.reload();
@@ -153,4 +160,21 @@ function initSoundButtons() {
             document.getElementById("effectIcon").src = "img/music_off.svg";
         }
     });
+}
+
+
+function openWithAnimation(element) {
+    element.classList.remove("hidden");
+    element.classList.remove("slide-out");
+    element.classList.add("slide-in");
+}
+
+function closeWithAnimation(element) {
+    element.classList.remove("slide-in");
+    element.classList.add("slide-out");
+
+    setTimeout(() => {
+        element.classList.add("hidden");
+        element.classList.remove("slide-out");
+    }, 500);
 }

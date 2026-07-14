@@ -103,6 +103,39 @@ h1 {
     border: 3px solid #A0220A;
     border-radius: 10px;
     color: #FFCC19;
+  
+}
+.slide-in {
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -70%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Schließen */
+.slide-out {
+    animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -70%);
+    }
 }
 
 #storyContainer::-webkit-scrollbar,
@@ -235,13 +268,14 @@ h1 {
     vertical-align: middle;
     margin-right: 8px;
 }
+
 #howToPlay p img {
     width: 40px;
     height: 40px;
 }
 
 #howToPlay p {
-    margin: 15px 0;
+    margin: 36px 0;
 }
 
 .gamepad-icons {
