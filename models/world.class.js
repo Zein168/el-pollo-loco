@@ -116,7 +116,7 @@ class World {
                 }
                 if (
                     this.character.speedY < 0 &&
-                    this.character.y + this.character.height - 10 < enemy.y + 20
+                    this.character.y + this.character.height - 10 < enemy.y + 50
                 ) {
                     if (!enemy.isDead) {
                         enemy.die();
