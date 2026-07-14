@@ -42,6 +42,7 @@ function initHowToPlay() {
     const howToPlay = document.getElementById("howToPlay");
 
     document.getElementById("howToPlayBtn").addEventListener("click", () => {
+        closeAllMenus();
         openWithAnimation(howToPlay);
     });
 
@@ -49,11 +50,11 @@ function initHowToPlay() {
         closeWithAnimation(howToPlay);
     });
 }
-
 function initStory() {
     const storyContainer = document.getElementById("storyContainer");
 
     document.getElementById("storyBtn").addEventListener("click", () => {
+        closeAllMenus();
         openWithAnimation(storyContainer);
     });
 
@@ -83,6 +84,7 @@ function initImpressum() {
     const impressum = document.getElementById("impressumContainer");
 
     document.getElementById("impressumBtn").addEventListener("click", () => {
+        closeAllMenus();
         openWithAnimation(impressum);
     });
 
@@ -95,6 +97,7 @@ function initPrivacy() {
     const privacy = document.getElementById("privacyContainer");
 
     document.getElementById("privacyBtn").addEventListener("click", () => {
+        closeAllMenus();
         openWithAnimation(privacy);
     });
 
@@ -162,10 +165,10 @@ function initSoundButtons() {
     });
 }
 
-
-let autoScroll;
+let autoScroll = null;
 
 function openWithAnimation(element) {
+    clearInterval(autoScroll);
     element.classList.remove("hidden");
     element.classList.remove("slide-out");
     element.classList.add("slide-in");
@@ -183,4 +186,15 @@ function closeWithAnimation(element) {
         element.classList.add("hidden");
         element.classList.remove("slide-out");
     }, 500);
+}
+
+function closeAllMenus() {
+    clearInterval(autoScroll);
+    document.querySelectorAll(
+        "#howToPlay, #storyContainer, #impressumContainer, #privacyContainer"
+    ).forEach(menu => {
+        menu.classList.add("hidden");
+        menu.classList.remove("slide-in");
+        menu.classList.remove("slide-out");
+    });
 }
