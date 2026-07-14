@@ -7,6 +7,12 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     isDead = false;
     intervals = [];
+    offset = {
+        top: 20,
+        bottom: 10,
+        left: 20,
+        right: 20
+    };
 
 
     applyGravity() {
@@ -28,10 +34,10 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x + mo.width &&
-            this.y < mo.y + mo.height;
+        return this.x + this.offset.left + this.width - this.offset.right > mo.x &&
+            this.y + this.offset.top + this.height - this.offset.bottom > mo.y &&
+            this.x + this.offset.left < mo.x + mo.width &&
+            this.y + this.offset.top < mo.y + mo.height;
     }
 
     playAnimation(images) {
@@ -68,7 +74,7 @@ class MovableObject extends DrawableObject {
         return timepassed < 1.5;
     }
 
-  
+
 
     die() {
         this.isDead = true;
