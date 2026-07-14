@@ -77,7 +77,7 @@ class World {
             if (this.character.energy <= 0) {
                 this.gameLost = true;
             }
-        }, 200);
+        }, 100);
     }
 
     checkThrowObjects() {
@@ -120,10 +120,9 @@ class World {
                 ) {
                     if (!enemy.isDead) {
                         enemy.die();
+                        this.character.speedY = 10;
+                        this.level.hearts.push(new Heart(enemy.x, enemy.y));
                     }
-
-                    this.character.speedY = 10;
-                    this.level.hearts.push(new Heart(enemy.x, enemy.y));
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
@@ -291,9 +290,11 @@ class World {
                             }
                         }
                     } else {
-                        let newBottle = new Bottles(enemy.x);
-                        this.level.bottles.push(newBottle);
-                        enemy.die();
+                        if (!enemy.isDead) {
+                            let newBottle = new Bottles(enemy.x);
+                            this.level.bottles.push(newBottle);
+                            enemy.die();
+                        }
                     }
                     this.throwableObjects.splice(bottleIndex, 1);
                 }
