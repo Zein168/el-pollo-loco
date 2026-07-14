@@ -108,22 +108,18 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead) {
+                return;
+            }
             if (this.character.isColliding(enemy)) {
-                if (enemy instanceof Endboss) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
+                if (this.character.speedY < 0 &&
+                    this.character.y + this.character.height < enemy.y + 50) {
+
+                    enemy.die();
+                    this.character.speedY = 10;
+                    this.level.hearts.push(new Heart(enemy.x, enemy.y));
                     return;
-                }
-                if (
-                    this.character.speedY < 0 &&
-                    this.character.y + this.character.height < enemy.y + 50
-                ) {
-                    if (!enemy.isDead) {
-                        enemy.die();
-                        this.character.speedY = 10;
-                        this.level.hearts.push(new Heart(enemy.x, enemy.y));
-                        return;
-                    }
+
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
