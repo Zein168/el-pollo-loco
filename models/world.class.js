@@ -108,6 +108,9 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead) {
+                return;
+            }
             if (this.character.isColliding(enemy)) {
                 if (enemy instanceof Endboss) {
                     this.character.hit();
@@ -116,12 +119,13 @@ class World {
                 }
                 if (
                     this.character.speedY < 0 &&
-                    this.character.y + this.character.height - 10 < enemy.y + 50
+                    this.character.y + this.character.height - 20 < enemy.y + 50
                 ) {
                     if (!enemy.isDead) {
                         enemy.die();
                         this.character.speedY = 10;
                         this.level.hearts.push(new Heart(enemy.x, enemy.y));
+                        return;
                     }
                 } else {
                     this.character.hit();
