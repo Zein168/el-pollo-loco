@@ -116,9 +116,12 @@ class World {
                 }
                 if (
                     this.character.speedY < 0 &&
-                    this.character.y + this.character.height - 10 < enemy.y + enemy.height
+                    this.character.y + this.character.height - 10 < enemy.y + 20
                 ) {
-                    enemy.die();
+                    if (!enemy.isDead) {
+                        enemy.die();
+                    }
+
                     this.character.speedY = 10;
                     this.level.hearts.push(new Heart(enemy.x, enemy.y));
                 } else {
