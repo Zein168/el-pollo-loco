@@ -85,6 +85,7 @@ class World {
             if (this.bottlesLeft <= 0) {
                 return;
             }
+            this.character.lastAction = Date.now();
             let bottle = new ThrowableObjects(
                 this.character.x + 100,
                 this.character.y + 100,
