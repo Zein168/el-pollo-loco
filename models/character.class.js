@@ -1,6 +1,12 @@
 class Character extends MovableObject {
 
     height = 280;
+    offset = {
+        top: 60,
+        bottom: 10,
+        left: 35,
+        right: 35
+    };
     y = 70;
     speed = 10;
     lastAction = Date.now();

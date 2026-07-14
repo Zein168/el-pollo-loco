@@ -2,7 +2,7 @@ function createCoins() {
     let coins = [];
 
     for (let x = 300; x <= 4800; x += 300) {
-        for (let y = 100; y <= 250; y += 80) {
+        for (let y = 100; y <= 250; y += 120) {
             coins.push(new Coin(x, y));
         }
     }

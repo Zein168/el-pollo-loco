@@ -8,10 +8,10 @@ class MovableObject extends DrawableObject {
     isDead = false;
     intervals = [];
     offset = {
-        top: 20,
-        bottom: 10,
-        left: 20,
-        right: 20
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
     };
 
 
@@ -33,12 +33,12 @@ class MovableObject extends DrawableObject {
 
     }
 
-    isColliding(mo) {
-        return this.x + this.offset.left + this.width - this.offset.right > mo.x &&
-            this.y + this.offset.top + this.height - this.offset.bottom > mo.y &&
-            this.x + this.offset.left < mo.x + mo.width &&
-            this.y + this.offset.top < mo.y + mo.height;
-    }
+ isColliding(mo) {
+    return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+        this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+        this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+        this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
+}
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
