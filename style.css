@@ -226,3 +226,7 @@ h1 {
     background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
 }
+
+.sound-bar img {
+    cursor: pointer;
+}
