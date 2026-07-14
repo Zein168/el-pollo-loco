@@ -97,8 +97,6 @@ h1 {
     width: 500px;
     height: 300px;
     padding: 20px;
-    border: 2px solid black;
-    border-radius: 10px;
     z-index: 1000;
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.9);
@@ -217,6 +215,7 @@ h1 {
     border: 3px solid #A0220A;
     border-radius: 10px;
     color: #FFCC19;
+
 }
 
 .sound-bar {
@@ -241,6 +240,10 @@ h1 {
     height: 40px;
 }
 
+#howToPlay p {
+    margin: 15px 0;
+}
+
 .gamepad-icons {
     position: absolute;
     right: 30px;
@@ -255,3 +258,15 @@ h1 {
     height: 50px;
 }
 
+#howToPlay strong {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid #A0220A;
+    color: #A0220A;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.colorRed {
+    color: #A0220A;
+}
