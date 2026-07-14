@@ -40,7 +40,8 @@ class SmallChicken extends MovableObject {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
                 if (!this.chickenSoundPlayed) {
-                    if (this.effectsOn) {
+                    if (this.world.effectsOn) {
+                        this.chickenSound.currentTime = 0;
                         this.chickenSound.play();
                     }
                     this.chickenSoundPlayed = true;

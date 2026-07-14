@@ -108,15 +108,15 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isDead) {
-                return;
-            }
+
             if (this.character.isColliding(enemy)) {
+
                 if (enemy instanceof Endboss) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
                     return;
                 }
+
                 if (
                     this.character.speedY < 0 &&
                     this.character.y + this.character.height - 20 < enemy.y + 50
