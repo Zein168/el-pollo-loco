@@ -101,7 +101,7 @@ h1 {
     border-radius: 10px;
     z-index: 1000;
     overflow-y: auto;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.9);
     border: 3px solid #A0220A;
     border-radius: 10px;
     color: #FFCC19;
@@ -230,3 +230,28 @@ h1 {
 .sound-bar img {
     cursor: pointer;
 }
+
+#howToPlay img {
+
+    vertical-align: middle;
+    margin-right: 8px;
+}
+#howToPlay p img {
+    width: 40px;
+    height: 40px;
+}
+
+.gamepad-icons {
+    position: absolute;
+    right: 30px;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gamepad-icons img {
+    width: 50px;
+    height: 50px;
+}
+
