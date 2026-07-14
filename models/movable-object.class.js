@@ -59,18 +59,15 @@ class MovableObject extends DrawableObject {
         this.speedY = 30;
     }
 
-    hit() {
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-            if (this instanceof Character) {
-                this.hurtSoundPlayed = false;
-            }
-        }
-    }
+hit() {
+    this.energy -= 5;
 
+    if (this.energy <= 0) {
+        this.energy = 0;
+    } else {
+        this.lastHit = new Date().getTime();
+    }
+}
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
