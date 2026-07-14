@@ -129,6 +129,9 @@ function restartGame() {
 }
 
 function initSoundButtons() {
+    document.getElementById("restartIcon").addEventListener("click", () => {
+        restartGame();
+    });
     document.getElementById("musicIcon").addEventListener("click", () => {
         world.musicOn = !world.musicOn;
         if (world.musicOn) {
