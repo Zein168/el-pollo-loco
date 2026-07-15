@@ -1,4 +1,10 @@
 class Heart {
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    };
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -10,7 +16,7 @@ class Heart {
         this.img.src = "img/7_statusbars/3_icons/icon_health.png";
 
         this.spawnTime = Date.now();
-        this.collectable = false;    
+        this.collectable = false;
     }
 
     draw(ctx) {

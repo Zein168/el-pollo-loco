@@ -263,10 +263,16 @@ class World {
 
     checkHeartCollisions() {
         this.level.hearts.forEach((heart, index) => {
-            if (heart.collectable && this.character.isColliding(heart)) {
+            if (
+                heart.collectable &&
+                this.character.isColliding(heart) &&
+                this.character.energy < 100
+            ) {
                 this.level.hearts.splice(index, 1);
+
                 this.character.energy += 20;
                 this.character.energy = Math.min(100, this.character.energy);
+
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
