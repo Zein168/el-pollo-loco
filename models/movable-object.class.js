@@ -33,12 +33,12 @@ class MovableObject extends DrawableObject {
 
     }
 
- isColliding(mo) {
-    return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-        this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-        this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
-        this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
-}
+    isColliding(mo) {
+        return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
+    }
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
@@ -59,15 +59,18 @@ class MovableObject extends DrawableObject {
         this.speedY = 30;
     }
 
-hit() {
-    this.energy -= 5;
+    hit() {
+        if (Date.now() - this.lastHit < 1000) {
+            return;
+        }
+        this.energy -= 20;
 
-    if (this.energy <= 0) {
-        this.energy = 0;
-    } else {
+        if (this.energy <= 0) {
+            this.energy = 0;
+        }
         this.lastHit = new Date().getTime();
     }
-}
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
