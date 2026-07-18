@@ -31,6 +31,8 @@ class World {
     musicOn = true;
     effectsOn = true;
     gameStarted = false;
+    lastThrowTime = 0;
+    throwCooldown = 500;
 
 
     constructor(canvas, keyboard) {
@@ -87,48 +89,32 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && !this.dKeyPressed) {
-
-            if (this.bottlesLeft <= 0 && this.bonusBottles <= 0) {
-                console.log("Keine Flaschen mehr!");
+            if (Date.now() - this.lastThrowTime < this.throwCooldown) {
                 return;
             }
-
+            if (this.bottlesLeft <= 0 && this.bonusBottles <= 0) {
+                return;
+            }
             let bottle = new ThrowableObjects(
                 this.character.x + 100,
                 this.character.y + 100,
                 this.character.otherDirection
             );
-
             this.throwableObjects.push(bottle);
-
-
+            this.lastThrowTime = Date.now();
             if (this.bonusBottles > 0) {
-
                 this.bonusBottles--;
-
-                console.log("🎁 Bonus-Flasche benutzt. Übrig:", this.bonusBottles);
-
                 if (this.bonusBottles === 0) {
                     this.coinBonusActive = false;
-                    console.log("🪙 Neuer Coin-Bonus möglich");
                 }
-
             } else {
-
                 this.bottlesLeft--;
-
                 this.bottleBar.setPercentage(
                     (this.bottlesLeft / this.maxBottles) * 100
                 );
-
-                console.log("🍾 Normale Flasche benutzt. Übrig:", this.bottlesLeft);
             }
-
-
             this.dKeyPressed = true;
         }
-
-
         if (!this.keyboard.D) {
             this.dKeyPressed = false;
         }
