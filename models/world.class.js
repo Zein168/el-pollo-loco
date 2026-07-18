@@ -171,27 +171,25 @@ class World {
         }
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
-        this.ctx.translate(this.camera_x, 0);
-        this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.drawBonusBottles();
-        this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.character);
         if (this.endbossBar) {
             this.endbossBar.updatePosition();
             this.addToMap(this.endbossBar);
         }
-        this.addObjectsToMap(this.level.clouds);
+        this.ctx.translate(this.camera_x, 0);
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.level.hearts.forEach(h => h.update());
         this.addObjectsToMap(this.level.hearts);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
-        this.ctx.translate(- this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0);
         if (this.gameWon) {
             this.ctx.drawImage(
                 this.winImage,
@@ -218,8 +216,6 @@ class World {
                 document.getElementById("homePage").style.display = "block";
             }
         }
-
-
         // draw is repeatedly called so that the movements become visible
         let self = this;
         requestAnimationFrame(function () {
@@ -227,12 +223,12 @@ class World {
         });
     }
 
-
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         })
     }
+
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -356,7 +352,4 @@ class World {
             );
         }
     }
-
-
-
 }
