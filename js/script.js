@@ -121,6 +121,7 @@ function startGame() {
         world.backgroundSound.play();
     }
     document.getElementById("startBtn").style.display = "none";
+    document.querySelector(".sound-bar").style.display = "flex";
 }
 
 function restartGame() {
