@@ -115,7 +115,6 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-
             if (this.energy <= 0) {
                 this.playAnimation(this.IMAGES_DEAD);
                 if (!this.deathSoundPlayed) {

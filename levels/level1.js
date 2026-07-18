@@ -39,7 +39,6 @@ function initLevel1() {
             new Chicken(3200),
             new SmallChicken(3280),
             new Chicken(4200),
-
             new SmallChicken(4260),
             new Chicken(4260),
             new SmallChicken(4250),

@@ -14,6 +14,10 @@ class World {
     bottleBar = new BottleBar();
     maxBottles = 5;
     bottlesLeft = 5;
+    bonusBottles = 0;
+    showBonusText = false;
+    coinBonusActive = false;
+    coinRewardGiven = false;
     endbossBar;
     gameWon = false;
     gameLost = false;
@@ -27,6 +31,7 @@ class World {
     musicOn = true;
     effectsOn = true;
     gameStarted = false;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -82,25 +87,48 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && !this.dKeyPressed) {
-            if (this.bottlesLeft <= 0) {
+
+            if (this.bottlesLeft <= 0 && this.bonusBottles <= 0) {
+                console.log("Keine Flaschen mehr!");
                 return;
             }
-            this.character.lastAction = Date.now();
+
             let bottle = new ThrowableObjects(
                 this.character.x + 100,
                 this.character.y + 100,
                 this.character.otherDirection
             );
+
             this.throwableObjects.push(bottle);
-            if (this.effectsOn) {
-                if (this.effectsOn) {
-                    this.throwSound.play();
+
+
+            if (this.bonusBottles > 0) {
+
+                this.bonusBottles--;
+
+                console.log("🎁 Bonus-Flasche benutzt. Übrig:", this.bonusBottles);
+
+                if (this.bonusBottles === 0) {
+                    this.coinBonusActive = false;
+                    console.log("🪙 Neuer Coin-Bonus möglich");
                 }
+
+            } else {
+
+                this.bottlesLeft--;
+
+                this.bottleBar.setPercentage(
+                    (this.bottlesLeft / this.maxBottles) * 100
+                );
+
+                console.log("🍾 Normale Flasche benutzt. Übrig:", this.bottlesLeft);
             }
-            this.bottlesLeft--;
-            this.bottleBar.setPercentage((this.bottlesLeft / 5) * 100);
+
+
             this.dKeyPressed = true;
         }
+
+
         if (!this.keyboard.D) {
             this.dKeyPressed = false;
         }
@@ -149,6 +177,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+        this.drawBonusBottles();
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         if (this.endbossBar) {
@@ -228,6 +257,9 @@ class World {
     }
 
     checkCoinCollisions() {
+        if (this.coinBonusActive) {
+            return;
+        }
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 if (this.collectedCoins >= this.maxCoins) {
@@ -241,6 +273,16 @@ class World {
                 }
                 let percent = (this.collectedCoins / this.maxCoins) * 100;
                 this.coinBar.setPercentage(percent);
+                if (this.collectedCoins >= this.maxCoins && !this.coinBonusActive) {
+                    this.coinBonusActive = true;
+                    this.bottlesLeft = this.maxBottles;
+                    this.bottleBar.setPercentage(
+                        (this.bottlesLeft / this.maxBottles) * 100
+                    );
+                    this.bonusBottles = 3;
+                    this.collectedCoins = 0;
+                    this.coinBar.setPercentage(0);
+                }
             }
         });
     }
@@ -269,10 +311,8 @@ class World {
                 this.character.energy < 100
             ) {
                 this.level.hearts.splice(index, 1);
-
                 this.character.energy += 20;
                 this.character.energy = Math.min(100, this.character.energy);
-
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
@@ -303,6 +343,18 @@ class World {
                 }
             });
         });
+    }
+
+    drawBonusBottles() {
+        if (this.bonusBottles > 0) {
+            this.ctx.font = "30px Arial";
+            this.ctx.fillStyle = "#A0220A";
+            this.ctx.fillText(
+                "+" + this.bonusBottles,
+                245,
+                156
+            );
+        }
     }
 
 
