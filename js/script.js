@@ -1,3 +1,8 @@
+let settings = {
+    music: true,
+    effects: true
+};
+
 function toggleFullscreen() {
     const elem = document.getElementById("fullscreen");
     if (!document.fullscreenElement) {
@@ -127,8 +132,14 @@ function startGame() {
 function restartGame() {
     initLevel1();
     world = new World(canvas, keyboard);
+    world.musicOn = settings.music;
+    world.effectsOn = settings.effects;
     world.showIntro = false;
     world.startEnemies();
+    if (!world.musicOn) {
+        world.backgroundSound.pause();
+    }
+    updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
 }
@@ -138,11 +149,12 @@ function initSoundButtons() {
         restartGame();
     });
     document.getElementById("musicIcon").addEventListener("click", () => {
-        world.musicOn = !world.musicOn;
+
+        settings.music = !settings.music;
+        world.musicOn = settings.music;
+
         if (world.musicOn) {
-            if (world.gameStarted) {
-                world.backgroundSound.play();
-            }
+            world.backgroundSound.play();
             document.getElementById("musicIcon").src = "img/volume_up.svg";
         } else {
             world.backgroundSound.pause();
@@ -150,7 +162,9 @@ function initSoundButtons() {
         }
     });
     document.getElementById("effectIcon").addEventListener("click", () => {
-        world.effectsOn = !world.effectsOn;
+
+        settings.effects = !settings.effects;
+        world.effectsOn = settings.effects;
 
         if (world.effectsOn) {
             document.getElementById("effectIcon").src = "img/music_note.svg";
@@ -212,4 +226,12 @@ function initOutsideClickClose() {
             }
         });
     });
+}
+
+function updateSoundIcons() {
+    document.getElementById("musicIcon").src =
+        settings.music ? "img/volume_up.svg" : "img/volume_off.svg";
+
+    document.getElementById("effectIcon").src =
+        settings.effects ? "img/music_note.svg" : "img/music_off.svg";
 }
