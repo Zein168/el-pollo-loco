@@ -103,8 +103,9 @@ h1 {
     border: 3px solid #A0220A;
     border-radius: 10px;
     color: #FFCC19;
-  
+
 }
+
 .slide-in {
     animation: slideDown 0.5s ease-out;
 }
@@ -279,16 +280,24 @@ h1 {
     margin: 36px 0;
 }
 
-.gamepad-icons {
-    position: absolute;
-    right: 30px;
-    top: 80px;
+.control-row {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 36px 0;
 }
 
-.gamepad-icons img {
+.control-row div {
+    display: flex;
+    align-items: center;
+}
+
+.control-row img {
+    width: 40px;
+    height: 40px;
+}
+
+.control-row>img {
     width: 50px;
     height: 50px;
 }
