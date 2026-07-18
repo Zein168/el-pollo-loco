@@ -135,6 +135,8 @@ function restartGame() {
     world.musicOn = settings.music;
     world.effectsOn = settings.effects;
     world.showIntro = false;
+    world.gameWon = false;
+    world.gameLost = false;
     world.startEnemies();
     if (!world.musicOn) {
         world.backgroundSound.pause();
