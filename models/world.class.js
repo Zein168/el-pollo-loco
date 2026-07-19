@@ -101,7 +101,7 @@ class World {
                 this.character.otherDirection
             );
             this.throwableObjects.push(bottle);
-            this.lastThrowTime = Date.now();
+            this.character.lastAction = Date.now();
             if (this.bonusBottles > 0) {
                 this.bonusBottles--;
                 if (this.bonusBottles === 0) {
