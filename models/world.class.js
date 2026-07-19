@@ -28,12 +28,12 @@ class World {
     throwSound = new Audio('audio/bottle-throw.mp3');
     backgroundSound = new Audio('audio/background-music.mp3');
     coinSound = new Audio('audio/coin.mp3');
+    dKeyPressed = false;
     musicOn = true;
     effectsOn = true;
     gameStarted = false;
     lastThrowTime = 0;
     throwCooldown = 500;
-
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -89,35 +89,49 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && !this.dKeyPressed) {
-            if (Date.now() - this.lastThrowTime < this.throwCooldown) {
+            if (!this.canThrowBottle()) {
                 return;
             }
-            if (this.bottlesLeft <= 0 && this.bonusBottles <= 0) {
-                return;
-            }
-            let bottle = new ThrowableObjects(
-                this.character.x + 100,
-                this.character.y + 100,
-                this.character.otherDirection
-            );
-            this.throwableObjects.push(bottle);
-            this.lastThrowTime = Date.now();
-            this.character.lastAction = Date.now();
-            if (this.bonusBottles > 0) {
-                this.bonusBottles--;
-                if (this.bonusBottles === 0) {
-                    this.coinBonusActive = false;
-                }
-            } else {
-                this.bottlesLeft--;
-                this.bottleBar.setPercentage(
-                    (this.bottlesLeft / this.maxBottles) * 100
-                );
-            }
+            this.throwBottle();
+            this.updateBottleCount();
             this.dKeyPressed = true;
         }
         if (!this.keyboard.D) {
             this.dKeyPressed = false;
+        }
+    }
+
+    canThrowBottle() {
+        return this.keyboard.D &&
+            !this.dKeyPressed &&
+            Date.now() - this.lastThrowTime >= this.throwCooldown &&
+            (this.bottlesLeft > 0 || this.bonusBottles > 0);
+    }
+
+    throwBottle() {
+        let bottle = new ThrowableObjects(
+            this.character.x + 100,
+            this.character.y + 100,
+            this.character.otherDirection
+        );
+        this.throwableObjects.push(bottle);
+        this.lastThrowTime = Date.now();
+        this.character.lastAction = Date.now();
+    }
+
+    updateBottleCount() {
+        if (this.bonusBottles > 0) {
+            this.bonusBottles--;
+
+            if (this.bonusBottles === 0) {
+                this.coinBonusActive = false;
+            }
+        } else {
+            this.bottlesLeft--;
+
+            this.bottleBar.setPercentage(
+                (this.bottlesLeft / this.maxBottles) * 100
+            );
         }
     }
 
