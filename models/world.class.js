@@ -84,7 +84,7 @@ class World {
             if (this.character.energy <= 0) {
                 this.gameLost = true;
             }
-        }, 100);
+        }, 30);
     }
 
     checkThrowObjects() {
@@ -126,17 +126,24 @@ class World {
                 return;
             }
             if (this.character.isColliding(enemy)) {
-                if (this.character.speedY < 0 &&
-                    this.character.y + this.character.height < enemy.y + 50) {
-
+                let characterFeet =
+                    this.character.y + this.character.height;
+                let enemyHead =
+                    enemy.y;
+                if (
+                    this.character.speedY < 0 &&
+                    characterFeet - enemyHead < 40
+                ) {
                     enemy.die();
-                    this.character.speedY = 10;
-                    this.level.hearts.push(new Heart(enemy.x, enemy.y));
-                    return;
-
+                    this.character.speedY = 15;
+                    this.level.hearts.push(
+                        new Heart(enemy.x, enemy.y)
+                    );
                 } else {
                     this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
+                    this.statusBar.setPercentage(
+                        this.character.energy
+                    );
                 }
             }
         });
