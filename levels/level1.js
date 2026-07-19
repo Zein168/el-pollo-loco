@@ -1,24 +1,20 @@
 function createCoins() {
     let coins = [];
-
-    for (let x = 300; x <= 4800; x += 300) {
+    for (let x = 600; x <= 4800; x += 600) {
         for (let y = 100; y <= 250; y += 120) {
             coins.push(new Coin(x, y));
         }
     }
-
     return coins;
 }
 
 function createBottles() {
     let bottles = [];
-
-    for (let x = 600; x <= 4200; x += 800) {
+    for (let x = 800; x <= 4000; x += 1000) {
         bottles.push(new Bottles(x));
         bottles.push(new Bottles(x + 60));
         bottles.push(new Bottles(x + 120));
     }
-
     return bottles;
 }
 
@@ -103,14 +99,12 @@ function initLevel1() {
 
         [
             ...createCoins(),
-            new Coin(1500, 150),
+          
         ],
-
 
         [
             ...createBottles(),
-            new Bottles(1500),
-            new Bottles(3000),
+           
 
 
         ],
