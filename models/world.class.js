@@ -153,7 +153,7 @@ class World {
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(
-                    this.character.energy
+                        this.character.energy
                     );
                 }
             }
@@ -378,6 +378,7 @@ class World {
 
     winGame() {
         this.gameWon = true;
+        this.hideMobileControls();
         this.stopAllSounds();
         this.character.stopAnimation();
         this.level.enemies.forEach(enemy => {
@@ -404,9 +405,14 @@ class World {
     }
 
     stopGame() {
-    this.character.stopAnimation();
-    this.level.enemies.forEach(enemy => {
-        enemy.stopAnimation();
-    });
-}
+        this.character.stopAnimation();
+        this.level.enemies.forEach(enemy => {
+            enemy.stopAnimation();
+        });
+    }
+
+    hideMobileControls() {
+        document.getElementById("mobileControls").style.display = "none";
+    }
+
 }
