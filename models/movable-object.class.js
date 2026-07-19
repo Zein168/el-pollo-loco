@@ -87,4 +87,8 @@ class MovableObject extends DrawableObject {
         }, 500);
     }
 
+    stopAnimation() {
+        this.intervals.forEach(interval => clearInterval(interval));
+    }
+
 }

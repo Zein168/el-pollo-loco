@@ -26,7 +26,7 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.intervals.push(setInterval(() => {
             const distance = this.world.character.x - this.x;
             if (distance > 10) {
                 this.otherDirection = true;
@@ -35,9 +35,8 @@ class Chicken extends MovableObject {
                 this.otherDirection = false;
                 this.moveLeft();
             }
-        }, 1000 / 60);
-
-        setInterval(() => {
+        }, 1000 / 60));
+        this.intervals.push(setInterval(() => {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
                 if (!this.chickenSoundPlayed) {
@@ -49,9 +48,7 @@ class Chicken extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 200);
+        }, 200));
     }
-
-
 }
 

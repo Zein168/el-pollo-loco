@@ -192,12 +192,12 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.drawBonusBottles();
-          this.ctx.translate(this.camera_x, 0);
+        this.ctx.translate(this.camera_x, 0);
         if (this.endbossBar) {
             this.endbossBar.updatePosition();
             this.addToMap(this.endbossBar);
         }
-      
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
@@ -210,7 +210,7 @@ class World {
             this.ctx.drawImage(
                 this.winImage,
                 5,
-                105,
+                50,
                 650,
                 400
             );
@@ -345,6 +345,12 @@ class World {
                             this.gameWon = true;
 
                             this.stopAllSounds();
+
+                            this.character.stopAnimation();
+
+                            this.level.enemies.forEach(enemy => {
+                                enemy.stopAnimation();
+                            });
 
                             if (!this.winSoundPlayed) {
                                 if (this.effectsOn) {

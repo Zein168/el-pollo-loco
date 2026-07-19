@@ -92,14 +92,14 @@ class Character extends MovableObject {
         this.animate();
     }
     animate() {
-        setInterval(() => {
+        this.intervals.push(setInterval(() => {
             this.checkMovement();
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 60);
+        }, 1000 / 60));
 
-        setInterval(() => {
+        this.intervals.push(setInterval(() => {
             this.checkAnimation();
-        }, 100);
+        }, 100));
     }
 
     checkMovement() {
