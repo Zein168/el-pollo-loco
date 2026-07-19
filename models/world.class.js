@@ -34,7 +34,6 @@ class World {
     gameStarted = false;
     lastThrowTime = 0;
     throwCooldown = 500;
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -49,7 +48,6 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
-
     }
 
     setWorld() {
@@ -68,7 +66,6 @@ class World {
             enemy.animate();
         });
     }
-
 
     run() {
         setInterval(() => {
@@ -122,13 +119,11 @@ class World {
     updateBottleCount() {
         if (this.bonusBottles > 0) {
             this.bonusBottles--;
-
             if (this.bonusBottles === 0) {
                 this.coinBonusActive = false;
             }
         } else {
             this.bottlesLeft--;
-
             this.bottleBar.setPercentage(
                 (this.bottlesLeft / this.maxBottles) * 100
             );
@@ -157,7 +152,7 @@ class World {
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(
-                        this.character.energy
+                    this.character.energy
                     );
                 }
             }
@@ -341,16 +336,21 @@ class World {
     checkBottleHitsEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             if (bottle.hasHit) return;
-            this.level.enemies.forEach(enemy => {
+            let hit = this.level.enemies.some(enemy => {
                 if (bottle.isColliding(enemy)) {
                     this.handleBottleHit(bottle, enemy);
-                    this.throwableObjects.splice(bottleIndex, 1);
+                    return true;
                 }
+                return false;
             });
+            if (hit) {
+                this.throwableObjects.splice(bottleIndex, 1);
+            }
         });
     }
 
     handleBottleHit(bottle, enemy) {
+        if (bottle.hasHit || enemy.isDead) return;
         bottle.hasHit = true;
         if (enemy instanceof Endboss) {
             this.hitEndboss(enemy);

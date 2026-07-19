@@ -87,14 +87,11 @@ function initLevel1() {
 
         [
             ...createCoins(),
-          
         ],
 
         [
             ...createBottles(),
            
-
-
         ],
 
         [
