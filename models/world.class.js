@@ -80,6 +80,7 @@ class World {
             this.checkBottleHitsEnemy();
             if (this.character.energy <= 0) {
                 this.gameLost = true;
+                this.stopGame();
             }
         }, 30);
     }
@@ -401,4 +402,11 @@ class World {
             );
         }
     }
+
+    stopGame() {
+    this.character.stopAnimation();
+    this.level.enemies.forEach(enemy => {
+        enemy.stopAnimation();
+    });
+}
 }
