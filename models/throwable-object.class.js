@@ -5,6 +5,12 @@ class ThrowableObjects extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
+    offset = {
+        top: 25,
+        bottom: 25,
+        left: 25,
+        right: 25
+    };
     constructor(x, y, otherDirection) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.hasHit = false;
