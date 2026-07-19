@@ -2,19 +2,18 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-
 function init() {
     canvas = document.getElementById("canvas");
     initLevel1();
     world = new World(canvas, keyboard);
     world.showIntro = true;
+    initMobileControls();
 }
 
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
     }
-
     if (e.keyCode == 37) {
         keyboard.LEFT = true;
     }
@@ -31,12 +30,9 @@ window.addEventListener("keydown", (e) => {
         keyboard.SPACE = true;
     }
 
-
     if (e.keyCode == 68) {
         keyboard.D = true;
     }
-
-    console.log(e);
 });
 
 window.addEventListener("keyup", (e) => {
@@ -63,8 +59,6 @@ window.addEventListener("keyup", (e) => {
     if (e.keyCode == 68) {
         keyboard.D = false;
     }
-
-    console.log(e);
 });
 
 

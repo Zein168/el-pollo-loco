@@ -254,3 +254,52 @@ function showMobileControls() {
 function hideMobileControls() {
     document.getElementById("mobileControls").style.display = "none";
 }
+
+function initMobileControls() {
+    const leftBtn = document.getElementById("leftBtn");
+    const rightBtn = document.getElementById("rightBtn");
+    const jumpBtn = document.getElementById("jumpBtn");
+    const throwBtn = document.getElementById("throwBtn");
+    leftBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+
+    leftBtn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+
+    rightBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+
+    rightBtn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+
+    jumpBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+
+    jumpBtn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+
+    throwBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+
+    throwBtn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
+}
