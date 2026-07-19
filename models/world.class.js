@@ -309,8 +309,12 @@ class World {
 
     checkBottleHitsEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
+            if (bottle.hasHit) {
+                return;
+            }
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
+                    bottle.hasHit = true;
                     if (enemy instanceof Endboss) {
                         enemy.hit();
                         this.endbossBar.setPercentage(enemy.energy);
