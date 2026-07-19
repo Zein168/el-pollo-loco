@@ -192,11 +192,12 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.drawBonusBottles();
+          this.ctx.translate(this.camera_x, 0);
         if (this.endbossBar) {
             this.endbossBar.updatePosition();
             this.addToMap(this.endbossBar);
         }
-        this.ctx.translate(this.camera_x, 0);
+      
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);

@@ -24,7 +24,7 @@ class EndbossBar extends DrawableObject {
 
     updatePosition() {
         this.x = this.endboss.x + 200;
-        this.y = this.endboss.y + 60;
+        this.y = this.endboss.y + 70;
     }
 
 
