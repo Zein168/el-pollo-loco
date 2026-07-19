@@ -127,6 +127,7 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
+    document.getElementById("mobileControls").classList.add("active");
 }
 
 function restartGame() {

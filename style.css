@@ -314,3 +314,42 @@ h1 {
 .colorRed {
     color: #A0220A;
 }
+
+#mobileControls {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 1000;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.mobile-left,
+.mobile-right {
+    display: flex;
+    gap: 15px;
+}
+
+#mobileControls button {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+#mobileControls img {
+    width: 65px;
+    height: 65px;
+}
+
+#mobileControls.active {
+    display: flex;
+}
+
+
+@media only screen and (max-width: 900px) {
+    #mobileControls {
+        display: flex;
+    }
+}
