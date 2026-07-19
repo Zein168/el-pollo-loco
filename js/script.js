@@ -130,8 +130,16 @@ function startGame() {
 }
 
 function restartGame() {
+    if (world) {
+        world.winSound.pause();
+        world.winSound.currentTime = 0;
+
+        world.backgroundSound.pause();
+        world.backgroundSound.currentTime = 0;
+    }
     initLevel1();
     world = new World(canvas, keyboard);
+    world.winSoundPlayed = false;
     world.musicOn = settings.music;
     world.effectsOn = settings.effects;
     world.showIntro = false;

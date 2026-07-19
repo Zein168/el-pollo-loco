@@ -164,6 +164,13 @@ class World {
         });
     }
 
+    stopAllSounds() {
+        this.backgroundSound.pause();
+        this.backgroundSound.currentTime = 0;
+        this.throwSound.pause();
+        this.coinSound.pause();
+        this.winSound.pause();
+    }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.showIntro) {
@@ -335,8 +342,13 @@ class World {
                         this.endbossBar.setPercentage(enemy.energy);
                         if (enemy.energy <= 0) {
                             this.gameWon = true;
+
+                            this.stopAllSounds();
+
                             if (!this.winSoundPlayed) {
-                                this.winSound.play();
+                                if (this.effectsOn) {
+                                    this.winSound.play();
+                                }
                                 this.winSoundPlayed = true;
                             }
                         }
