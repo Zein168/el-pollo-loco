@@ -127,14 +127,13 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    document.getElementById("mobileControls").classList.add("active");
+    showMobileControls();
 }
 
 function restartGame() {
     if (world) {
         world.winSound.pause();
         world.winSound.currentTime = 0;
-
         world.backgroundSound.pause();
         world.backgroundSound.currentTime = 0;
     }
@@ -153,6 +152,7 @@ function restartGame() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
+    showMobileControls();
 }
 
 function initSoundButtons() {
@@ -245,4 +245,12 @@ function updateSoundIcons() {
 
     document.getElementById("effectIcon").src =
         settings.effects ? "img/music_note.svg" : "img/music_off.svg";
+}
+
+function showMobileControls() {
+    document.getElementById("mobileControls").style.display = "flex";
+}
+
+function hideMobileControls() {
+    document.getElementById("mobileControls").style.display = "none";
 }

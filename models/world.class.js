@@ -80,6 +80,7 @@ class World {
             this.checkBottleHitsEnemy();
             if (this.character.energy <= 0) {
                 this.gameLost = true;
+                hideMobileControls();
                 this.stopGame();
             }
         }, 30);
@@ -378,7 +379,7 @@ class World {
 
     winGame() {
         this.gameWon = true;
-        this.hideMobileControls();
+        hideMobileControls();
         this.stopAllSounds();
         this.character.stopAnimation();
         this.level.enemies.forEach(enemy => {
@@ -409,10 +410,6 @@ class World {
         this.level.enemies.forEach(enemy => {
             enemy.stopAnimation();
         });
-    }
-
-    hideMobileControls() {
-        document.getElementById("mobileControls").style.display = "none";
     }
 
 }
