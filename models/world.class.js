@@ -218,7 +218,7 @@ class World {
             this.ctx.drawImage(
                 this.loseImage,
                 5,
-                80,
+                50,
                 650,
                 400
             );
