@@ -1,3 +1,7 @@
+/**
+ * Represents a throwable bottle object in the game.
+ * Extends MovableObject and handles throwing movement and rotation animation.
+ */
 class ThrowableObjects extends MovableObject {
     BOTTLES_ROTATION = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
