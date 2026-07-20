@@ -1,3 +1,7 @@
+/**
+ * Represents a game level.
+ * Stores all objects and elements belonging to the level.
+ */
 class Level {
     enemies;
     clouds;
