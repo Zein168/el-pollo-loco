@@ -1,3 +1,7 @@
+/**
+ * Represents the endboss health bar in the game.
+ * Extends DrawableObject and displays the current health status of the endboss.
+ */
 class EndbossBar extends DrawableObject {
     IMAGES = [
         'img/7_statusbars/2_statusbar_endboss/blue/blue0.png',
@@ -21,19 +25,16 @@ class EndbossBar extends DrawableObject {
 
     }
 
-
     updatePosition() {
         this.x = this.endboss.x + 200;
         this.y = this.endboss.y + 70;
     }
-
 
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
-
 
     resolveImageIndex() {
         if (this.percentage >= 100) return 5;
