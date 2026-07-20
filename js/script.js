@@ -132,14 +132,29 @@ function startGame() {
 }
 
 function restartGame() {
+    stopCurrentGameSounds();
+    createNewWorld();
+    resetGameState();
+    startRestartedGame();
+    resetGameUI();
+}
+
+function stopCurrentGameSounds() {
     if (world) {
         world.winSound.pause();
         world.winSound.currentTime = 0;
+
         world.backgroundSound.pause();
         world.backgroundSound.currentTime = 0;
     }
+}
+
+function createNewWorld() {
     initLevel1();
     world = new World(canvas, keyboard);
+}
+
+function resetGameState() {
     world.winSoundPlayed = false;
     world.musicOn = settings.music;
     world.effectsOn = settings.effects;
@@ -148,12 +163,19 @@ function restartGame() {
     world.gameLost = false;
     world.character.deathSoundPlayed = false;
     world.character.hurtSoundPlayed = false;
+}
+
+function startRestartedGame() {
     world.startEnemies();
+
     if (world.musicOn) {
         world.backgroundSound.play();
     } else {
         world.backgroundSound.pause();
     }
+}
+
+function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
