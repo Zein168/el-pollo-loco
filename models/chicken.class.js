@@ -1,3 +1,7 @@
+/**
+ * Represents a chicken enemy in the game.
+ * Extends MovableObject and handles movement, animations, and sounds.
+ */
 class Chicken extends MovableObject {
     y = 370;
     height = 60;
