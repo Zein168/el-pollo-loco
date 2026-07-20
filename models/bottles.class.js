@@ -1,3 +1,7 @@
+/**
+ * Represents a bottle object in the game.
+ * Extends MovableObject and displays collectible bottles on the ground.
+ */
 class Bottles extends MovableObject {
     IMAGES = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
