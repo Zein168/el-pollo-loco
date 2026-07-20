@@ -120,24 +120,35 @@ class Character extends MovableObject {
     }
     checkAnimation() {
         if (this.energy <= 0) {
-            this.playAnimation(this.IMAGES_DEAD);
-            this.playDeathSound();
+            this.playDeadAnimation();
         } else if (this.isHurt()) {
-            this.playAnimation(this.IMAGES_HURT);
-            this.playHurtSound();
+            this.playHurtAnimation();
         } else {
-            this.hurtSoundPlayed = false;
-            if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                } else
-                    if (this.isLongIdle()) {
-                        this.playAnimation(this.IMAGES_LONG_IDLE);
-                    } else {
-                        this.playAnimation(this.IMAGES_IDLE);
-                    }
+            this.playNormalAnimation();
+        }
+    }
+
+    playDeadAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.playDeathSound();
+    }
+
+    playHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+        this.playHurtSound();
+    }
+
+    playNormalAnimation() {
+        this.hurtSoundPlayed = false;
+
+        if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (this.isLongIdle()) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        } else {
+            this.playAnimation(this.IMAGES_IDLE);
         }
     }
 

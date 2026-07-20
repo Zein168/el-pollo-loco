@@ -206,7 +206,7 @@ class World {
         if (this.gameWon) {
             this.ctx.drawImage(
                 this.winImage,
-                5,
+                25,
                 50,
                 650,
                 400
@@ -219,7 +219,7 @@ class World {
         if (this.gameLost) {
             this.ctx.drawImage(
                 this.loseImage,
-                5,
+                45,
                 50,
                 650,
                 400
