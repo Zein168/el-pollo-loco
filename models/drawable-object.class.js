@@ -1,3 +1,7 @@
+/**
+ * Represents a drawable object in the game.
+ * Handles image loading, image caching, and rendering objects on the canvas.
+ */
 class DrawableObject {
     img;
     imageCache = {};
