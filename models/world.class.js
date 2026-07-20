@@ -1,3 +1,7 @@
+/**
+ * Represents the game world.
+ * Manages game objects, player actions, collisions, rendering, sounds, and game states.
+ */
 class World {
     character = new Character();
     level = level1;
