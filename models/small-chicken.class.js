@@ -1,3 +1,7 @@
+/**
+ * Represents a small chicken enemy in the game.
+ * Extends MovableObject and handles movement, animations, and sounds.
+ */
 class SmallChicken extends MovableObject {
     y = 370;
     height = 60;
@@ -35,7 +39,6 @@ class SmallChicken extends MovableObject {
                 this.moveLeft();
             }
         }, 1000 / 60));
-
         this.intervals.push(setInterval(() => {
             if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD);
