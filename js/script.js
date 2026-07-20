@@ -161,34 +161,49 @@ function restartGame() {
 }
 
 function initSoundButtons() {
+    initRestartSoundButton();
+    initMusicButton();
+    initEffectsButton();
+}
+
+function initRestartSoundButton() {
     document.getElementById("restartIcon").addEventListener("click", () => {
         restartGame();
     });
-    document.getElementById("musicIcon").addEventListener("click", () => {
+}
 
+function initMusicButton() {
+    const musicIcon = document.getElementById("musicIcon");
+
+    musicIcon.addEventListener("click", () => {
         settings.music = !settings.music;
         world.musicOn = settings.music;
 
         if (world.musicOn) {
             world.backgroundSound.play();
-            document.getElementById("musicIcon").src = "img/volume_up.svg";
+            musicIcon.src = "img/volume_up.svg";
         } else {
             world.backgroundSound.pause();
-            document.getElementById("musicIcon").src = "img/volume_off.svg";
+            musicIcon.src = "img/volume_off.svg";
         }
     });
-    document.getElementById("effectIcon").addEventListener("click", () => {
+}
 
+function initEffectsButton() {
+    const effectIcon = document.getElementById("effectIcon");
+
+    effectIcon.addEventListener("click", () => {
         settings.effects = !settings.effects;
         world.effectsOn = settings.effects;
 
         if (world.effectsOn) {
-            document.getElementById("effectIcon").src = "img/music_note.svg";
+            effectIcon.src = "img/music_note.svg";
         } else {
-            document.getElementById("effectIcon").src = "img/music_off.svg";
+            effectIcon.src = "img/music_off.svg";
         }
     });
 }
+
 
 let autoScroll = null;
 
