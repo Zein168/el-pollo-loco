@@ -1,8 +1,411 @@
 body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('img/desert.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Bangers', Arial, Helvetica, sans-serif;
 }
+
+@font-face {
+    font-family: 'Bangers';
+    src: url('fonts/Bangers.ttf') format('truetype');
+}
+
+
 canvas {
     background-color: black;
+    display: block;
+    border-radius: 10px;
+}
+
+h1 {
+    margin-top: 150px;
+    font-size: 36px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+}
+
+.game-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+
+}
+
+.intro-container {
+    position: relative;
+}
+
+#startBtn {
+    width: 116px;
+    height: 38px;
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #A0220A;
+    border-radius: 10px;
+    color: #FFCC19;
+    font-size: 16px;
+}
+
+.end-buttons {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+#restartBtn2,
+#homePage {
+    width: 103px;
+    height: 38px;
+    font-size: 16px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #A0220A;
+    border-radius: 10px;
+    color: #FFCC19;
+}
+
+.hidden {
+    display: none;
+}
+
+#storyContainer,
+#howToPlay,
+#impressumContainer,
+#privacyContainer {
+    position: fixed;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 300px;
+    padding: 20px;
+    z-index: 1000;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid #A0220A;
+    border-radius: 10px;
+    color: #FFCC19;
+
+}
+
+.slide-in {
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -70%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Schließen */
+.slide-out {
+    animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -70%);
+    }
+}
+
+#storyContainer::-webkit-scrollbar,
+#howToPlay::-webkit-scrollbar,
+#impressumContainer::-webkit-scrollbar,
+#privacyContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+#storyContainer::-webkit-scrollbar-thumb,
+#howToPlay::-webkit-scrollbar-thumb,
+#impressumContainer::-webkit-scrollbar-thumb,
+#privacyContainer::-webkit-scrollbar-thumb {
+    background: #FFCC19;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width:720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height:480px) {
+    canvas {
+        height: 100vh;
+    }
+}
+
+#fullscreen {
+    padding-bottom: 100px;
+}
+
+
+#fullscreen:fullscreen .game-container,
+#fullscreen:fullscreen .intro-container {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fullscreen:fullscreen canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+#fullscreenIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#fullscreenIcon_exit {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#restartBtn,
+#howToPlayBtn,
+#storyBtn,
+#impressumBtn,
+#privacyBtn {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #A0220A;
+    border-radius: 10px;
+    color: #FFCC19;
+    font-size: 16px;
+
+}
+
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+#fullscreen:fullscreen #startBtn {
+    bottom: 20px;
+    top: auto;
+}
+
+#fullscreen:fullscreen #restartBtn2,
+#fullscreen:fullscreen #homePage {
+    bottom: 2px;
+    top: auto;
+}
+
+#closeImpressum,
+#closePrivacy,
+#closeStory,
+#closeHowToPlay {
+    margin-top: 65px;
+    align-self: flex-start;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #A0220A;
+    border-radius: 10px;
+    color: #FFCC19;
+
+}
+
+.sound-bar {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.sound-bar img {
+    cursor: pointer;
+}
+
+#howToPlay img {
+
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+#howToPlay p img {
+    width: 40px;
+    height: 40px;
+}
+
+#howToPlay p {
+    margin: 36px 0;
+}
+
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 36px 0;
+}
+
+.control-row div {
+    display: flex;
+    align-items: center;
+}
+
+.control-row img {
+    width: 40px;
+    height: 40px;
+}
+
+.control-row>img {
+    width: 50px;
+    height: 50px;
+}
+
+#howToPlay strong {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid #A0220A;
+    color: #A0220A;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.colorRed {
+    color: #A0220A;
+}
+
+#mobileControls {
+    display: none;
+    position: absolute;
+    bottom: 4px;
+    left: 20px;
+    right: 20px;
+    z-index: 1000;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.mobile-left,
+.mobile-right {
+    display: flex;
+    gap: 15px;
+}
+
+#mobileControls button {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #A0220A;
+    border-radius: 15px;
+    padding: 8px;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+#mobileControls button:active {
+    transform: scale(0.9);
+    background: rgba(160, 34, 10, 0.5);
+}
+
+#mobileControls img {
+    width: 45px;
+    height: 45px;
+}
+
+#mobileControls.active {
+    display: flex;
+}
+
+
+@media only screen and (max-width: 900px) {
+    #mobileControls.active {
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #mobileControls img {
+        width: 35px;
+        height: 35px;
+    }
+
+    #mobileControls button {
+        bottom: 2px;
+        left: 15px;
+        right: 15px;
+    }
+
+    .mobile-left,
+    .mobile-right {
+        gap: 10px;
+    }
+
+    #mobileControls {
+        bottom: 4px;
+        left: 15px;
+        right: 15px;
+    }
+
+    #mobileControls button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .game-buttons {
+        flex-direction: column;
+
+    }
+
+    #storyContainer,
+    #howToPlay,
+    #impressumContainer,
+    #privacyContainer {
+        width: 308px;
+    }
+
+
 }

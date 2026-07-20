@@ -1,5 +1,9 @@
+/**
+ * Represents a background object in the game world.
+ * Extends MovableObject and is used to display
+ * background layers at specific positions.
+ */
 class BackgroundObject extends MovableObject {
-
     width = 720;
     height = 480;
     constructor(imagePath, x){

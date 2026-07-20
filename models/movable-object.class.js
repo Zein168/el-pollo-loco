@@ -1,81 +1,96 @@
-class MovableObject extends DrawableObject{
+/**
+ * Represents a movable object in the game.
+ * Extends DrawableObject and provides movement, gravity, collision, and animation features.
+ */
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    isDead = false;
+    intervals = [];
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    };
 
-
-    applyGravity(){
-        setInterval(() => {
+    applyGravity() {
+        this.intervals.push(setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
-                this.y -=this.speedY;
+                this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 25);
+        }, 1000 / 25));
     }
 
-    isAboveGround(){
-        if(this instanceof ThrowableObjects) {
+    isAboveGround() {
+        if (this instanceof ThrowableObjects) {
             return true;
         } else {
             return this.y < 150
         }
-        
-    }
-
-
-
-    isColliding(mo){
-        return this.x + this.width > mo.x &&
-        this.y + this.height > mo.y &&
-        this.x < mo.x &&
-        this.y < mo.y + mo.height
 
     }
 
-    playAnimation(images){ 
+    isColliding(mo) {
+        return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
+    }
+
+    playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
     }
 
-    moveRight(){
-        console.log("Moving right")
+    moveRight() {
         this.x += this.speed;
-        
     }
 
     moveLeft() {
         this.x -= this.speed;
-   
-       
     }
 
-    jump(){
+    jump() {
         this.speedY = 30;
     }
 
     hit() {
-        this.energy -= 5;
-        if(this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
+        if (Date.now() - this.lastHit < 1000) {
+            return;
         }
+        this.energy -= 20;
+        if (this.energy <= 0) {
+            this.energy = 0;
+        }
+        this.lastHit = new Date().getTime();
     }
 
-    isHurt(){
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 1.5;
     }
 
-    isDead(){
-        return this.energy == 0;
+
+
+    die() {
+        this.isDead = true;
+        this.speed = 0;
+        setTimeout(() => {
+            this.y = 1000;
+        }, 500);
     }
 
+    stopAnimation() {
+        this.intervals.forEach(interval => clearInterval(interval));
+    }
 
 }
