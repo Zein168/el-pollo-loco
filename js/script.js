@@ -169,12 +169,15 @@ function initGameButtons() {
 function startGame() {
     world.showIntro = false;
     world.startEnemies();
+
     if (world.musicOn) {
         world.backgroundSound.play();
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    showMobileControls();
+    if (isMobileDevice()) {
+        showMobileControls();
+    }
 }
 
 /**
@@ -446,4 +449,8 @@ function initMobileControls() {
         e.preventDefault();
         keyboard.D = false;
     });
+}
+
+function isMobileDevice() {
+    return window.innerWidth <= 1024;
 }
