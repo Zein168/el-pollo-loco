@@ -1,3 +1,7 @@
+/**
+ * Represents the player's health status bar in the game.
+ * Extends DrawableObject and displays the current health percentage.
+ */
 class StatusBar extends DrawableObject {
     IMAGES = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
