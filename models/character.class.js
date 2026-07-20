@@ -1,5 +1,8 @@
+/**
+ * Represents the player character in the game.
+ * Extends MovableObject and handles movement, animations, sounds, and actions.
+ */
 class Character extends MovableObject {
-
     height = 280;
     offset = {
         top: 60,
@@ -74,7 +77,12 @@ class Character extends MovableObject {
     ];
 
     world;
-
+    
+    /**
+ * Creates a new character instance.
+ * Loads all character animations, initializes sounds,
+ * applies gravity, and starts the animation loop.
+ */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -91,6 +99,11 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
     }
+
+    /**
+ * Starts the character animation loops.
+ * Updates movement, camera position, and animations.
+ */
     animate() {
         this.intervals.push(setInterval(() => {
             this.checkMovement();
@@ -102,6 +115,10 @@ class Character extends MovableObject {
         }, 100));
     }
 
+    /**
+  * Checks player input and handles movement actions.
+  * Controls walking direction and jumping.
+  */
     checkMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
@@ -118,6 +135,11 @@ class Character extends MovableObject {
             this.lastAction = Date.now();
         }
     }
+
+    /**
+ * Controls the character animation depending on the current state.
+ * Handles death, damage, movement, jumping, and idle animations.
+ */
     checkAnimation() {
         if (this.energy <= 0) {
             this.playDeadAnimation();
@@ -128,16 +150,26 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+    * Plays the death animation and triggers the death sound.
+    */
     playDeadAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         this.playDeathSound();
     }
 
+    /**
+     * Plays the hurt animation and triggers the hurt sound.
+     */
     playHurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
         this.playHurtSound();
     }
 
+    /**
+  * Controls normal character animations.
+  * Switches between walking, jumping, idle, and long idle states.
+  */
     playNormalAnimation() {
         this.hurtSoundPlayed = false;
 
@@ -152,6 +184,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the death sound once if sound effects are enabled.
+     */
     playDeathSound() {
         if (!this.deathSoundPlayed && this.world.effectsOn) {
             this.deathSound.currentTime = 0;
@@ -160,6 +195,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the hurt sound once if sound effects are enabled.
+     */
     playHurtSound() {
         if (!this.hurtSoundPlayed && this.world.effectsOn) {
             this.hurtSound.currentTime = 0;
@@ -171,6 +209,10 @@ class Character extends MovableObject {
             }, 500);
         }
     }
+
+    /**
+ * Makes the character jump and plays the jump sound.
+ */
     jump() {
         this.speedY = 30;
         this.jumpSound.currentTime = 0;
@@ -179,6 +221,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+* Checks whether the character has been idle for a long time.
+*
+* @returns {boolean} True if the character is long idle
+*/
     isLongIdle() {
         return Date.now() - this.lastAction > 5000;
     }
