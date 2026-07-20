@@ -81,6 +81,7 @@ class World {
             if (this.character.energy <= 0) {
                 this.gameLost = true;
                 hideMobileControls();
+                this.character.playDeathSound();
                 this.stopGame();
             }
         }, 30);

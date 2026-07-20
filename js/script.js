@@ -146,6 +146,8 @@ function restartGame() {
     world.showIntro = false;
     world.gameWon = false;
     world.gameLost = false;
+    world.character.deathSoundPlayed = false;
+    world.character.hurtSoundPlayed = false;
     world.startEnemies();
     if (world.musicOn) {
         world.backgroundSound.play();

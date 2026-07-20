@@ -140,12 +140,15 @@ class Character extends MovableObject {
                     }
         }
     }
+
     playDeathSound() {
         if (!this.deathSoundPlayed && this.world.effectsOn) {
+            this.deathSound.currentTime = 0;
             this.deathSound.play();
             this.deathSoundPlayed = true;
         }
     }
+
     playHurtSound() {
         if (!this.hurtSoundPlayed && this.world.effectsOn) {
             this.hurtSound.currentTime = 0;
