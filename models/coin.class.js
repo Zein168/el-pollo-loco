@@ -1,3 +1,7 @@
+/**
+ * Represents a collectible coin in the game.
+ * Extends MovableObject and can be collected by the player.
+ */
 class Coin extends MovableObject  {
      offset = {
         top: 0,
