@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
     initGameButtons();
     initSoundButtons();
     initOutsideClickClose();
-    initMobileControls(); 
+    initMobileControls();
 });
 
 function initHowToPlay() {
@@ -147,7 +147,9 @@ function restartGame() {
     world.gameWon = false;
     world.gameLost = false;
     world.startEnemies();
-    if (!world.musicOn) {
+    if (world.musicOn) {
+        world.backgroundSound.play();
+    } else {
         world.backgroundSound.pause();
     }
     updateSoundIcons();
