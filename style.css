@@ -318,7 +318,7 @@ h1 {
 #mobileControls {
     display: none;
     position: absolute;
-    bottom: 20px;
+    bottom: 4px;
     left: 20px;
     right: 20px;
     z-index: 1000;
@@ -333,14 +333,27 @@ h1 {
 }
 
 #mobileControls button {
-    background: transparent;
-    border: none;
-    padding: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #A0220A;
+    border-radius: 15px;
+    padding: 8px;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+#mobileControls button:active {
+    transform: scale(0.9);
+    background: rgba(160, 34, 10, 0.5);
 }
 
 #mobileControls img {
-    width: 65px;
-    height: 65px;
+    width: 45px;
+    height: 45px;
 }
 
 #mobileControls.active {
@@ -352,4 +365,47 @@ h1 {
     #mobileControls.active {
         display: flex;
     }
+}
+
+@media only screen and (max-width: 400px) {
+    #mobileControls img {
+        width: 35px;
+        height: 35px;
+    }
+
+    #mobileControls button {
+        bottom: 2px;
+        left: 15px;
+        right: 15px;
+    }
+
+    .mobile-left,
+    .mobile-right {
+        gap: 10px;
+    }
+
+    #mobileControls {
+        bottom: 4px;
+        left: 15px;
+        right: 15px;
+    }
+
+    #mobileControls button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .game-buttons {
+        flex-direction: column;
+
+    }
+
+    #storyContainer,
+    #howToPlay,
+    #impressumContainer,
+    #privacyContainer {
+        width: 308px;
+    }
+
+
 }
