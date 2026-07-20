@@ -41,6 +41,7 @@ window.addEventListener("load", () => {
     initGameButtons();
     initSoundButtons();
     initOutsideClickClose();
+    initMobileControls(); 
 });
 
 function initHowToPlay() {
