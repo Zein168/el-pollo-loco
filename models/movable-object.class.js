@@ -1,3 +1,7 @@
+/**
+ * Represents a movable object in the game.
+ * Extends DrawableObject and provides movement, gravity, collision, and animation features.
+ */
 class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
@@ -63,7 +67,6 @@ class MovableObject extends DrawableObject {
             return;
         }
         this.energy -= 20;
-
         if (this.energy <= 0) {
             this.energy = 0;
         }
