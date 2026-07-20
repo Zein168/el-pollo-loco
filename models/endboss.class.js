@@ -1,3 +1,7 @@
+/**
+ * Represents the endboss enemy in the game.
+ * Extends MovableObject and handles movement, attacks, animations, and health.
+ */
 class Endboss extends MovableObject {
     height = 500;
     width = 250;
