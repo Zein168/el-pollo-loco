@@ -1,3 +1,7 @@
+/**
+ * Represents the coin status bar in the game.
+ * Extends DrawableObject and displays the current amount of collected coins.
+ */
 class CoinBar extends DrawableObject {
     IMAGES = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png',
