@@ -1,3 +1,10 @@
+/**
+ * Creates all coins for level 1.
+ * Generates coins in rows and columns
+ * and returns them as an array.
+ *
+ * @returns {Coin[]} Array containing all created coins
+ */
 function createCoins() {
     let coins = [];
     for (let x = 600; x <= 4800; x += 600) {
@@ -8,6 +15,13 @@ function createCoins() {
     return coins;
 }
 
+/**
+ * Creates all bottles for level 1.
+ * Places groups of bottles at predefined positions
+ * and returns them as an array.
+ *
+ * @returns {Bottles[]} Array containing all created bottles
+ */
 function createBottles() {
     let bottles = [];
     for (let x = 800; x <= 4000; x += 1000) {
@@ -17,8 +31,24 @@ function createBottles() {
     }
     return bottles;
 }
-
+/**
+ * Stores the first level configuration.
+ * Contains enemies, clouds, background objects,
+ * coins, bottles and other level elements.
+ */
 let level1;
+/**
+ * Initializes level 1.
+ *
+ * Creates the level with:
+ * - Enemies
+ * - Clouds
+ * - Background layers
+ * - Collectible coins
+ * - Collectible bottles
+ *
+ * @returns {void}
+ */
 function initLevel1() {
     level1 = new Level(
         [
