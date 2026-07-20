@@ -66,46 +66,71 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+        this.startMovement();
+        this.startAnimation();
+        this.startAttack();
+    }
+
+    startMovement() {
         setInterval(() => {
-            if (this.world &&
-                this.world.character.x >= 4600 &&
-                !this.isActivated) {
-                this.isActivated = true;
-                this.isAlert = true;
-                setTimeout(() => {
-                    this.isAlert = false;
-                }, 1500);
-            }
-            if (this.isActivated && !this.isAlert && this.energy > 0) {
-                if (this.world.character.x < this.x - 20) {
-                    this.x -= this.speed;
-                    this.otherDirection = false;
-                } else if (this.world.character.x > this.x + 150) {
-                    this.x += this.speed;
-                    this.otherDirection = true;
-                }
-            }
+            this.checkActivation();
+            this.moveTowardsCharacter();
         }, 1000 / 60);
+    }
 
-        setInterval(() => {
-            if (this.energy <= 0) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAlert) {
-                this.playAnimation(this.IMAGES_ALERT);
-            } else if (this.isAttacking) {
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
+    checkActivation() {
+        if (
+            this.world &&
+            this.world.character.x >= 4600 &&
+            !this.isActivated
+        ) {
+            this.isActivated = true;
+            this.isAlert = true;
+
+            setTimeout(() => {
+                this.isAlert = false;
+            }, 1500);
+        }
+    }
+
+    moveTowardsCharacter() {
+        if (this.isActivated && !this.isAlert && this.energy > 0) {
+            if (this.world.character.x < this.x - 20) {
+                this.x -= this.speed;
+                this.otherDirection = false;
+            } else if (this.world.character.x > this.x + 150) {
+                this.x += this.speed;
+                this.otherDirection = true;
             }
+        }
+    }
+
+    updateAnimation() {
+        if (this.energy <= 0) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.isHurt) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isAlert) {
+            this.playAnimation(this.IMAGES_ALERT);
+        } else if (this.isAttacking) {
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+    startAttack() {
+    setInterval(() => {
+        if (this.isActivated && !this.isAlert) {
+            this.attack();
+        }
+    }, 1500);
+    }
+
+    startAnimation() {
+        setInterval(() => {
+            this.updateAnimation();
         }, 200);
-
-        setInterval(() => {
-            if (this.isActivated && !this.isAlert) {
-                this.attack();
-            }
-        }, 1500);
     }
 
     attack() {
