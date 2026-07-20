@@ -1,8 +1,17 @@
+/**
+ * Stores the current game settings.
+ * Controls music and sound effects states.
+ */
 let settings = {
     music: true,
     effects: true
 };
 
+/**
+ * Toggles fullscreen mode.
+ * Opens fullscreen if it is not active,
+ * otherwise exits fullscreen.
+ */
 function toggleFullscreen() {
     const elem = document.getElementById("fullscreen");
     if (!document.fullscreenElement) {
@@ -12,6 +21,11 @@ function toggleFullscreen() {
     }
 }
 
+/**
+ * Opens fullscreen mode for the given element.
+ *
+ * @param {HTMLElement} elem - Element that should enter fullscreen mode
+ */
 function openFullscreen(elem) {
     if (elem.requestFullscreen) {
         elem.requestFullscreen();
@@ -22,6 +36,9 @@ function openFullscreen(elem) {
     }
 }
 
+/**
+ * Closes the currently active fullscreen mode.
+ */
 function closeFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -32,6 +49,9 @@ function closeFullscreen() {
     }
 }
 
+/**
+ * Initializes all game interface elements after the page has loaded.
+ */
 window.addEventListener("load", () => {
     initHowToPlay();
     initStory();
@@ -44,6 +64,9 @@ window.addEventListener("load", () => {
     initMobileControls();
 });
 
+/**
+ * Initializes the "How To Play" menu.
+ */
 function initHowToPlay() {
     const howToPlay = document.getElementById("howToPlay");
     document.getElementById("howToPlayBtn").addEventListener("click", () => {
@@ -55,6 +78,9 @@ function initHowToPlay() {
     });
 }
 
+/**
+ * Initializes the story menu.
+ */
 function initStory() {
     const storyContainer = document.getElementById("storyContainer");
     document.getElementById("storyBtn").addEventListener("click", () => {
@@ -66,6 +92,11 @@ function initStory() {
     });
 }
 
+/**
+ * Initializes fullscreen change handling.
+ * Updates fullscreen icons and hides game buttons
+ * depending on the current fullscreen state.
+ */
 function initFullscreen() {
     document.addEventListener("fullscreenchange", () => {
         const enterIcon = document.getElementById("fullscreenIcon");
@@ -83,6 +114,9 @@ function initFullscreen() {
     });
 }
 
+/**
+ * Initializes the impressum menu.
+ */
 function initImpressum() {
     const impressum = document.getElementById("impressumContainer");
     document.getElementById("impressumBtn").addEventListener("click", () => {
@@ -94,6 +128,9 @@ function initImpressum() {
     });
 }
 
+/**
+ * Initializes the privacy information menu.
+ */
 function initPrivacy() {
     const privacy = document.getElementById("privacyContainer");
     document.getElementById("privacyBtn").addEventListener("click", () => {
@@ -105,6 +142,10 @@ function initPrivacy() {
     });
 }
 
+/**
+ * Initializes all game-related buttons.
+ * Handles restarting, returning home, and starting the game.
+ */
 function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
         location.reload();
@@ -120,6 +161,11 @@ function initGameButtons() {
     });
 }
 
+/**
+ * Starts the game.
+ * Hides the intro screen, starts enemies,
+ * starts background music and shows mobile controls.
+ */
 function startGame() {
     world.showIntro = false;
     world.startEnemies();
@@ -131,6 +177,11 @@ function startGame() {
     showMobileControls();
 }
 
+/**
+ * Restarts the complete game.
+ * Stops sounds, creates a new world,
+ * resets states and updates the interface.
+ */
 function restartGame() {
     stopCurrentGameSounds();
     createNewWorld();
@@ -139,6 +190,9 @@ function restartGame() {
     resetGameUI();
 }
 
+/**
+ * Stops all currently active game sounds.
+ */
 function stopCurrentGameSounds() {
     if (world) {
         world.winSound.pause();
@@ -149,11 +203,19 @@ function stopCurrentGameSounds() {
     }
 }
 
+
+/**
+ * Creates a new game world with a fresh level.
+ */
 function createNewWorld() {
     initLevel1();
     world = new World(canvas, keyboard);
 }
 
+/**
+ * Resets all important game states
+ * to their default values.
+ */
 function resetGameState() {
     world.winSoundPlayed = false;
     world.musicOn = settings.music;
@@ -165,6 +227,10 @@ function resetGameState() {
     world.character.hurtSoundPlayed = false;
 }
 
+/**
+ * Starts a restarted game session.
+ * Activates enemies and handles background music.
+ */
 function startRestartedGame() {
     world.startEnemies();
 
@@ -175,6 +241,9 @@ function startRestartedGame() {
     }
 }
 
+/**
+ * Resets the user interface after restarting the game.
+ */
 function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
@@ -182,25 +251,33 @@ function resetGameUI() {
     showMobileControls();
 }
 
+/**
+ * Initializes all sound-related buttons.
+ */
 function initSoundButtons() {
     initRestartSoundButton();
     initMusicButton();
     initEffectsButton();
 }
 
+/**
+ * Initializes the restart sound button.
+ */
 function initRestartSoundButton() {
     document.getElementById("restartIcon").addEventListener("click", () => {
         restartGame();
     });
 }
 
+/**
+ * Initializes the music toggle button.
+ * Enables or disables background music.
+ */
 function initMusicButton() {
     const musicIcon = document.getElementById("musicIcon");
-
     musicIcon.addEventListener("click", () => {
         settings.music = !settings.music;
         world.musicOn = settings.music;
-
         if (world.musicOn) {
             world.backgroundSound.play();
             musicIcon.src = "img/volume_up.svg";
@@ -211,13 +288,15 @@ function initMusicButton() {
     });
 }
 
+/**
+ * Initializes the sound effects toggle button.
+ * Enables or disables game effects.
+ */
 function initEffectsButton() {
     const effectIcon = document.getElementById("effectIcon");
-
     effectIcon.addEventListener("click", () => {
         settings.effects = !settings.effects;
         world.effectsOn = settings.effects;
-
         if (world.effectsOn) {
             effectIcon.src = "img/music_note.svg";
         } else {
@@ -226,9 +305,17 @@ function initEffectsButton() {
     });
 }
 
-
+/**
+ * Stores the automatic scrolling interval.
+ */
 let autoScroll = null;
 
+/**
+ * Opens a menu element with a slide-in animation
+ * and automatically scrolls its content.
+ *
+ * @param {HTMLElement} element - Menu element to open
+ */
 function openWithAnimation(element) {
     clearInterval(autoScroll);
     element.classList.remove("hidden");
@@ -240,6 +327,11 @@ function openWithAnimation(element) {
     }, 50);
 }
 
+/**
+ * Closes a menu element with a slide-out animation.
+ *
+ * @param {HTMLElement} element - Menu element to close
+ */
 function closeWithAnimation(element) {
     clearInterval(autoScroll);
     element.classList.remove("slide-in");
@@ -250,6 +342,9 @@ function closeWithAnimation(element) {
     }, 500);
 }
 
+/**
+ * Closes all open menu elements.
+ */
 function closeAllMenus() {
     clearInterval(autoScroll);
     document.querySelectorAll(
@@ -261,6 +356,9 @@ function closeAllMenus() {
     });
 }
 
+/**
+ * Initializes closing menus when clicking outside.
+ */
 function initOutsideClickClose() {
     const menus = document.querySelectorAll(
         "#howToPlay, #storyContainer, #impressumContainer, #privacyContainer"
@@ -281,6 +379,10 @@ function initOutsideClickClose() {
     });
 }
 
+/**
+ * Updates the displayed sound icons
+ * according to the current settings.
+ */
 function updateSoundIcons() {
     document.getElementById("musicIcon").src =
         settings.music ? "img/volume_up.svg" : "img/volume_off.svg";
@@ -289,14 +391,24 @@ function updateSoundIcons() {
         settings.effects ? "img/music_note.svg" : "img/music_off.svg";
 }
 
+/**
+ * Displays the mobile control buttons.
+ */
 function showMobileControls() {
     document.getElementById("mobileControls").style.display = "flex";
 }
 
+/**
+ * Hides the mobile control buttons.
+ */
 function hideMobileControls() {
     document.getElementById("mobileControls").style.display = "none";
 }
 
+/**
+ * Initializes touch controls for mobile devices.
+ * Handles movement, jumping and throwing actions.
+ */
 function initMobileControls() {
     const leftBtn = document.getElementById("leftBtn");
     const rightBtn = document.getElementById("rightBtn");
@@ -306,40 +418,30 @@ function initMobileControls() {
         e.preventDefault();
         keyboard.LEFT = true;
     });
-
     leftBtn.addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
     });
-
-
     rightBtn.addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.RIGHT = true;
     });
-
     rightBtn.addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
     });
-
-
     jumpBtn.addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
     });
-
     jumpBtn.addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
     });
-
-
     throwBtn.addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.D = true;
     });
-
     throwBtn.addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.D = false;
