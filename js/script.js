@@ -3,8 +3,8 @@
  * Controls music and sound effects states.
  */
 let settings = {
-    music: true,
-    effects: true
+    music: JSON.parse(localStorage.getItem("music")) ?? true,
+    effects: JSON.parse(localStorage.getItem("effects")) ?? true
 };
 
 /**
@@ -62,6 +62,7 @@ window.addEventListener("load", () => {
     initSoundButtons();
     initOutsideClickClose();
     initMobileControls();
+    updateSoundIcons();
 });
 
 /**
@@ -175,7 +176,6 @@ function startGame() {
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
     document.getElementById("mobileControls").classList.add("active");
-
 }
 
 /**
@@ -234,7 +234,6 @@ function resetGameState() {
  */
 function startRestartedGame() {
     world.startEnemies();
-
     if (world.musicOn) {
         world.backgroundSound.play();
     } else {
@@ -278,6 +277,7 @@ function initMusicButton() {
     const musicIcon = document.getElementById("musicIcon");
     musicIcon.addEventListener("click", () => {
         settings.music = !settings.music;
+        localStorage.setItem("music", settings.music);
         world.musicOn = settings.music;
         if (world.musicOn) {
             world.backgroundSound.play();
@@ -297,6 +297,7 @@ function initEffectsButton() {
     const effectIcon = document.getElementById("effectIcon");
     effectIcon.addEventListener("click", () => {
         settings.effects = !settings.effects;
+        localStorage.setItem("effects", settings.effects);
         world.effectsOn = settings.effects;
         if (world.effectsOn) {
             effectIcon.src = "img/music_note.svg";
@@ -391,8 +392,6 @@ function updateSoundIcons() {
     document.getElementById("effectIcon").src =
         settings.effects ? "img/music_note.svg" : "img/music_off.svg";
 }
-
-
 
 /**
  * Hides the mobile control buttons.
