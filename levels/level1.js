@@ -70,7 +70,11 @@ function initLevel1() {
             new Endboss()
         ],
         [
-            new Cloud()
+            new Cloud(500), 
+            new Cloud(1650),
+            new Cloud(3000),
+            new Cloud(4000),
+            new Cloud(5000)
         ],
         [
             new BackgroundObject('img/5_background/layers/air.png', -719),
@@ -121,7 +125,7 @@ function initLevel1() {
 
         [
             ...createBottles(),
-           
+
         ],
 
         [
