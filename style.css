@@ -356,12 +356,7 @@ h1 {
     height: 45px;
 }
 
-#mobileControls.active {
-    display: flex;
-}
-
-
-@media only screen and (max-width: 900px) {
+@media (pointer: coarse) {
     #mobileControls.active {
         display: flex;
     }

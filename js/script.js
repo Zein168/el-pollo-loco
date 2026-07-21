@@ -169,15 +169,13 @@ function initGameButtons() {
 function startGame() {
     world.showIntro = false;
     world.startEnemies();
-
     if (world.musicOn) {
         world.backgroundSound.play();
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    if (isMobileDevice()) {
-        showMobileControls();
-    }
+    document.getElementById("mobileControls").classList.add("active");
+
 }
 
 /**
@@ -251,7 +249,7 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    showMobileControls();
+    document.getElementById("mobileControls").style.display = "flex";
 }
 
 /**
@@ -394,12 +392,7 @@ function updateSoundIcons() {
         settings.effects ? "img/music_note.svg" : "img/music_off.svg";
 }
 
-/**
- * Displays the mobile control buttons.
- */
-function showMobileControls() {
-    document.getElementById("mobileControls").style.display = "flex";
-}
+
 
 /**
  * Hides the mobile control buttons.
@@ -451,6 +444,8 @@ function initMobileControls() {
     });
 }
 
-function isMobileDevice() {
-    return window.innerWidth <= 1024;
+function showMobileControls() {
+    document.getElementById("mobileControls")
+        .classList.add("active");
 }
+
