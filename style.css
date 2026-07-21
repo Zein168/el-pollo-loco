@@ -373,6 +373,10 @@ h1 {
         height: 35px;
     }
 
+    #fullscreen {
+        padding-bottom: 0;
+    }
+
     #mobileControls button {
         bottom: 2px;
         left: 15px;
@@ -407,5 +411,16 @@ h1 {
         width: 308px;
     }
 
+
+}
+
+@media only screen and (max-width: 1024px) {
+    h1 {
+        margin-top: 0px;
+    }
+
+    #fullscreen {
+        padding-bottom: 0px;
+    }
 
 }
