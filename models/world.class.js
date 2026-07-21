@@ -42,6 +42,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.musicOn = settings.music;
+        this.effectsOn = settings.effects;
         this.winImage = new Image();
         this.winImage.src = 'img/You won, you lost/You won A.png';
         this.loseImage = new Image();
