@@ -168,6 +168,8 @@ function initGameButtons() {
  * starts background music and shows mobile controls.
  */
 function startGame() {
+    world.character.gameStarted = true;
+    world.character.lastAction = Date.now();
     world.showIntro = false;
     world.startEnemies();
     if (world.musicOn) {
@@ -198,7 +200,6 @@ function stopCurrentGameSounds() {
     if (world) {
         world.winSound.pause();
         world.winSound.currentTime = 0;
-
         world.backgroundSound.pause();
         world.backgroundSound.currentTime = 0;
     }

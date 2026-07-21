@@ -12,6 +12,7 @@ class Character extends MovableObject {
     };
     y = 70;
     speed = 10;
+    gameStarted = false;
     lastAction = Date.now();
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -77,7 +78,7 @@ class Character extends MovableObject {
     ];
 
     world;
-    
+
     /**
  * Creates a new character instance.
  * Loads all character animations, initializes sounds,
@@ -141,6 +142,9 @@ class Character extends MovableObject {
  * Handles death, damage, movement, jumping, and idle animations.
  */
     checkAnimation() {
+        if (!this.gameStarted) {
+            return;
+        }
         if (this.energy <= 0) {
             this.playDeadAnimation();
         } else if (this.isHurt()) {
