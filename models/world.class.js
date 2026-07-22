@@ -38,6 +38,8 @@ class World {
     gameStarted = false;
     lastThrowTime = 0;
     throwCooldown = 500;
+    coinBonus = 0;
+    coinsSinceBonus = false;
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -170,7 +172,7 @@ class World {
         this.coinSound.pause();
         this.winSound.pause();
     }
-    
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.showIntro) {
@@ -191,7 +193,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
-        this.drawBonusBottles();
+        this.drawBonusCoins();
         this.ctx.translate(this.camera_x, 0);
         if (this.endbossBar) {
             this.endbossBar.updatePosition();
@@ -282,7 +284,22 @@ class World {
         this.playCoinSound();
         this.updateCoinBar();
         if (this.collectedCoins >= this.maxCoins) {
-            this.activateCoinBonus();
+            if (!this.coinBonusStarted) {
+                this.coinBonusStarted = true;
+            }
+            this.coinBonus++;
+        }
+    }
+
+    drawBonusCoins() {
+        if (this.coinBonus > 0) {
+            this.ctx.font = "30px Arial";
+            this.ctx.fillStyle = "#A0220A";
+            this.ctx.fillText(
+                "+" + this.coinBonus,
+                245,
+                100
+            );
         }
     }
 
@@ -298,21 +315,9 @@ class World {
         this.coinBar.setPercentage(percent);
     }
 
-    activateCoinBonus() {
-        this.coinBonusActive = true;
-        this.bottlesLeft = this.maxBottles;
-        this.bottleBar.setPercentage(100);
-        this.bonusBottles = 3;
-        this.collectedCoins = 0;
-        this.coinBar.setPercentage(0);
-    }
-
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                if (this.bottlesLeft >= this.maxBottles) {
-                    return;
-                }
                 this.level.bottles.splice(index, 1);
                 if (this.bottlesLeft < this.maxBottles) {
                     this.bottlesLeft++;
@@ -393,18 +398,6 @@ class World {
                 this.winSound.play();
             }
             this.winSoundPlayed = true;
-        }
-    }
-
-    drawBonusBottles() {
-        if (this.bonusBottles > 0) {
-            this.ctx.font = "30px Arial";
-            this.ctx.fillStyle = "#A0220A";
-            this.ctx.fillText(
-                "+" + this.bonusBottles,
-                245,
-                156
-            );
         }
     }
 
