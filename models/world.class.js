@@ -141,14 +141,10 @@ class World {
 
     checkCollisions() {
         for (let enemy of this.level.enemies) {
-
             if (enemy.isDead) continue;
-
             if (!this.character.isColliding(enemy)) continue;
-
             let characterFeet = this.character.y + this.character.height;
             let enemyHead = enemy.y;
-
             if (
                 this.character.speedY < 0 &&
                 characterFeet - enemyHead < 40 &&
@@ -162,8 +158,7 @@ class World {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
-
-            break; // Nach der ersten Kollision aufhören
+            break; 
         }
     }
 

@@ -8,9 +8,10 @@
 function createCoins() {
     let coins = [];
     for (let x = 600; x <= 4800; x += 600) {
-        for (let y = 100; y <= 250; y += 120) {
-            coins.push(new Coin(x, y));
-        }
+        coins.push(new Coin(x, 150));       
+        coins.push(new Coin(x + 80, 150));  
+        coins.push(new Coin(x, 180));       
+        coins.push(new Coin(x + 80, 180)); 
     }
     return coins;
 }
