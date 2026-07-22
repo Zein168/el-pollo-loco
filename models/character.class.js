@@ -5,6 +5,7 @@
 class Character extends MovableObject {
     height = 280;
     jumpKillDone = false;
+    wasAboveGround = false;
     offset = {
         top: 100,
         bottom: 10,
@@ -109,6 +110,7 @@ class Character extends MovableObject {
     animate() {
         this.intervals.push(setInterval(() => {
             this.checkMovement();
+            this.checkLanding();
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60));
 
@@ -177,7 +179,6 @@ class Character extends MovableObject {
   */
     playNormalAnimation() {
         this.hurtSoundPlayed = false;
-
         if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -234,5 +235,14 @@ class Character extends MovableObject {
 */
     isLongIdle() {
         return Date.now() - this.lastAction > 5000;
+    }
+
+
+    checkLanding() {
+        let isNowAboveGround = this.isAboveGround();
+        if (this.wasAboveGround && !isNowAboveGround) {
+            this.currentImage = 0;
+        }
+        this.wasAboveGround = isNowAboveGround;
     }
 }
