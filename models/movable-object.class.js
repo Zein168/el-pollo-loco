@@ -63,6 +63,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
+            console.log("PEPE HIT");
         if (Date.now() - this.lastHit < 1000) {
             return;
         }

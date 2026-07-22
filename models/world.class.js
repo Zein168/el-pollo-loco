@@ -154,11 +154,12 @@ class World {
                 enemy.die();
                 this.character.speedY = 15;
                 this.level.hearts.push(new Heart(enemy.x, enemy.y));
-            } else {
+                break;
+            } else if (!this.character.jumpKillDone) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+                break;
             }
-            break; 
         }
     }
 
@@ -169,6 +170,7 @@ class World {
         this.coinSound.pause();
         this.winSound.pause();
     }
+    
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.showIntro) {
