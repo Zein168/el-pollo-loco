@@ -4,6 +4,7 @@
  */
 class Character extends MovableObject {
     height = 280;
+    jumpKillDone = false;
     offset = {
         top: 60,
         bottom: 10,
@@ -219,6 +220,7 @@ class Character extends MovableObject {
  */
     jump() {
         this.speedY = 30;
+        this.jumpKillDone = false;
         this.jumpSound.currentTime = 0;
         if (this.world.effectsOn) {
             this.jumpSound.play();

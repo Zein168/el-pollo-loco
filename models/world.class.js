@@ -140,32 +140,31 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (enemy.isDead) {
-                return;
+        for (let enemy of this.level.enemies) {
+
+            if (enemy.isDead) continue;
+
+            if (!this.character.isColliding(enemy)) continue;
+
+            let characterFeet = this.character.y + this.character.height;
+            let enemyHead = enemy.y;
+
+            if (
+                this.character.speedY < 0 &&
+                characterFeet - enemyHead < 40 &&
+                !this.character.jumpKillDone
+            ) {
+                this.character.jumpKillDone = true;
+                enemy.die();
+                this.character.speedY = 15;
+                this.level.hearts.push(new Heart(enemy.x, enemy.y));
+            } else {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
             }
-            if (this.character.isColliding(enemy)) {
-                let characterFeet =
-                    this.character.y + this.character.height;
-                let enemyHead =
-                    enemy.y;
-                if (
-                    this.character.speedY < 0 &&
-                    characterFeet - enemyHead < 40
-                ) {
-                    enemy.die();
-                    this.character.speedY = 15;
-                    this.level.hearts.push(
-                        new Heart(enemy.x, enemy.y)
-                    );
-                } else {
-                    this.character.hit();
-                    this.statusBar.setPercentage(
-                        this.character.energy
-                    );
-                }
-            }
-        });
+
+            break; // Nach der ersten Kollision aufhören
+        }
     }
 
     stopAllSounds() {
