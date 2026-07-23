@@ -220,14 +220,23 @@ function createNewWorld() {
  * to their default values.
  */
 function resetGameState() {
+    world.character.gameStarted = true;
+
     world.winSoundPlayed = false;
     world.musicOn = settings.music;
     world.effectsOn = settings.effects;
+
     world.showIntro = false;
     world.gameWon = false;
     world.gameLost = false;
+
+    world.character.energy = 100;
+    world.character.isDead = false;
     world.character.deathSoundPlayed = false;
     world.character.hurtSoundPlayed = false;
+    world.character.lastHit = 0;
+    world.character.speedY = 0;
+    world.character.jumpKillDone = false;
 }
 
 /**
@@ -235,6 +244,7 @@ function resetGameState() {
  * Activates enemies and handles background music.
  */
 function startRestartedGame() {
+    world.character.gameStarted = true;
     world.startEnemies();
     if (world.musicOn) {
         world.backgroundSound.play();
@@ -250,7 +260,7 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    document.getElementById("mobileControls").style.display = "flex";
+    document.getElementById("mobileControls").style.display = "active";
 }
 
 /**
