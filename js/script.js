@@ -352,17 +352,41 @@ function stopAutoScroll() {
     }
 }
 
+/**
+ * Initializes manual scroll controls for an element.
+ * Combines mouse and wheel scroll handling.
+ *
+ * @param {HTMLElement} element - Element that receives scroll controls
+ */
 function initManualScrollControl(element) {
+    initMouseScrollControl(element);
+    initWheelScrollControl(element);
+}
+
+/**
+ * Initializes mouse-based scrolling behavior.
+ * Stops automatic scrolling while the user interacts
+ * and restarts it after releasing the mouse button.
+ *
+ * @param {HTMLElement} element - Element that receives mouse controls
+ */
+function initMouseScrollControl(element) {
     element.addEventListener("mousedown", () => {
         userScrolling = true;
         stopAutoScroll();
     });
     element.addEventListener("mouseup", () => {
-        setTimeout(() => {
-            userScrolling = false;
-            startAutoScroll(element);
-        }, 1500);
+        resumeAutoScroll(element, 1500);
     });
+}
+
+/**
+ * Initializes wheel scrolling behavior.
+ * Pauses automatic scrolling while the user scrolls manually.
+ *
+ * @param {HTMLElement} element - Element that receives wheel controls
+ */
+function initWheelScrollControl(element) {
     element.addEventListener("wheel", () => {
         userScrolling = true;
         stopAutoScroll();
@@ -372,6 +396,19 @@ function initManualScrollControl(element) {
             startAutoScroll(element);
         }, 500);
     });
+}
+
+/**
+ * Restarts automatic scrolling after a delay.
+ *
+ * @param {HTMLElement} element - Element to scroll automatically
+ * @param {number} delay - Delay before restarting auto scroll in milliseconds
+ */
+function resumeAutoScroll(element, delay) {
+    setTimeout(() => {
+        userScrolling = false;
+        startAutoScroll(element);
+    }, delay);
 }
 
 /**
@@ -488,20 +525,31 @@ function initMobileControls() {
     });
 }
 
+/**
+ * Shows the mobile control buttons.
+ * Activates the mobile control interface.
+ */
 function showMobileControls() {
     document.getElementById("mobileControls")
         .classList.add("active");
 }
 
+
+/**
+ * Returns to the home screen.
+ * Stops the current game, resets game states,
+ * and updates the interface visibility.
+ */
 function goToHome() {
     stopCurrentGameSounds();
 
     if (world) {
         world.stopGame();
+        world.showIntro = true;
+        world.gameWon = false;
+        world.gameLost = false;
     }
-    world.showIntro = true;
-    world.gameWon = false;
-    world.gameLost = false;
+
     document.getElementById("startBtn").style.display = "block";
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
