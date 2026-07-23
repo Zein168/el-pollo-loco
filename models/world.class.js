@@ -157,8 +157,8 @@ class World {
                 enemy.die();
                 this.character.speedY = 15;
                 this.level.hearts.push(new Heart(enemy.x, enemy.y));
-                break;
-            } else if (!this.character.jumpKillDone) {
+                return;
+            } else {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
                 break;
@@ -317,27 +317,27 @@ class World {
         this.coinBar.setPercentage(percent);
     }
 
-checkBottleCollisions() {
-    this.level.bottles.forEach((bottle, index) => {
-        if (this.character.isColliding(bottle)) {
-            this.level.bottles.splice(index, 1);
-            this.bonusBottles++;
-            this.bottleBar.setPercentage(100);
-        }
-    });
-}
+    checkBottleCollisions() {
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(index, 1);
+                this.bonusBottles++;
+                this.bottleBar.setPercentage(100);
+            }
+        });
+    }
 
     drawBonusBottles() {
-    if (this.bonusBottles > 0) {
-        this.ctx.font = "30px Arial";
-        this.ctx.fillStyle = "#A0220A";
-        this.ctx.fillText(
-            "+" + this.bonusBottles,
-            245,
-            160
-        );
+        if (this.bonusBottles > 0) {
+            this.ctx.font = "30px Arial";
+            this.ctx.fillStyle = "#A0220A";
+            this.ctx.fillText(
+                "+" + this.bonusBottles,
+                245,
+                160
+            );
+        }
     }
-}
 
     checkHeartCollisions() {
         this.level.hearts.forEach((heart, index) => {
