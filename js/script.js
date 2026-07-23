@@ -236,7 +236,6 @@ function resetGameState() {
     world.character.jumpKillDone = false;
     world.character.deathSound.pause();
     world.character.deathSound.currentTime = 0;
-
     world.character.hurtSound.pause();
     world.character.hurtSound.currentTime = 0;
 }
@@ -546,7 +545,6 @@ function showMobileControls() {
         .classList.add("active");
 }
 
-
 /**
  * Returns to the home screen.
  * Stops the current game, resets game states,
@@ -554,14 +552,12 @@ function showMobileControls() {
  */
 function goToHome() {
     stopCurrentGameSounds();
-
     if (world) {
         world.stopGame();
         world.showIntro = true;
         world.gameWon = false;
         world.gameLost = false;
     }
-
     document.getElementById("startBtn").style.display = "block";
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";

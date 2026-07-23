@@ -129,17 +129,12 @@ class World {
     }
 
     updateBottleCount() {
-        if (this.bonusBottles > 0) {
-            this.bonusBottles--;
-            if (this.bonusBottles === 0) {
-                this.coinBonusActive = false;
-            }
-        } else {
+        if (this.bottlesLeft > 0) {
             this.bottlesLeft--;
-            this.bottleBar.setPercentage(
-                (this.bottlesLeft / this.maxBottles) * 100
-            );
+        } else if (this.bonusBottles > 0) {
+            this.bonusBottles--;
         }
+        this.updateBottleBar();
     }
 
     checkCollisions() {
@@ -335,8 +330,12 @@ class World {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(index, 1);
-                this.bonusBottles++;
-                this.bottleBar.setPercentage(100);
+                if (this.bottlesLeft < this.maxBottles) {
+                    this.bottlesLeft++;
+                } else {
+                    this.bonusBottles++;
+                }
+                this.updateBottleBar();
             }
         });
     }
@@ -351,6 +350,11 @@ class World {
                 160
             );
         }
+    }
+
+    updateBottleBar() {
+        let percent = (this.bottlesLeft / this.maxBottles) * 100;
+        this.bottleBar.setPercentage(percent);
     }
 
     checkHeartCollisions() {
