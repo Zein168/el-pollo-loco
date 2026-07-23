@@ -221,15 +221,12 @@ function createNewWorld() {
  */
 function resetGameState() {
     world.character.gameStarted = true;
-
     world.winSoundPlayed = false;
     world.musicOn = settings.music;
     world.effectsOn = settings.effects;
-
     world.showIntro = false;
     world.gameWon = false;
     world.gameLost = false;
-
     world.character.energy = 100;
     world.character.isDead = false;
     world.character.deathSoundPlayed = false;
@@ -237,6 +234,11 @@ function resetGameState() {
     world.character.lastHit = 0;
     world.character.speedY = 0;
     world.character.jumpKillDone = false;
+    world.character.deathSound.pause();
+    world.character.deathSound.currentTime = 0;
+
+    world.character.hurtSound.pause();
+    world.character.hurtSound.currentTime = 0;
 }
 
 /**

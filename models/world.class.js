@@ -87,7 +87,7 @@ class World {
             this.checkBottleCollisions();
             this.checkHeartCollisions();
             this.checkBottleHitsEnemy();
-            if (this.character.energy <= 0) {
+            if (this.character.energy <= 0 && !this.gameLost) {
                 this.gameLost = true;
                 hideMobileControls();
                 this.character.playDeathSound();
