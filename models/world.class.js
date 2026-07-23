@@ -146,24 +146,38 @@ class World {
         for (let enemy of this.level.enemies) {
             if (enemy.isDead) continue;
             if (!this.character.isColliding(enemy)) continue;
-            let characterFeet = this.character.y + this.character.height;
-            let enemyHead = enemy.y;
-            if (
-                this.character.speedY < 0 &&
-                characterFeet - enemyHead < 40 &&
-                !this.character.jumpKillDone
-            ) {
-                this.character.jumpKillDone = true;
-                enemy.die();
-                this.character.speedY = 15;
-                this.level.hearts.push(new Heart(enemy.x, enemy.y));
+
+            if (this.isJumpingOnEnemy(enemy)) {
+                this.killEnemyByJump(enemy);
                 return;
-            } else {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-                break;
             }
+
+            this.characterHit();
+            break;
         }
+    }
+
+    isJumpingOnEnemy(enemy) {
+        let characterFeet = this.character.y + this.character.height;
+        let enemyHead = enemy.y;
+
+        return (
+            this.character.speedY < 0 &&
+            characterFeet - enemyHead < 40 &&
+            !this.character.jumpKillDone
+        );
+    }
+
+    killEnemyByJump(enemy) {
+        this.character.jumpKillDone = true;
+        enemy.die();
+        this.character.speedY = 15;
+        this.level.hearts.push(new Heart(enemy.x, enemy.y));
+    }
+
+    characterHit() {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
     }
 
     stopAllSounds() {
