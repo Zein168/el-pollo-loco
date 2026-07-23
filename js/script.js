@@ -313,6 +313,8 @@ function initEffectsButton() {
  * Stores the automatic scrolling interval.
  */
 let autoScroll = null;
+let autoScrollActive = false;
+let userScrolling = false;
 
 /**
  * Opens a menu element with a slide-in animation
@@ -321,14 +323,55 @@ let autoScroll = null;
  * @param {HTMLElement} element - Menu element to open
  */
 function openWithAnimation(element) {
-    clearInterval(autoScroll);
+    stopAutoScroll();
     element.classList.remove("hidden");
     element.classList.remove("slide-out");
     element.classList.add("slide-in");
     element.scrollTop = 0;
-    autoScroll = setInterval(() => {
-        element.scrollTop += 1;
-    }, 50);
+    initManualScrollControl(element);
+    startAutoScroll(element);
+}
+
+function startAutoScroll(element) {
+    autoScrollActive = true;
+    function scrollStep() {
+        if (!autoScrollActive) return;
+        if (!userScrolling) {
+            element.scrollTop += 0.5;
+        }
+        autoScroll = requestAnimationFrame(scrollStep);
+    }
+    autoScroll = requestAnimationFrame(scrollStep);
+}
+
+function stopAutoScroll() {
+    autoScrollActive = false;
+    if (autoScroll) {
+        cancelAnimationFrame(autoScroll);
+        autoScroll = null;
+    }
+}
+
+function initManualScrollControl(element) {
+    element.addEventListener("mousedown", () => {
+        userScrolling = true;
+        stopAutoScroll();
+    });
+    element.addEventListener("mouseup", () => {
+        setTimeout(() => {
+            userScrolling = false;
+            startAutoScroll(element);
+        }, 1500);
+    });
+    element.addEventListener("wheel", () => {
+        userScrolling = true;
+        stopAutoScroll();
+        clearTimeout(element.scrollTimer);
+        element.scrollTimer = setTimeout(() => {
+            userScrolling = false;
+            startAutoScroll(element);
+        }, 500);
+    });
 }
 
 /**
@@ -337,7 +380,7 @@ function openWithAnimation(element) {
  * @param {HTMLElement} element - Menu element to close
  */
 function closeWithAnimation(element) {
-    clearInterval(autoScroll);
+    stopAutoScroll();
     element.classList.remove("slide-in");
     element.classList.add("slide-out");
     setTimeout(() => {
@@ -350,7 +393,7 @@ function closeWithAnimation(element) {
  * Closes all open menu elements.
  */
 function closeAllMenus() {
-    clearInterval(autoScroll);
+    stopAutoScroll();
     document.querySelectorAll(
         "#howToPlay, #storyContainer, #impressumContainer, #privacyContainer"
     ).forEach(menu => {
