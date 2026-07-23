@@ -149,13 +149,13 @@ function initPrivacy() {
  */
 function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
-        location.reload();
+        restartGame();
     });
     document.getElementById("restartBtn2").addEventListener("click", () => {
         restartGame();
     });
     document.getElementById("homePage").addEventListener("click", () => {
-        location.reload();
+        goToHome();
     });
     document.getElementById("startBtn").addEventListener("click", () => {
         startGame();
@@ -168,6 +168,7 @@ function initGameButtons() {
  * starts background music and shows mobile controls.
  */
 function startGame() {
+    createNewWorld();
     world.character.gameStarted = true;
     world.character.lastAction = Date.now();
     world.showIntro = false;
@@ -449,3 +450,18 @@ function showMobileControls() {
         .classList.add("active");
 }
 
+function goToHome() {
+    stopCurrentGameSounds();
+
+    if (world) {
+        world.stopGame();
+    }
+    world.showIntro = true;
+    world.gameWon = false;
+    world.gameLost = false;
+    document.getElementById("startBtn").style.display = "block";
+    document.getElementById("restartBtn2").style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("mobileControls").classList.remove("active");
+    document.querySelector(".sound-bar").style.display = "flex";
+}
