@@ -19,6 +19,7 @@ class World {
     maxBottles = 5;
     bottlesLeft = 5;
     bonusBottles = 0;
+    bottleBonusStarted = false;
     showBonusText = false;
     coinBonusActive = false;
     coinRewardGiven = false;
@@ -194,6 +195,7 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.drawBonusCoins();
+        this.drawBonusBottles();
         this.ctx.translate(this.camera_x, 0);
         if (this.endbossBar) {
             this.endbossBar.updatePosition();
@@ -315,18 +317,27 @@ class World {
         this.coinBar.setPercentage(percent);
     }
 
-    checkBottleCollisions() {
-        this.level.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle)) {
-                this.level.bottles.splice(index, 1);
-                if (this.bottlesLeft < this.maxBottles) {
-                    this.bottlesLeft++;
-                }
-                let percent = (this.bottlesLeft / this.maxBottles) * 100;
-                this.bottleBar.setPercentage(percent);
-            }
-        });
+checkBottleCollisions() {
+    this.level.bottles.forEach((bottle, index) => {
+        if (this.character.isColliding(bottle)) {
+            this.level.bottles.splice(index, 1);
+            this.bonusBottles++;
+            this.bottleBar.setPercentage(100);
+        }
+    });
+}
+
+    drawBonusBottles() {
+    if (this.bonusBottles > 0) {
+        this.ctx.font = "30px Arial";
+        this.ctx.fillStyle = "#A0220A";
+        this.ctx.fillText(
+            "+" + this.bonusBottles,
+            245,
+            160
+        );
     }
+}
 
     checkHeartCollisions() {
         this.level.hearts.forEach((heart, index) => {
