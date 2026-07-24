@@ -42,6 +42,7 @@ class World {
     coinBonus = 0;
     coinsSinceBonus = false;
     gameInterval;
+    jumpKillCooldown = false;
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -146,12 +147,13 @@ class World {
         for (let enemy of this.level.enemies) {
             if (enemy.isDead) continue;
             if (!this.character.isColliding(enemy)) continue;
-
             if (this.isJumpingOnEnemy(enemy)) {
                 this.killEnemyByJump(enemy);
                 return;
             }
-
+            if (this.jumpKillCooldown) {
+                return;
+            }
             this.characterHit();
             break;
         }
@@ -160,7 +162,6 @@ class World {
     isJumpingOnEnemy(enemy) {
         let characterFeet = this.character.y + this.character.height;
         let enemyHead = enemy.y;
-
         return (
             this.character.speedY < 0 &&
             characterFeet - enemyHead < 40 &&
@@ -169,10 +170,13 @@ class World {
     }
 
     killEnemyByJump(enemy) {
-        this.character.jumpKillDone = true;
+        this.jumpKillCooldown = true;
         enemy.die();
         this.character.speedY = 15;
         this.level.hearts.push(new Heart(enemy.x, enemy.y));
+        setTimeout(() => {
+            this.jumpKillCooldown = false;
+        }, 200);
     }
 
     characterHit() {
