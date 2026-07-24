@@ -71,6 +71,9 @@ class MovableObject extends DrawableObject {
             this.energy = 0;
         }
         this.lastHit = new Date().getTime();
+        if (this.hurtSoundPlayed !== undefined) {
+            this.hurtSoundPlayed = false;
+        }
     }
 
     isHurt() {

@@ -4,10 +4,10 @@
  */
 class Coin extends MovableObject  {
      offset = {
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0    
+    top: 30,
+    bottom: 30,
+    left: 30,
+    right: 30   
     };
     constructor(x, y) {
         super().loadImage('img/8_coin/coin_1.png');

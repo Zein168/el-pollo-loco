@@ -3,8 +3,8 @@
  * Controls music and sound effects states.
  */
 let settings = {
-    music: true,
-    effects: true
+    music: JSON.parse(localStorage.getItem("music")) ?? true,
+    effects: JSON.parse(localStorage.getItem("effects")) ?? true
 };
 
 /**
@@ -62,6 +62,7 @@ window.addEventListener("load", () => {
     initSoundButtons();
     initOutsideClickClose();
     initMobileControls();
+    updateSoundIcons();
 });
 
 /**
@@ -148,13 +149,14 @@ function initPrivacy() {
  */
 function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
-        location.reload();
+        restartGame();
     });
-    document.getElementById("restartBtn2").addEventListener("click", () => {
+    document.getElementById("restartBtn2").addEventListener("click", (e) => {
+        e.target.blur();
         restartGame();
     });
     document.getElementById("homePage").addEventListener("click", () => {
-        location.reload();
+        goToHome();
     });
     document.getElementById("startBtn").addEventListener("click", () => {
         startGame();
@@ -167,17 +169,17 @@ function initGameButtons() {
  * starts background music and shows mobile controls.
  */
 function startGame() {
+    createNewWorld();
+    world.character.gameStarted = true;
+    world.character.lastAction = Date.now();
     world.showIntro = false;
     world.startEnemies();
-
     if (world.musicOn) {
         world.backgroundSound.play();
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    if (isMobileDevice()) {
-        showMobileControls();
-    }
+    document.getElementById("mobileControls").className = "active";
 }
 
 /**
@@ -186,11 +188,22 @@ function startGame() {
  * resets states and updates the interface.
  */
 function restartGame() {
+    document.activeElement.blur();
+    resetKeyboard();
     stopCurrentGameSounds();
     createNewWorld();
     resetGameState();
     startRestartedGame();
     resetGameUI();
+}
+
+function resetKeyboard() {
+    keyboard.LEFT = false;
+    keyboard.RIGHT = false;
+    keyboard.UP = false;
+    keyboard.DOWN = false;
+    keyboard.SPACE = false;
+    keyboard.D = false;
 }
 
 /**
@@ -200,7 +213,6 @@ function stopCurrentGameSounds() {
     if (world) {
         world.winSound.pause();
         world.winSound.currentTime = 0;
-
         world.backgroundSound.pause();
         world.backgroundSound.currentTime = 0;
     }
@@ -211,6 +223,9 @@ function stopCurrentGameSounds() {
  * Creates a new game world with a fresh level.
  */
 function createNewWorld() {
+    if (world) {
+        world.stopGame();
+    }
     initLevel1();
     world = new World(canvas, keyboard);
 }
@@ -220,14 +235,24 @@ function createNewWorld() {
  * to their default values.
  */
 function resetGameState() {
+    world.character.gameStarted = true;
     world.winSoundPlayed = false;
     world.musicOn = settings.music;
     world.effectsOn = settings.effects;
     world.showIntro = false;
     world.gameWon = false;
     world.gameLost = false;
+    world.character.energy = 100;
+    world.character.isDead = false;
     world.character.deathSoundPlayed = false;
     world.character.hurtSoundPlayed = false;
+    world.character.lastHit = 0;
+    world.character.speedY = 0;
+    world.character.jumpKillDone = false;
+    world.character.deathSound.pause();
+    world.character.deathSound.currentTime = 0;
+    world.character.hurtSound.pause();
+    world.character.hurtSound.currentTime = 0;
 }
 
 /**
@@ -235,8 +260,8 @@ function resetGameState() {
  * Activates enemies and handles background music.
  */
 function startRestartedGame() {
+    world.character.gameStarted = true;
     world.startEnemies();
-
     if (world.musicOn) {
         world.backgroundSound.play();
     } else {
@@ -251,7 +276,7 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    showMobileControls();
+    document.getElementById("mobileControls").classList.add = "active";
 }
 
 /**
@@ -280,6 +305,7 @@ function initMusicButton() {
     const musicIcon = document.getElementById("musicIcon");
     musicIcon.addEventListener("click", () => {
         settings.music = !settings.music;
+        localStorage.setItem("music", settings.music);
         world.musicOn = settings.music;
         if (world.musicOn) {
             world.backgroundSound.play();
@@ -299,6 +325,7 @@ function initEffectsButton() {
     const effectIcon = document.getElementById("effectIcon");
     effectIcon.addEventListener("click", () => {
         settings.effects = !settings.effects;
+        localStorage.setItem("effects", settings.effects);
         world.effectsOn = settings.effects;
         if (world.effectsOn) {
             effectIcon.src = "img/music_note.svg";
@@ -312,6 +339,8 @@ function initEffectsButton() {
  * Stores the automatic scrolling interval.
  */
 let autoScroll = null;
+let autoScrollActive = false;
+let userScrolling = false;
 
 /**
  * Opens a menu element with a slide-in animation
@@ -320,14 +349,104 @@ let autoScroll = null;
  * @param {HTMLElement} element - Menu element to open
  */
 function openWithAnimation(element) {
-    clearInterval(autoScroll);
+    stopAutoScroll();
     element.classList.remove("hidden");
     element.classList.remove("slide-out");
     element.classList.add("slide-in");
     element.scrollTop = 0;
-    autoScroll = setInterval(() => {
-        element.scrollTop += 1;
-    }, 50);
+    initManualScrollControl(element);
+    startAutoScroll(element);
+}
+
+/**
+ * Starts automatic scrolling for a given element.
+ * Uses requestAnimationFrame to smoothly move the scroll position.
+ * Automatic scrolling pauses while the user is manually scrolling.
+ *
+ * @param {HTMLElement} element - Element that should be scrolled automatically
+ */
+function startAutoScroll(element) {
+    autoScrollActive = true;
+    function scrollStep() {
+        if (!autoScrollActive) return;
+        if (!userScrolling) {
+            element.scrollTop += 0.5;
+        }
+        autoScroll = requestAnimationFrame(scrollStep);
+    }
+    autoScroll = requestAnimationFrame(scrollStep);
+}
+
+/**
+ * Stops the automatic scrolling animation.
+ * Cancels the current requestAnimationFrame loop
+ * and resets the animation reference.
+ */
+function stopAutoScroll() {
+    autoScrollActive = false;
+    if (autoScroll) {
+        cancelAnimationFrame(autoScroll);
+        autoScroll = null;
+    }
+}
+
+/**
+ * Initializes manual scroll controls for an element.
+ * Combines mouse and wheel scroll handling.
+ *
+ * @param {HTMLElement} element - Element that receives scroll controls
+ */
+function initManualScrollControl(element) {
+    initMouseScrollControl(element);
+    initWheelScrollControl(element);
+}
+
+/**
+ * Initializes mouse-based scrolling behavior.
+ * Stops automatic scrolling while the user interacts
+ * and restarts it after releasing the mouse button.
+ *
+ * @param {HTMLElement} element - Element that receives mouse controls
+ */
+function initMouseScrollControl(element) {
+    element.addEventListener("mousedown", () => {
+        userScrolling = true;
+        stopAutoScroll();
+    });
+    element.addEventListener("mouseup", () => {
+        resumeAutoScroll(element, 1500);
+    });
+}
+
+/**
+ * Initializes wheel scrolling behavior.
+ * Pauses automatic scrolling while the user scrolls manually.
+ *
+ * @param {HTMLElement} element - Element that receives wheel controls
+ */
+function initWheelScrollControl(element) {
+    element.addEventListener("wheel", () => {
+        userScrolling = true;
+        stopAutoScroll();
+        clearTimeout(element.scrollTimer);
+        element.scrollTimer = setTimeout(() => {
+            userScrolling = false;
+            startAutoScroll(element);
+        }, 500);
+    });
+}
+
+/**
+ * Restarts automatic scrolling after a delay.
+ *
+ * @param {HTMLElement} element - Element to scroll automatically
+ * @param {number} delay - Delay before restarting auto scroll in milliseconds
+ */
+function resumeAutoScroll(element, delay) {
+    setTimeout(() => {
+        userScrolling = false;
+        startAutoScroll(element);
+    }, delay);
 }
 
 /**
@@ -336,7 +455,7 @@ function openWithAnimation(element) {
  * @param {HTMLElement} element - Menu element to close
  */
 function closeWithAnimation(element) {
-    clearInterval(autoScroll);
+    stopAutoScroll();
     element.classList.remove("slide-in");
     element.classList.add("slide-out");
     setTimeout(() => {
@@ -349,7 +468,7 @@ function closeWithAnimation(element) {
  * Closes all open menu elements.
  */
 function closeAllMenus() {
-    clearInterval(autoScroll);
+    stopAutoScroll();
     document.querySelectorAll(
         "#howToPlay, #storyContainer, #impressumContainer, #privacyContainer"
     ).forEach(menu => {
@@ -392,13 +511,6 @@ function updateSoundIcons() {
 
     document.getElementById("effectIcon").src =
         settings.effects ? "img/music_note.svg" : "img/music_off.svg";
-}
-
-/**
- * Displays the mobile control buttons.
- */
-function showMobileControls() {
-    document.getElementById("mobileControls").style.display = "flex";
 }
 
 /**
@@ -451,6 +563,31 @@ function initMobileControls() {
     });
 }
 
-function isMobileDevice() {
-    return window.innerWidth <= 1024;
+/**
+ * Shows the mobile control buttons.
+ * Activates the mobile control interface.
+ */
+function showMobileControls() {
+    document.getElementById("mobileControls")
+        .classList.add("active");
+}
+
+/**
+ * Returns to the home screen.
+ * Stops the current game, resets game states,
+ * and updates the interface visibility.
+ */
+function goToHome() {
+    stopCurrentGameSounds();
+    if (world) {
+        world.stopGame();
+        world.showIntro = true;
+        world.gameWon = false;
+        world.gameLost = false;
+    }
+    document.getElementById("startBtn").style.display = "block";
+    document.getElementById("restartBtn2").style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("mobileControls").classList.remove("active");
+    document.querySelector(".sound-bar").style.display = "flex";
 }

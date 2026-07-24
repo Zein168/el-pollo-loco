@@ -24,6 +24,7 @@ function init() {
     canvas = document.getElementById("canvas");
     initLevel1();
     world = new World(canvas, keyboard);
+    world.startEnemies();
     world.showIntro = true;
     initMobileControls();
 }
@@ -49,6 +50,7 @@ window.addEventListener("keydown", (e) => {
         keyboard.DOWN = true;
     }
     if (e.keyCode == 32) {
+        e.preventDefault();
         keyboard.SPACE = true;
     }
     if (e.keyCode == 68) {

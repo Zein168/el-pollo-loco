@@ -4,14 +4,17 @@
  */
 class Character extends MovableObject {
     height = 280;
+    jumpKillDone = false;
+    wasAboveGround = false;
     offset = {
-        top: 60,
+        top: 100,
         bottom: 10,
         left: 35,
         right: 35
     };
     y = 70;
     speed = 10;
+    gameStarted = false;
     lastAction = Date.now();
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -77,7 +80,7 @@ class Character extends MovableObject {
     ];
 
     world;
-    
+
     /**
  * Creates a new character instance.
  * Loads all character animations, initializes sounds,
@@ -107,9 +110,9 @@ class Character extends MovableObject {
     animate() {
         this.intervals.push(setInterval(() => {
             this.checkMovement();
+            this.checkLanding();
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60));
-
         this.intervals.push(setInterval(() => {
             this.checkAnimation();
         }, 100));
@@ -141,6 +144,9 @@ class Character extends MovableObject {
  * Handles death, damage, movement, jumping, and idle animations.
  */
     checkAnimation() {
+        if (!this.gameStarted) {
+            return;
+        }
         if (this.energy <= 0) {
             this.playDeadAnimation();
         } else if (this.isHurt()) {
@@ -172,7 +178,6 @@ class Character extends MovableObject {
   */
     playNormalAnimation() {
         this.hurtSoundPlayed = false;
-
         if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -215,6 +220,7 @@ class Character extends MovableObject {
  */
     jump() {
         this.speedY = 30;
+        this.jumpKillDone = false;
         this.jumpSound.currentTime = 0;
         if (this.world.effectsOn) {
             this.jumpSound.play();
@@ -228,5 +234,14 @@ class Character extends MovableObject {
 */
     isLongIdle() {
         return Date.now() - this.lastAction > 5000;
+    }
+
+
+    checkLanding() {
+        let isNowAboveGround = this.isAboveGround();
+        if (this.wasAboveGround && !isNowAboveGround) {
+            this.currentImage = 0;
+        }
+        this.wasAboveGround = isNowAboveGround;
     }
 }

@@ -8,9 +8,10 @@
 function createCoins() {
     let coins = [];
     for (let x = 600; x <= 4800; x += 600) {
-        for (let y = 100; y <= 250; y += 120) {
-            coins.push(new Coin(x, y));
-        }
+        coins.push(new Coin(x, 150));       
+        coins.push(new Coin(x + 80, 150));  
+        coins.push(new Coin(x, 180));       
+        coins.push(new Coin(x + 80, 180)); 
     }
     return coins;
 }
@@ -70,7 +71,11 @@ function initLevel1() {
             new Endboss()
         ],
         [
-            new Cloud()
+            new Cloud(500), 
+            new Cloud(1650),
+            new Cloud(3000),
+            new Cloud(4000),
+            new Cloud(5000)
         ],
         [
             new BackgroundObject('img/5_background/layers/air.png', -719),
@@ -121,7 +126,7 @@ function initLevel1() {
 
         [
             ...createBottles(),
-           
+
         ],
 
         [
