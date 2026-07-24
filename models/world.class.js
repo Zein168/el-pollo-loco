@@ -111,6 +111,7 @@ class World {
     }
 
     canThrowBottle() {
+        console.log("BOTTLE THROW");
         return this.keyboard.D &&
             !this.dKeyPressed &&
             Date.now() - this.lastThrowTime >= this.throwCooldown &&
@@ -124,6 +125,10 @@ class World {
             this.character.otherDirection
         );
         this.throwableObjects.push(bottle);
+        if (this.effectsOn) {
+            this.throwSound.currentTime = 0;
+            this.throwSound.play();
+        }
         this.lastThrowTime = Date.now();
         this.character.lastAction = Date.now();
     }
