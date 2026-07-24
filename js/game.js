@@ -24,6 +24,7 @@ function init() {
     canvas = document.getElementById("canvas");
     initLevel1();
     world = new World(canvas, keyboard);
+    world.startEnemies();
     world.showIntro = true;
     initMobileControls();
 }
