@@ -49,6 +49,7 @@ window.addEventListener("keydown", (e) => {
         keyboard.DOWN = true;
     }
     if (e.keyCode == 32) {
+        e.preventDefault();
         keyboard.SPACE = true;
     }
     if (e.keyCode == 68) {

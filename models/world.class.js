@@ -41,6 +41,7 @@ class World {
     throwCooldown = 500;
     coinBonus = 0;
     coinsSinceBonus = false;
+    gameInterval;
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -77,7 +78,7 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        this.gameInterval = setInterval(() => {
             if (this.gameWon || this.gameLost) {
                 return;
             }
@@ -436,10 +437,15 @@ class World {
     }
 
     stopGame() {
+        if (this.gameInterval) {
+            clearInterval(this.gameInterval);
+            this.gameInterval = null;
+        }
         this.character.stopAnimation();
         this.level.enemies.forEach(enemy => {
             enemy.stopAnimation();
         });
+        this.throwableObjects = [];
     }
 
 }

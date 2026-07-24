@@ -151,7 +151,8 @@ function initGameButtons() {
     document.getElementById("restartBtn").addEventListener("click", () => {
         restartGame();
     });
-    document.getElementById("restartBtn2").addEventListener("click", () => {
+    document.getElementById("restartBtn2").addEventListener("click", (e) => {
+        e.target.blur();
         restartGame();
     });
     document.getElementById("homePage").addEventListener("click", () => {
@@ -178,7 +179,7 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    document.getElementById("mobileControls").classList.add("active");
+    document.getElementById("mobileControls").className = "active";
 }
 
 /**
@@ -187,11 +188,22 @@ function startGame() {
  * resets states and updates the interface.
  */
 function restartGame() {
+    document.activeElement.blur();
+    resetKeyboard();
     stopCurrentGameSounds();
     createNewWorld();
     resetGameState();
     startRestartedGame();
     resetGameUI();
+}
+
+function resetKeyboard() {
+    keyboard.LEFT = false;
+    keyboard.RIGHT = false;
+    keyboard.UP = false;
+    keyboard.DOWN = false;
+    keyboard.SPACE = false;
+    keyboard.D = false;
 }
 
 /**
@@ -211,6 +223,9 @@ function stopCurrentGameSounds() {
  * Creates a new game world with a fresh level.
  */
 function createNewWorld() {
+    if (world) {
+        world.stopGame();
+    }
     initLevel1();
     world = new World(canvas, keyboard);
 }
@@ -261,7 +276,7 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    document.getElementById("mobileControls").style.display = "active";
+    document.getElementById("mobileControls").classList.add = "active";
 }
 
 /**
