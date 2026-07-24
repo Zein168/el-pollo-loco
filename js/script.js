@@ -358,6 +358,13 @@ function openWithAnimation(element) {
     startAutoScroll(element);
 }
 
+/**
+ * Starts automatic scrolling for a given element.
+ * Uses requestAnimationFrame to smoothly move the scroll position.
+ * Automatic scrolling pauses while the user is manually scrolling.
+ *
+ * @param {HTMLElement} element - Element that should be scrolled automatically
+ */
 function startAutoScroll(element) {
     autoScrollActive = true;
     function scrollStep() {
@@ -370,6 +377,11 @@ function startAutoScroll(element) {
     autoScroll = requestAnimationFrame(scrollStep);
 }
 
+/**
+ * Stops the automatic scrolling animation.
+ * Cancels the current requestAnimationFrame loop
+ * and resets the animation reference.
+ */
 function stopAutoScroll() {
     autoScrollActive = false;
     if (autoScroll) {
