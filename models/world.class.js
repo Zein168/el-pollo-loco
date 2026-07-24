@@ -112,7 +112,6 @@ class World {
     }
 
     canThrowBottle() {
-        console.log("BOTTLE THROW");
         return this.keyboard.D &&
             !this.dKeyPressed &&
             Date.now() - this.lastThrowTime >= this.throwCooldown &&
@@ -135,10 +134,10 @@ class World {
     }
 
     updateBottleCount() {
-        if (this.bottlesLeft > 0) {
-            this.bottlesLeft--;
-        } else if (this.bonusBottles > 0) {
+        if (this.bonusBottles > 0) {
             this.bonusBottles--;
+        } else if (this.bottlesLeft > 0) {
+            this.bottlesLeft--;
         }
         this.updateBottleBar();
     }
