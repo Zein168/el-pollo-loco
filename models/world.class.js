@@ -151,9 +151,6 @@ class World {
                 this.killEnemyByJump(enemy);
                 return;
             }
-            if (this.jumpKillCooldown) {
-                return;
-            }
             this.characterHit();
             break;
         }
@@ -170,13 +167,14 @@ class World {
     }
 
     killEnemyByJump(enemy) {
-        this.jumpKillCooldown = true;
+            if (this.character.jumpKillDone) {
+        return;
+    }
+        this.character.jumpKillDone = true;
         enemy.die();
         this.character.speedY = 15;
         this.level.hearts.push(new Heart(enemy.x, enemy.y));
-        setTimeout(() => {
-            this.jumpKillCooldown = false;
-        }, 200);
+
     }
 
     characterHit() {
