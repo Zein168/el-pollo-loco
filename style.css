@@ -396,6 +396,7 @@ h1 {
 
     .game-buttons {
         flex-direction: column;
+        width: 116px;
 
     }
 
@@ -404,6 +405,11 @@ h1 {
     #impressumContainer,
     #privacyContainer {
         width: 308px;
+    }
+    
+    .game-buttons-container {
+        display: flex;
+        justify-content: center;
     }
 
 
@@ -419,3 +425,4 @@ h1 {
     }
 
 }
+
