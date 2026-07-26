@@ -120,12 +120,17 @@ class World {
     }
 
     throwBottle() {
+        let bottleX = this.character.otherDirection
+            ? this.character.x - 50
+            : this.character.x + 100;
+
         let bottle = new ThrowableObjects(
-            this.character.x + 100,
+            bottleX,
             this.character.y + 100,
             this.character.otherDirection
         );
         this.throwableObjects.push(bottle);
+
         if (this.effectsOn) {
             this.throwSound.currentTime = 0;
             this.throwSound.play();
