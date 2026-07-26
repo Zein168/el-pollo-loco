@@ -171,6 +171,7 @@ function initGameButtons() {
 function startGame() {
     createNewWorld();
     world.character.gameStarted = true;
+    document.body.classList.add("game-started");
     world.character.lastAction = Date.now();
     world.showIntro = false;
     world.startEnemies();
@@ -580,6 +581,7 @@ function showMobileControls() {
  * and updates the interface visibility.
  */
 function goToHome() {
+    document.body.classList.remove("game-started");
     stopCurrentGameSounds();
     if (world) {
         world.stopGame();
