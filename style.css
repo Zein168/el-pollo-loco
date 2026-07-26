@@ -523,8 +523,3 @@ h1 {
     }
 }
 
-@media (orientation: landscape) {
-    body {
-        background: green;
-    }
-}
