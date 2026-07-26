@@ -426,3 +426,23 @@ h1 {
 
 }
 
+@media (orientation: landscape) and (max-height: 500px) {
+
+    canvas {
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+    .game-buttons-container {
+        display: none;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    #mobileControls {
+        display: flex;
+    }
+}
+
