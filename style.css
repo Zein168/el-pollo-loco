@@ -516,3 +516,9 @@ h1 {
         display: none;
     }
 }
+
+@media (max-width: 1024px) and (pointer: coarse) {
+    .game-started .game-buttons {
+        display: none;
+    }
+}
