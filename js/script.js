@@ -179,7 +179,7 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    document.getElementById("mobileControls").className = "active";
+    showMobileControls();
 }
 
 /**
@@ -276,7 +276,7 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    document.getElementById("mobileControls").classList.add = "active";
+    document.getElementById("mobileControls").classList.add("active");
 }
 
 /**
@@ -568,10 +568,12 @@ function initMobileControls() {
  * Activates the mobile control interface.
  */
 function showMobileControls() {
-    document.getElementById("mobileControls")
-        .classList.add("active");
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+    if (isMobile) {
+        document.getElementById("mobileControls")
+            .classList.add("active");
+    }
 }
-
 /**
  * Returns to the home screen.
  * Stops the current game, resets game states,

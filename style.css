@@ -356,11 +356,10 @@ h1 {
     height: 45px;
 }
 
-@media (pointer: coarse) {
-    #mobileControls {
-        display: flex;
-    }
+#mobileControls.active {
+    display: flex;
 }
+
 
 @media only screen and (max-width: 400px) {
     #mobileControls img {
@@ -449,7 +448,7 @@ h1 {
     }
 }
 
-@media (max-width: 1366px){
+@media (max-width: 1366px) {
     #fullscreen {
         padding-bottom: 0;
     }
@@ -483,7 +482,4 @@ h1 {
         max-height: 100vh;
     }
 
-    #mobileControls {
-        display: flex;
-    }
 }
