@@ -180,7 +180,6 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    showMobileControls();
 }
 
 /**
@@ -564,17 +563,7 @@ function initMobileControls() {
     });
 }
 
-/**
- * Shows the mobile control buttons.
- * Activates the mobile control interface.
- */
-function showMobileControls() {
-    const isMobile = window.matchMedia("(pointer: coarse)").matches;
-    if (isMobile) {
-        document.getElementById("mobileControls")
-            .classList.add("active");
-    }
-}
+
 /**
  * Returns to the home screen.
  * Stops the current game, resets game states,
