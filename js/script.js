@@ -53,6 +53,7 @@ function closeFullscreen() {
  * Initializes all game interface elements after the page has loaded.
  */
 window.addEventListener("load", () => {
+    initRotateButton();
     initHowToPlay();
     initStory();
     initFullscreen();
@@ -583,4 +584,26 @@ function goToHome() {
     document.getElementById("homePage").style.display = "none";
     document.getElementById("mobileControls").classList.remove("active");
     document.querySelector(".sound-bar").style.display = "flex";
+}
+
+function initRotateButton() {
+    const rotateBtn = document.getElementById("rotateBtn");
+    let landscape = false;
+    rotateBtn.addEventListener("click", async () => {
+        try {
+            if (!screen.orientation?.lock) {
+                console.log("Rotation nicht unterstützt");
+                return;
+            }
+            if (!landscape) {
+                await screen.orientation.lock("landscape");
+                landscape = true;
+            } else {
+                await screen.orientation.lock("portrait");
+                landscape = false;
+            }
+        } catch (error) {
+            console.log("Fehler:", error);
+        }
+    });
 }

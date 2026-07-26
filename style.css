@@ -522,3 +522,9 @@ h1 {
         display: none;
     }
 }
+
+@media (orientation: landscape) {
+    body {
+        background: green;
+    }
+}
