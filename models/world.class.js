@@ -309,6 +309,9 @@ class World {
     }
 
     drawBonusCoins() {
+        if (this.collectedCoins === 0) {
+            return;
+        }
         this.ctx.font = "30px Arial";
         this.ctx.fillStyle = "#A0220A";
         this.ctx.fillText(
@@ -342,6 +345,9 @@ class World {
     }
 
     drawBonusBottles() {
+        if (this.bottlesLeft === 0) {
+            return;
+        }
         this.ctx.font = "30px Arial";
         this.ctx.fillStyle = "#A0220A";
         this.ctx.fillText(
