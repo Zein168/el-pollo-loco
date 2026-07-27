@@ -181,6 +181,7 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
+    showMobileControls();
 }
 
 /**
@@ -277,7 +278,9 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    document.getElementById("mobileControls").classList.add("active");
+    if (window.matchMedia("(pointer: coarse)").matches) {
+        showMobileControls();
+    }
 }
 
 /**
@@ -521,6 +524,15 @@ function hideMobileControls() {
     document.getElementById("mobileControls").classList.remove("active");
 }
 
+function showMobileControls() {
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+
+    if (isMobile) {
+        document.getElementById("mobileControls").classList.add("active");
+    }
+}
+
+
 /**
  * Initializes touch controls for mobile devices.
  * Handles movement, jumping and throwing actions.
@@ -607,3 +619,4 @@ function initRotateButton() {
         }
     });
 }
+
