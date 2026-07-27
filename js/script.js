@@ -525,7 +525,7 @@ function hideMobileControls() {
 }
 
 function showMobileControls() {
- const isMobile = 
+    const isMobile =
         window.innerWidth <= 1024 &&
         /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isMobile) {
@@ -601,23 +601,25 @@ function goToHome() {
 
 function initRotateButton() {
     const rotateBtn = document.getElementById("rotateBtn");
-    let landscape = false;
+    if (!isOrientationLockSupported()) {
+        rotateBtn.style.display = "none";
+        return;
+    }
+    let isLandscape = false;
     rotateBtn.addEventListener("click", async () => {
-        try {
-            if (!screen.orientation?.lock) {
-                console.log("Rotation nicht unterstützt");
-                return;
-            }
-            if (!landscape) {
-                await screen.orientation.lock("landscape");
-                landscape = true;
-            } else {
-                await screen.orientation.lock("portrait");
-                landscape = false;
-            }
-        } catch (error) {
-            console.log("Fehler:", error);
-        }
+        await changeOrientation(isLandscape ? "portrait" : "landscape");
+        isLandscape = !isLandscape;
     });
+}
+
+function isOrientationLockSupported() {
+    return screen.orientation?.lock;
+}
+
+async function changeOrientation(mode) {
+    try {
+        await screen.orientation.lock(mode);
+    } catch (error) {
+    }
 }
 
