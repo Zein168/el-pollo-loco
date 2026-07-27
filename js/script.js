@@ -53,6 +53,7 @@ function closeFullscreen() {
  * Initializes all game interface elements after the page has loaded.
  */
 window.addEventListener("load", () => {
+    initRotateButton();
     initHowToPlay();
     initStory();
     initFullscreen();
@@ -171,6 +172,7 @@ function initGameButtons() {
 function startGame() {
     createNewWorld();
     world.character.gameStarted = true;
+    document.body.classList.add("game-started");
     world.character.lastAction = Date.now();
     world.showIntro = false;
     world.startEnemies();
@@ -179,7 +181,6 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
-    document.getElementById("mobileControls").className = "active";
 }
 
 /**
@@ -276,7 +277,7 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    document.getElementById("mobileControls").classList.add = "active";
+    document.getElementById("mobileControls").classList.add("active");
 }
 
 /**
@@ -563,14 +564,6 @@ function initMobileControls() {
     });
 }
 
-/**
- * Shows the mobile control buttons.
- * Activates the mobile control interface.
- */
-function showMobileControls() {
-    document.getElementById("mobileControls")
-        .classList.add("active");
-}
 
 /**
  * Returns to the home screen.
@@ -578,6 +571,7 @@ function showMobileControls() {
  * and updates the interface visibility.
  */
 function goToHome() {
+    document.body.classList.remove("game-started");
     stopCurrentGameSounds();
     if (world) {
         world.stopGame();
@@ -590,4 +584,26 @@ function goToHome() {
     document.getElementById("homePage").style.display = "none";
     document.getElementById("mobileControls").classList.remove("active");
     document.querySelector(".sound-bar").style.display = "flex";
+}
+
+function initRotateButton() {
+    const rotateBtn = document.getElementById("rotateBtn");
+    let landscape = false;
+    rotateBtn.addEventListener("click", async () => {
+        try {
+            if (!screen.orientation?.lock) {
+                console.log("Rotation nicht unterstützt");
+                return;
+            }
+            if (!landscape) {
+                await screen.orientation.lock("landscape");
+                landscape = true;
+            } else {
+                await screen.orientation.lock("portrait");
+                landscape = false;
+            }
+        } catch (error) {
+            console.log("Fehler:", error);
+        }
+    });
 }
