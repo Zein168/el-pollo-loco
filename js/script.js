@@ -518,7 +518,7 @@ function updateSoundIcons() {
  * Hides the mobile control buttons.
  */
 function hideMobileControls() {
-    document.getElementById("mobileControls").style.display = "none";
+    document.getElementById("mobileControls").classList.remove("active");
 }
 
 /**
