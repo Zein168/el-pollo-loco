@@ -327,7 +327,7 @@ h1 {
     align-items: flex-end;
 }
 
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) and (pointer: coarse) and (hover: none) {
     .game-started #mobileControls.active {
         display: flex;
     }
@@ -507,7 +507,7 @@ h1 {
     height: 24px;
 }
 
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) and (pointer: coarse) and (hover: none) {
     .game-started #rotateBtn {
         display: flex;
     }

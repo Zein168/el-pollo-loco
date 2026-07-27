@@ -525,8 +525,9 @@ function hideMobileControls() {
 }
 
 function showMobileControls() {
-    const isMobile = window.matchMedia("(pointer: coarse)").matches;
-
+ const isMobile = 
+        window.innerWidth <= 1024 &&
+        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isMobile) {
         document.getElementById("mobileControls").classList.add("active");
     }
