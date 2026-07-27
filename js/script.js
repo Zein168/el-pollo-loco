@@ -181,6 +181,7 @@ function startGame() {
     }
     document.getElementById("startBtn").style.display = "none";
     document.querySelector(".sound-bar").style.display = "flex";
+    showMobileControls();
 }
 
 /**
@@ -277,7 +278,9 @@ function resetGameUI() {
     updateSoundIcons();
     document.getElementById("restartBtn2").style.display = "none";
     document.getElementById("homePage").style.display = "none";
-    document.getElementById("mobileControls").classList.add("active");
+    if (window.matchMedia("(pointer: coarse)").matches) {
+        showMobileControls();
+    }
 }
 
 /**
@@ -518,8 +521,18 @@ function updateSoundIcons() {
  * Hides the mobile control buttons.
  */
 function hideMobileControls() {
-    document.getElementById("mobileControls").style.display = "none";
+    document.getElementById("mobileControls").classList.remove("active");
 }
+
+function showMobileControls() {
+ const isMobile = 
+        window.innerWidth <= 1024 &&
+        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+        document.getElementById("mobileControls").classList.add("active");
+    }
+}
+
 
 /**
  * Initializes touch controls for mobile devices.
@@ -607,3 +620,4 @@ function initRotateButton() {
         }
     });
 }
+
