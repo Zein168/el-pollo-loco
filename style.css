@@ -327,7 +327,7 @@ h1 {
     align-items: flex-end;
 }
 
-@media (max-width: 1024px) and (pointer: coarse) and (hover: none) {
+@media (max-width: 1024px) and (pointer: coarse){
     .game-started #mobileControls.active {
         display: flex;
     }

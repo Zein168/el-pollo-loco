@@ -525,10 +525,11 @@ function hideMobileControls() {
 }
 
 function showMobileControls() {
-    const isMobile =
-        window.innerWidth <= 1024 &&
-        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isMobile) {
+    const isTouchDevice =
+        navigator.maxTouchPoints > 0 ||
+        "ontouchstart" in window;
+    const isSmallScreen = window.innerWidth <= 1024;
+    if (isSmallScreen && isTouchDevice) {
         document.getElementById("mobileControls").classList.add("active");
     }
 }
@@ -602,7 +603,6 @@ function goToHome() {
 function initRotateButton() {
     const rotateBtn = document.getElementById("rotateBtn");
     if (!isOrientationLockSupported()) {
-        rotateBtn.style.display = "none";
         return;
     }
     let isLandscape = false;
@@ -620,6 +620,7 @@ async function changeOrientation(mode) {
     try {
         await screen.orientation.lock(mode);
     } catch (error) {
+        console.log("Orientation change failed");
     }
 }
 
