@@ -53,6 +53,7 @@ function closeFullscreen() {
  * Initializes all game interface elements after the page has loaded.
  */
 window.addEventListener("load", () => {
+    initMenuButton();
     initRotateButton();
     initHowToPlay();
     initStory();
@@ -646,3 +647,11 @@ function checkOrientation() {
 window.addEventListener("load", checkOrientation);
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("orientationchange", checkOrientation);
+
+
+function initMenuButton() {
+    const menuButton = document.getElementById("menu");
+    menuButton.addEventListener("click", () => {
+        goToHome();
+    });
+}
