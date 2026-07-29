@@ -628,3 +628,19 @@ async function changeOrientation(mode) {
     }
 }
 
+function checkOrientation() {
+    const rotateMessage = document.getElementById("rotateMessage");
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (!isMobile) {
+        rotateMessage.style.display = "none";
+        return;
+    }
+    if (window.innerHeight > window.innerWidth) {
+        rotateMessage.style.display = "flex";
+    } else {
+        rotateMessage.style.display = "none";
+    }
+}
+window.addEventListener("load", checkOrientation);
+window.addEventListener("resize", checkOrientation);
+window.addEventListener("orientationchange", checkOrientation);
