@@ -596,6 +596,8 @@ function goToHome() {
         world.showIntro = true;
         world.gameWon = false;
         world.gameLost = false;
+        world.character.energy = 100;
+        world.character.deathSoundPlayed = false;
     }
     document.getElementById("startBtn").style.display = "block";
     document.getElementById("restartBtn2").style.display = "none";
