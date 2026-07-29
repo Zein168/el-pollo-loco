@@ -217,6 +217,10 @@ function stopCurrentGameSounds() {
         world.winSound.currentTime = 0;
         world.backgroundSound.pause();
         world.backgroundSound.currentTime = 0;
+        world.character.deathSound.pause();
+        world.character.deathSound.currentTime = 0;
+        world.character.hurtSound.pause();
+        world.character.hurtSound.currentTime = 0;
     }
 }
 

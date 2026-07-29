@@ -193,6 +193,13 @@ class World {
         this.throwSound.pause();
         this.coinSound.pause();
         this.winSound.pause();
+        this.throwSound.currentTime = 0;
+        this.coinSound.currentTime = 0;
+        this.winSound.currentTime = 0;
+        this.character.deathSound.pause();
+        this.character.deathSound.currentTime = 0;
+        this.character.hurtSound.pause();
+        this.character.hurtSound.currentTime = 0;
     }
 
     draw() {
