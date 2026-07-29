@@ -317,10 +317,10 @@ function initMusicButton() {
         world.musicOn = settings.music;
         if (world.musicOn) {
             world.backgroundSound.play();
-            musicIcon.src = "img/volume_up.svg";
+            musicIcon.src = "img/music_note.svg";
         } else {
             world.backgroundSound.pause();
-            musicIcon.src = "img/volume_off.svg";
+            musicIcon.src = "img/music_off.svg";
         }
     });
 }
@@ -336,9 +336,9 @@ function initEffectsButton() {
         localStorage.setItem("effects", settings.effects);
         world.effectsOn = settings.effects;
         if (world.effectsOn) {
-            effectIcon.src = "img/music_note.svg";
+            effectIcon.src = "img/volume_up.svg";
         } else {
-            effectIcon.src = "img/music_off.svg";
+            effectIcon.src = "img/volume_off.svg";
         }
     });
 }
@@ -515,10 +515,10 @@ function initOutsideClickClose() {
  */
 function updateSoundIcons() {
     document.getElementById("musicIcon").src =
-        settings.music ? "img/volume_up.svg" : "img/volume_off.svg";
+        settings.music ? "img/music_note.svg" : "img/music_off.svg";
 
     document.getElementById("effectIcon").src =
-        settings.effects ? "img/music_note.svg" : "img/music_off.svg";
+        settings.effects ? "img/volume_up.svg" : "img/volume_off.svg";
 }
 
 /**
