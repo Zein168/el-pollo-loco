@@ -324,10 +324,11 @@ h1 {
     right: 20px;
     z-index: 1000;
     justify-content: space-between;
+    flex-direction: row-reverse;
     align-items: flex-end;
 }
 
-@media (max-width: 1024px) and (pointer: coarse){
+@media (max-width: 1024px) and (pointer: coarse) {
     .game-started #mobileControls.active {
         display: flex;
     }
@@ -501,7 +502,7 @@ h1 {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0, 0, 0, 0.9);
     color: white;
     z-index: 9999;
     justify-content: center;
