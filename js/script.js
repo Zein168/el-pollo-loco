@@ -54,7 +54,6 @@ function closeFullscreen() {
  */
 window.addEventListener("load", () => {
     initMenuButton();
-    initRotateButton();
     initHowToPlay();
     initStory();
     initFullscreen();
@@ -605,18 +604,6 @@ function goToHome() {
     document.getElementById("homePage").style.display = "none";
     document.getElementById("mobileControls").classList.remove("active");
     document.querySelector(".sound-bar").style.display = "flex";
-}
-
-function initRotateButton() {
-    const rotateBtn = document.getElementById("rotateBtn");
-    if (!isOrientationLockSupported()) {
-        return;
-    }
-    let isLandscape = false;
-    rotateBtn.addEventListener("click", async () => {
-        await changeOrientation(isLandscape ? "portrait" : "landscape");
-        isLandscape = !isLandscape;
-    });
 }
 
 function isOrientationLockSupported() {
