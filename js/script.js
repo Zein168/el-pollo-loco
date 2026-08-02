@@ -16,6 +16,11 @@ window.addEventListener("load", () => {
     updateSoundIcons();
 });
 
+/**
+ * Resets all keyboard inputs to their inactive state.
+ * Iterates through all keyboard properties and sets them to false.
+ * This prevents stuck controls after restarting the game.
+ */
 function resetKeyboard() {
     keyboard.LEFT = false;
     keyboard.RIGHT = false;
@@ -136,6 +141,11 @@ function hideMobileControls() {
     document.getElementById("mobileControls").classList.remove("active");
 }
 
+/**
+ * Shows the mobile control buttons on supported devices.
+ * Checks if the device has touch support and if the screen size
+ * is suitable for mobile controls before activating them.
+ */
 function showMobileControls() {
     const isTouchDevice =
         navigator.maxTouchPoints > 0 ||
@@ -212,10 +222,19 @@ function goToHome() {
     document.querySelector(".sound-bar").style.display = "flex";
 }
 
+/**
+ * Checks if the browser supports screen orientation locking.
+ * Returns the available orientation lock function if supported.
+ */
 function isOrientationLockSupported() {
     return screen.orientation?.lock;
 }
 
+/**
+ * Changes the device orientation to the given mode.
+ *
+ * @param {string} mode - Target orientation mode
+ */
 async function changeOrientation(mode) {
     try {
         await screen.orientation.lock(mode);
@@ -224,6 +243,11 @@ async function changeOrientation(mode) {
     }
 }
 
+/**
+ * Checks the current device orientation.
+ * Shows a message on mobile devices when the device is held vertically.
+ * Hides the message when the device is already in landscape mode.
+ */
 function checkOrientation() {
     const rotateMessage = document.getElementById("rotateMessage");
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -241,6 +265,10 @@ window.addEventListener("load", checkOrientation);
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("orientationchange", checkOrientation);
 
+/**
+ * Initializes the menu button.
+ * Returns the user to the home screen when clicked.
+ */
 function initMenuButton() {
     const menuButton = document.getElementById("menu");
     menuButton.addEventListener("click", () => {
