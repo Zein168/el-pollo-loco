@@ -1,6 +1,7 @@
 /**
  * Represents a throwable bottle object in the game.
- * Extends MovableObject and handles throwing movement and rotation animation.
+ * Extends MovableObject and handles throwing movement,
+ * gravity and rotation animation.
  */
 class ThrowableObjects extends MovableObject {
     BOTTLES_ROTATION = [
@@ -15,6 +16,16 @@ class ThrowableObjects extends MovableObject {
         left: 25,
         right: 25
     };
+
+      /**
+     * Creates a throwable bottle.
+     * Loads images, sets position, direction and starts
+     * throwing and rotation animations.
+     *
+     * @param {number} x - Horizontal starting position
+     * @param {number} y - Vertical starting position
+     * @param {boolean} otherDirection - Defines throwing direction
+     */
     constructor(x, y, otherDirection) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.hasHit = false;
@@ -28,6 +39,12 @@ class ThrowableObjects extends MovableObject {
         this.animate();
     }
 
+    
+    /**
+     * Starts the throwing movement.
+     * Applies gravity and moves the bottle horizontally
+     * depending on the throwing direction.
+     */
     throw() {
         this.speedY = 25;
         this.applyGravity();
@@ -40,6 +57,10 @@ class ThrowableObjects extends MovableObject {
         }, 25);
     }
 
+        /**
+     * Starts the bottle rotation animation.
+     * Changes the displayed image continuously.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.BOTTLES_ROTATION);
