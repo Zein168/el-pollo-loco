@@ -11,7 +11,7 @@ class Endboss extends MovableObject {
     isHurt = false;
     isAttacking = false;
     attackCooldown = false;
-    speed = 1;
+    speed = 3;
     isActivated = false;
     isAlert = false;
 
@@ -57,6 +57,10 @@ class Endboss extends MovableObject {
     ];
 
 
+/**
+ * Creates the endboss enemy.
+ * Loads all required animation images and sets the initial position.
+ */
     constructor() {
         super();
         this.loadImage(this.IMAGES_WALKING[0]);
@@ -66,15 +70,22 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_ALERT);
         this.x = 5000;
-        
     }
 
+/**
+ * Starts all endboss systems.
+ * Activates movement, animations and attack behavior.
+ */
     animate() {
         this.startMovement();
         this.startAnimation();
         this.startAttack();
     }
 
+/**
+ * Starts the movement loop.
+ * Checks activation state and moves the endboss towards the character.
+ */
     startMovement() {
         this.intervals.push(setInterval(() => {
             this.checkActivation();
@@ -82,6 +93,10 @@ class Endboss extends MovableObject {
         }, 1000 / 60));;
     }
 
+/**
+ * Activates the endboss when the character reaches the boss area.
+ * Starts the alert animation before normal behavior begins.
+ */
     checkActivation() {
         if (
             this.world &&
@@ -96,6 +111,10 @@ class Endboss extends MovableObject {
         }
     }
 
+/**
+ * Moves the endboss towards the character.
+ * Movement is disabled during alert state or after death.
+ */
     moveTowardsCharacter() {
         if (this.isActivated && !this.isAlert && this.energy > 0) {
             if (this.world.character.x < this.x - 20) {
@@ -108,20 +127,28 @@ class Endboss extends MovableObject {
         }
     }
 
+/**
+ * Selects the correct animation depending on the current state.
+ * Handles death, hurt, attack, alert and walking animations.
+ */
     updateAnimation() {
         if (this.energy <= 0) {
             this.playAnimation(this.IMAGES_DEAD);
         } else if (this.isHurt) {
             this.playAnimation(this.IMAGES_HURT);
-        } else if (this.isAlert) {
-            this.playAnimation(this.IMAGES_ALERT);
         } else if (this.isAttacking) {
             this.playAnimation(this.IMAGES_ATTACK);
+        } else if (this.isAlert) {
+            this.playAnimation(this.IMAGES_ALERT);
         } else {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+/**
+ * Starts the attack timer.
+ * The endboss can attack regularly after activation.
+ */
     startAttack() {
         this.intervals.push(setInterval(() => {
             if (this.isActivated && !this.isAlert) {
@@ -130,29 +157,45 @@ class Endboss extends MovableObject {
         }, 1500));
     }
 
+    /**
+ * Starts the animation update loop.
+ */
     startAnimation() {
         this.intervals.push(setInterval(() => {
             this.updateAnimation();
         }, 200));
     }
 
+/**
+ * Performs an attack against the character.
+ * Uses a cooldown and checks the distance before dealing damage.
+ */
     attack() {
         if (this.attackCooldown || this.isAlert || this.energy <= 0) {
             return;
         }
+        this.attackCooldown = true;
         this.isAttacking = true;
+        this.currentAnimation = null;
+        this.currentImage = 0;
         setTimeout(() => {
-            if (this.world.character.isColliding(this)) {
+            let distance = Math.abs(this.world.character.x - this.x);
+            if (distance < 180) {
+
                 this.world.character.hit();
-            }
-            this.isAttacking = false;
-            this.attackCooldown = true;
-            setTimeout(() => {
-                this.attackCooldown = false;
-            }, 1000);
+            } 
         }, 500);
+
+        setTimeout(() => {
+            this.attackCooldown = false;
+        }, 1000);
+
     }
 
+/**
+ * Reduces the endboss health when hit.
+ * Triggers hurt animation or death when health reaches zero.
+ */
     hit() {
         if (this.isDead) return;
         this.energy -= 20;
@@ -166,10 +209,15 @@ class Endboss extends MovableObject {
         }, 500);
     }
 
+/**
+ * Handles the death state of the endboss.
+ * Stops further actions and resets the animation frame.
+ */
     die() {
         if (this.isDead) return;
         this.isDead = true;
         this.energy = 0;
+        this.currentAnimation = null;
         this.currentImage = 0;
     }
 } 

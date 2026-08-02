@@ -16,6 +16,13 @@ class SmallChicken extends MovableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
+/**
+ * Creates a small chicken enemy.
+ * Loads walking and death animations and initializes
+ * position, movement speed and death sound.
+ *
+ * @param {number} x - Horizontal starting position of the chicken
+ */
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -28,6 +35,12 @@ class SmallChicken extends MovableObject {
         this.chickenSoundPlayed = false;
     }
 
+/**
+ * Starts the movement and animation loops of the small chicken.
+ * The chicken follows the character and switches between
+ * walking and death animations.
+ * The death sound is played only once when defeated.
+ */
     animate() {
         this.intervals.push(setInterval(() => {
             const distance = this.world.character.x - this.x;

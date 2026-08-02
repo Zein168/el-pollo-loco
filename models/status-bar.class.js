@@ -14,32 +14,53 @@ class StatusBar extends DrawableObject {
 
     percentage = 100;
 
-    constructor(){
+/**
+ * Creates a status bar.
+ * Loads the provided images and initializes position,
+ * size and starting percentage value.
+ *
+ * @param {string[]} images - Array containing status bar image paths
+ * @param {number} x - Horizontal position of the status bar
+ * @param {number} y - Vertical position of the status bar
+ * @param {number} percentage - Initial status percentage value
+ */
+    constructor(images, x, y, percentage) {
         super();
+        this.IMAGES = images;
         this.loadImages(this.IMAGES);
-        this.x = 40;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
         this.width = 200;
         this.height = 60;
-        this.setPercentage(100);
+        this.setPercentage(percentage);
     }
 
-    setPercentage(percentage){
+/**
+ * Updates the displayed status bar image according to the percentage.
+ *
+ * @param {number} percentage - Current status value
+ */
+    setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
-    resolveImageIndex(){
-        if(this.percentage == 100){
+/**
+ * Determines the correct image index based on the current percentage.
+ *
+ * @returns {number} Index of the matching status bar image
+ */
+    resolveImageIndex() {
+        if (this.percentage >= 100) {
             return 5;
-        } else if (this.percentage >= 80){
+        } else if (this.percentage >= 80) {
             return 4;
-        } else if (this.percentage >= 60){
+        } else if (this.percentage >= 60) {
             return 3;
-        }  else if (this.percentage >= 40){
+        } else if (this.percentage >= 40) {
             return 2;
-        } else if (this.percentage >= 20){
+        } else if (this.percentage >= 20) {
             return 1;
         } else {
             return 0;

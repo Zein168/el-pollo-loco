@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mobile.css" />
     <link
       rel="icon"
       type="image/png"
@@ -23,15 +24,23 @@
     <script src="models/hearts.class.js"></script>
     <script src="models/background-object.class.js"></script>
     <script src="models/status-bar.class.js"></script>
+    <script src="models/health-bar.class.js"></script>
     <script src="models/coin-bar.class.js"></script>
     <script src="models/bottles-bar.class.js"></script>
     <script src="models/endboss-bar.class.js"></script>
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="models/world.class.js"></script>
+    <script src="models/collision-manager.class.js"></script>
+    <script src="js/world/world-sounds.js"></script>
+    <script src="js/world/world-render.js"></script>
     <script src="models/throwable-object.class.js"></script>
     <script src="js/game.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/fullscreen.js"></script>
+    <script src="js/game-control.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/settings.js"></script>
   </head>
   <body onload="init()">
     <div id="fullscreen">
@@ -54,10 +63,6 @@
                 alt="Exit Fullscreen"
               />
             </div>
-            <div id="rotateBtn">
-              <img src="img/mobile_rotate.svg" alt="Rotate">
-            </div>
-
             <div id="mobileControls">
         <div class="mobile-left">
         <button id="jumpBtn">
@@ -78,9 +83,10 @@
     </div>
           </div>
           <div class="sound-bar">
+            <img id="menu" src="img/menuicon.svg" alt="menu" />
             <img id="restartIcon" src="img/restart.svg" alt="Restart" />
-            <img id="effectIcon" src="img/music_note.svg" alt="Effects" />
-            <img id="musicIcon" src="img/volume_up.svg" alt="Music" />
+            <img id="effectIcon" src="img/volume_up.svg" alt="Effects" />
+            <img id="musicIcon" src="img/music_note.svg" alt="Music" />
           </div>
           <button id="startBtn">Start Game</button>
           <div class="end-buttons">
@@ -259,6 +265,12 @@
         <p class="colorRed">E-Mail: zein.9494@outlook.com</p>
 
         <button id="closePrivacy">Close</button>
+      </div>
+    </div>
+    <div id="rotateMessage">
+      <div>
+          <img src="img/mobile_rotate.svg" alt="rotate"><br>
+          Bitte drehe dein Gerät ins Querformat, um El Pollo Loco zu spielen.
       </div>
     </div>
   </body>

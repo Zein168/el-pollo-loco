@@ -11,6 +11,17 @@ class Level {
     bottles;
     hearts;
 
+    
+    /**
+     * Creates a game level with all required objects.
+     *
+     * @param {Enemy[]} enemies - Enemies placed in the level
+     * @param {Cloud[]} clouds - Moving cloud objects
+     * @param {DrawableObject[]} backgroundObjects - Background elements
+     * @param {Coin[]} coins - Collectible coins
+     * @param {Bottles[]} bottles - Collectible bottles
+     * @param {Heart[]} hearts - Collectible health items
+     */
     constructor(enemies, clouds, backgroundObjects, coins, bottles, hearts) {
         this.enemies = enemies;
         this.clouds = clouds;

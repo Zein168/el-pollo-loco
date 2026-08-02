@@ -87,7 +87,10 @@ class Character extends MovableObject {
  * applies gravity, and starts the animation loop.
  */
     constructor() {
-        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        super();
+        this.currentAnimation = null;
+        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
@@ -219,6 +222,8 @@ class Character extends MovableObject {
  * Makes the character jump and plays the jump sound.
  */
     jump() {
+        this.currentAnimation = this.IMAGES_JUMPING;
+        this.currentImage = 0;
         this.speedY = 30;
         this.jumpKillDone = false;
         this.jumpSound.currentTime = 0;
@@ -239,9 +244,7 @@ class Character extends MovableObject {
 
     checkLanding() {
         let isNowAboveGround = this.isAboveGround();
-        if (this.wasAboveGround && !isNowAboveGround) {
-            this.currentImage = 0;
-        }
+     
         this.wasAboveGround = isNowAboveGround;
     }
 }
