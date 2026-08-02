@@ -9,7 +9,7 @@ class World {
     canvas;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
+    statusBar = new HealthBar();
     coinBar = new CoinBar();
     throwableObjects = [];
     collectedCoins = 0;
