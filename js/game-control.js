@@ -78,15 +78,9 @@ function resetGameState() {
     world.gameLost = false;
     world.character.energy = 100;
     world.character.isDead = false;
-    world.character.deathSoundPlayed = false;
-    world.character.hurtSoundPlayed = false;
     world.character.lastHit = 0;
     world.character.speedY = 0;
     world.character.jumpKillDone = false;
-    world.character.deathSound.pause();
-    world.character.deathSound.currentTime = 0;
-    world.character.hurtSound.pause();
-    world.character.hurtSound.currentTime = 0;
 }
 
 /**
