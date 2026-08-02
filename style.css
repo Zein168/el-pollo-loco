@@ -515,3 +515,8 @@ h1 {
 #rotateMessage div {
     padding: 20px;
 }
+
+#rotateMessage img {
+    width: 90px;
+    height: 90px;
+}
