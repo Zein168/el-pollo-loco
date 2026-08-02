@@ -21,16 +21,6 @@ class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    // drawFrame(ctx){
-    //if(this instanceof Character || this instanceof Chicken || this instanceof SmallChicken || this instanceof Coin || this instanceof ThrowableObjects || this instanceof Bottles){
-    //  ctx.beginPath();
-    // ctx.lineWidth = '5';
-    // ctx.strokeStyle = 'black';
-    // ctx.rect(this.x, this.y, this.width, this.height);
-    //ctx.stroke();
-    //}
-    // }
-
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
