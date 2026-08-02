@@ -39,6 +39,7 @@ class World {
     coinsSinceBonus = false;
     gameInterval;
     jumpKillCooldown = false;
+    collisionManager;
 
     /**
      * Creates a new game world.
@@ -52,6 +53,7 @@ class World {
         this.keyboard = keyboard;
         this.musicOn = settings.music;
         this.effectsOn = settings.effects;
+        this.collisionManager = new CollisionManager(this);
         this.winImage = new Image();
         this.winImage.src = 'img/You won, you lost/You won A.png';
         this.loseImage = new Image();
@@ -98,12 +100,9 @@ class World {
             if (this.gameWon || this.gameLost) {
                 return;
             }
-            this.checkCollisions();
+            this.collisionManager.checkAll();
             this.checkThrowObjects();
-            this.checkCoinCollisions();
-            this.checkBottleCollisions();
-            this.checkHeartCollisions();
-            this.checkBottleHitsEnemy();
+
             if (this.character.energy <= 0 && !this.gameLost) {
                 this.gameLost = true;
                 hideMobileControls();
@@ -169,9 +168,9 @@ class World {
     }
 
     /**
- * Updates the amount of available bottles.
- * Removes bonus bottles first, then normal bottles.
- */
+     * Updates the amount of available bottles.
+     * Removes bonus bottles first, then normal bottles.
+     */
     updateBottleCount() {
         if (this.bonusBottles > 0) {
             this.bonusBottles--;
@@ -182,67 +181,8 @@ class World {
     }
 
     /**
- * Checks collisions between the player and enemies.
- * Handles normal damage and jump attacks.
- */
-    checkCollisions() {
-        for (let enemy of this.level.enemies) {
-            if (enemy.isDead) continue;
-            if (!this.character.isColliding(enemy)) continue;
-            if (this.isJumpingOnEnemy(enemy)) {
-                this.killEnemyByJump(enemy);
-                return;
-            }
-            this.characterHit();
-            break;
-        }
-    }
-
-    /**
- * Checks if the player is jumping on top of an enemy.
- *
- * @param {MovableObject} enemy - Enemy to check
- * @returns {boolean} True if the enemy can be defeated by jumping
- */
-    isJumpingOnEnemy(enemy) {
-        let characterFeet = this.character.y + this.character.height;
-        let enemyHead = enemy.y;
-        return (
-            this.character.speedY < 0 &&
-            characterFeet - enemyHead < 40 &&
-            !this.character.jumpKillDone
-        );
-    }
-
-    /**
- * Defeats an enemy by jumping on it.
- * Creates a heart reward and bounces the player upwards.
- *
- * @param {MovableObject} enemy - Enemy that gets defeated
- */
-    killEnemyByJump(enemy) {
-        if (this.character.jumpKillDone) {
-            return;
-        }
-        this.character.jumpKillDone = true;
-        enemy.die();
-        this.character.speedY = 15;
-        this.level.hearts.push(new Heart(enemy.x, enemy.y));
-
-    }
-
-
-    /**
-     * Applies damage to the player and updates the health bar.
+     * Stops all active game sounds.
      */
-    characterHit() {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
-    }
-
-    /**
- * Stops all active game sounds.
- */
     stopAllSounds() {
         this.backgroundSound.pause();
         this.backgroundSound.currentTime = 0;
@@ -259,33 +199,9 @@ class World {
     }
 
     /**
-     * Checks and handles collected coins.
-     */
-    checkCoinCollisions() {
-        if (this.coinBonusActive) return;
-        this.level.coins.forEach((coin, index) => {
-            if (this.character.isColliding(coin)) {
-                this.collectCoin(index);
-            }
-        });
-    }
-
-    /**
- * Removes a collected coin and updates the coin counter.
- *
- * @param {number} index - Index of the collected coin
- */
-    collectCoin(index) {
-        this.level.coins.splice(index, 1);
-        this.collectedCoins++;
-        this.playCoinSound();
-        this.updateCoinBar();
-    }
-
- /**
- * Draws the collected coin amount on the game screen.
- * Displays the counter only when at least one coin was collected.
- */
+    * Draws the collected coin amount on the game screen.
+    * Displays the counter only when at least one coin was collected.
+    */
     drawBonusCoins() {
         if (this.collectedCoins === 0) {
             return;
@@ -300,10 +216,10 @@ class World {
 
     }
 
- /**
- * Plays the coin collection sound effect.
- * Resets the audio position before playing.
- */
+    /**
+    * Plays the coin collection sound effect.
+    * Resets the audio position before playing.
+    */
     playCoinSound() {
         if (this.effectsOn) {
             this.coinSound.currentTime = 0;
@@ -311,25 +227,12 @@ class World {
         }
     }
 
-     /**
-     * Updates the displayed coin status bar.
-     */
+    /**
+    * Updates the displayed coin status bar.
+    */
     updateCoinBar() {
         let percent = (this.collectedCoins / this.maxCoins) * 100;
         this.coinBar.setPercentage(percent);
-    }
-
-    /**
-     * Checks and handles collected bottles.
-     */
-    checkBottleCollisions() {
-        this.level.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle)) {
-                this.level.bottles.splice(index, 1);
-                this.bottlesLeft++;
-                this.updateBottleBar();
-            }
-        });
     }
 
     /**
@@ -357,92 +260,10 @@ class World {
         this.bottleBar.setPercentage(percent);
     }
 
-    
     /**
-     * Checks if the player collects a health item.
-     * Restores player energy and updates the health bar.
-     */
-    checkHeartCollisions() {
-        this.level.hearts.forEach((heart, index) => {
-            if (
-                heart.collectable &&
-                this.character.isColliding(heart) &&
-                this.character.energy < 100
-            ) {
-                this.level.hearts.splice(index, 1);
-                this.character.energy += 20;
-                this.character.energy = Math.min(100, this.character.energy);
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        });
-    }
-
-     /**
-     * Checks collisions between thrown bottles and enemies.
-     */
-    checkBottleHitsEnemy() {
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
-            if (bottle.hasHit) return;
-            let hit = this.level.enemies.some(enemy => {
-                if (bottle.isColliding(enemy)) {
-                    this.handleBottleHit(bottle, enemy);
-                    return true;
-                }
-                return false;
-            });
-            if (hit) {
-                this.throwableObjects.splice(bottleIndex, 1);
-            }
-        });
-    }
-
-     /**
-     * Handles a successful bottle hit.
-     *
-     * @param {ThrowableObjects} bottle - Bottle object hitting an enemy
-     * @param {MovableObject} enemy - Enemy being hit
-     */
-    handleBottleHit(bottle, enemy) {
-        if (bottle.hasHit || enemy.isDead) return;
-        bottle.hasHit = true;
-        if (enemy instanceof Endboss) {
-            this.hitEndboss(enemy);
-        } else {
-            this.hitEnemy(enemy);
-        }
-    }
-
-    /**
-     * Damages the endboss and updates the boss health bar.
-     *
-     * @param {Endboss} enemy - Endboss instance
-     */
-    hitEndboss(enemy) {
-        enemy.hit();
-        this.endbossBar.setPercentage(enemy.energy);
-        if (enemy.energy <= 0) {
-            this.winGame();
-        }
-    }
-
-    
-    /**
-     * Defeats a normal enemy after being hit by a bottle.
-     *
-     * @param {MovableObject} enemy - Enemy instance
-     */
-    hitEnemy(enemy) {
-        if (!enemy.isDead) {
-            let newBottle = new Bottles(enemy.x);
-            this.level.bottles.push(newBottle);
-            enemy.die();
-        }
-    }
-
-     /**
-     * Finishes the game successfully.
-     * Stops sounds, animations, and displays the win screen.
-     */
+    * Finishes the game successfully.
+    * Stops sounds, animations, and displays the win screen.
+    */
     winGame() {
         this.gameWon = true;
         hideMobileControls();
@@ -459,9 +280,9 @@ class World {
         }
     }
 
-     /**
-     * Stops the active game loop and animations.
-     */
+    /**
+    * Stops the active game loop and animations.
+    */
     stopGame() {
         if (this.gameInterval) {
             clearInterval(this.gameInterval);
