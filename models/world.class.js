@@ -28,11 +28,7 @@ class World {
     gameLost = false;
     introImage = new Image();
     showIntro = true;
-    winSound = new Audio('audio/victory.mp3');
     winSoundPlayed = false;
-    throwSound = new Audio('audio/bottle-throw.mp3');
-    backgroundSound = new Audio('audio/background-music.mp3');
-    coinSound = new Audio('audio/coin.mp3');
     dKeyPressed = false;
     musicOn = true;
     effectsOn = true;
@@ -43,6 +39,13 @@ class World {
     coinsSinceBonus = false;
     gameInterval;
     jumpKillCooldown = false;
+
+    /**
+     * Creates a new game world.
+     *
+     * @param {HTMLCanvasElement} canvas - Canvas element used for rendering
+     * @param {Keyboard} keyboard - Keyboard input controller
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -54,13 +57,17 @@ class World {
         this.loseImage = new Image();
         this.loseImage.src = 'img/You won, you lost/Game Over.png';
         this.introImage.src = "img/9_intro_outro_screens/start/startscreen_1.png";
-        this.backgroundSound.loop = true;
-        this.backgroundSound.volume = 0.3;
+        this.initSounds();
         this.setWorld();
         this.draw();
         this.run();
     }
 
+    /**
+     * Connects all game objects with the current world.
+     * Assigns the world reference to the character and enemies.
+     * Creates the endboss health bar if an endboss exists.
+     */
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => {
@@ -72,12 +79,20 @@ class World {
         });
     }
 
+    /**
+     * Starts the animation loops of all enemies in the level.
+     */
     startEnemies() {
         this.level.enemies.forEach(enemy => {
             enemy.animate();
         });
     }
 
+    /**
+ * Starts the main game loop.
+ * Checks collisions, player actions, collectibles,
+ * and handles game over conditions.
+ */
     run() {
         this.gameInterval = setInterval(() => {
             if (this.gameWon || this.gameLost) {
@@ -98,6 +113,10 @@ class World {
         }, 30);
     }
 
+    /**
+     * Checks if the player can throw a bottle.
+     * Handles keyboard input and throw cooldown.
+     */
     checkThrowObjects() {
         if (this.keyboard.D && !this.dKeyPressed) {
             if (!this.canThrowBottle()) {
@@ -112,6 +131,12 @@ class World {
         }
     }
 
+    /**
+ * Checks if the player is allowed to throw a bottle.
+ * Verifies keyboard input, throw cooldown, and available bottles.
+ *
+ * @returns {boolean} True if a bottle can be thrown
+ */
     canThrowBottle() {
         return this.keyboard.D &&
             !this.dKeyPressed &&
@@ -119,6 +144,10 @@ class World {
             (this.bottlesLeft > 0 || this.bonusBottles > 0);
     }
 
+    /**
+     * Creates and throws a new bottle object.
+     * Updates position, sound effects, and cooldown timer.
+     */
     throwBottle() {
         let bottleX = this.character.otherDirection
             ? this.character.x - 50
@@ -139,6 +168,10 @@ class World {
         this.character.lastAction = Date.now();
     }
 
+    /**
+ * Updates the amount of available bottles.
+ * Removes bonus bottles first, then normal bottles.
+ */
     updateBottleCount() {
         if (this.bonusBottles > 0) {
             this.bonusBottles--;
@@ -148,6 +181,10 @@ class World {
         this.updateBottleBar();
     }
 
+    /**
+ * Checks collisions between the player and enemies.
+ * Handles normal damage and jump attacks.
+ */
     checkCollisions() {
         for (let enemy of this.level.enemies) {
             if (enemy.isDead) continue;
@@ -161,6 +198,12 @@ class World {
         }
     }
 
+    /**
+ * Checks if the player is jumping on top of an enemy.
+ *
+ * @param {MovableObject} enemy - Enemy to check
+ * @returns {boolean} True if the enemy can be defeated by jumping
+ */
     isJumpingOnEnemy(enemy) {
         let characterFeet = this.character.y + this.character.height;
         let enemyHead = enemy.y;
@@ -171,6 +214,12 @@ class World {
         );
     }
 
+    /**
+ * Defeats an enemy by jumping on it.
+ * Creates a heart reward and bounces the player upwards.
+ *
+ * @param {MovableObject} enemy - Enemy that gets defeated
+ */
     killEnemyByJump(enemy) {
         if (this.character.jumpKillDone) {
             return;
@@ -182,11 +231,18 @@ class World {
 
     }
 
+
+    /**
+     * Applies damage to the player and updates the health bar.
+     */
     characterHit() {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
     }
 
+    /**
+ * Stops all active game sounds.
+ */
     stopAllSounds() {
         this.backgroundSound.pause();
         this.backgroundSound.currentTime = 0;
@@ -202,103 +258,9 @@ class World {
         this.character.hurtSound.currentTime = 0;
     }
 
-    draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if (this.showIntro) {
-            this.ctx.drawImage(
-                this.introImage,
-                0,
-                0,
-                this.canvas.width,
-                this.canvas.height
-            );
-            requestAnimationFrame(() => this.draw());
-            return;
-        }
-        this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.bottleBar);
-        this.drawBonusCoins();
-        this.drawBonusBottles();
-        this.ctx.translate(this.camera_x, 0);
-        if (this.endbossBar) {
-            this.endbossBar.updatePosition();
-            this.addToMap(this.endbossBar);
-        }
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.level.hearts.forEach(h => h.update());
-        this.addObjectsToMap(this.level.hearts);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.throwableObjects);
-        this.ctx.translate(-this.camera_x, 0);
-        if (this.gameWon) {
-            this.ctx.drawImage(
-                this.winImage,
-                25,
-                50,
-                650,
-                400
-            );
-            if (this === world) {
-                document.getElementById("restartBtn2").style.display = "block";
-                document.getElementById("homePage").style.display = "block";
-            }
-        }
-        if (this.gameLost) {
-            this.ctx.drawImage(
-                this.loseImage,
-                45,
-                50,
-                650,
-                400
-            );
-            if (this === world) {
-                document.getElementById("restartBtn2").style.display = "block";
-                document.getElementById("homePage").style.display = "block";
-            }
-        }
-        // draw is repeatedly called so that the movements become visible
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
-    }
-
-    addObjectsToMap(objects) {
-        objects.forEach(o => {
-            this.addToMap(o);
-        })
-    }
-
-    addToMap(mo) {
-        if (mo.otherDirection) {
-            this.flipImage(mo);
-        }
-        mo.draw(this.ctx);
-        if (mo.otherDirection) {
-            this.flipImageBack(mo);
-        }
-
-    }
-
-    flipImage(mo) {
-        this.ctx.save();
-        this.ctx.translate(mo.width, 0);
-        this.ctx.scale(-1, 1);
-        mo.x = mo.x * -1;
-    }
-
-    flipImageBack(mo) {
-        mo.x = mo.x * -1;
-        this.ctx.restore();
-    }
-
+    /**
+     * Checks and handles collected coins.
+     */
     checkCoinCollisions() {
         if (this.coinBonusActive) return;
         this.level.coins.forEach((coin, index) => {
@@ -308,6 +270,11 @@ class World {
         });
     }
 
+    /**
+ * Removes a collected coin and updates the coin counter.
+ *
+ * @param {number} index - Index of the collected coin
+ */
     collectCoin(index) {
         this.level.coins.splice(index, 1);
         this.collectedCoins++;
@@ -315,6 +282,10 @@ class World {
         this.updateCoinBar();
     }
 
+ /**
+ * Draws the collected coin amount on the game screen.
+ * Displays the counter only when at least one coin was collected.
+ */
     drawBonusCoins() {
         if (this.collectedCoins === 0) {
             return;
@@ -329,6 +300,10 @@ class World {
 
     }
 
+ /**
+ * Plays the coin collection sound effect.
+ * Resets the audio position before playing.
+ */
     playCoinSound() {
         if (this.effectsOn) {
             this.coinSound.currentTime = 0;
@@ -336,11 +311,17 @@ class World {
         }
     }
 
+     /**
+     * Updates the displayed coin status bar.
+     */
     updateCoinBar() {
         let percent = (this.collectedCoins / this.maxCoins) * 100;
         this.coinBar.setPercentage(percent);
     }
 
+    /**
+     * Checks and handles collected bottles.
+     */
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
@@ -351,6 +332,10 @@ class World {
         });
     }
 
+    /**
+ * Draws the available bottle amount on the game screen.
+ * Displays the counter only when at least one bottle is available.
+ */
     drawBonusBottles() {
         if (this.bottlesLeft === 0) {
             return;
@@ -364,11 +349,19 @@ class World {
         );
     }
 
+    /**
+     * Updates the displayed bottle status bar.
+     */
     updateBottleBar() {
         let percent = (this.bottlesLeft / this.maxBottles) * 100;
         this.bottleBar.setPercentage(percent);
     }
 
+    
+    /**
+     * Checks if the player collects a health item.
+     * Restores player energy and updates the health bar.
+     */
     checkHeartCollisions() {
         this.level.hearts.forEach((heart, index) => {
             if (
@@ -384,6 +377,9 @@ class World {
         });
     }
 
+     /**
+     * Checks collisions between thrown bottles and enemies.
+     */
     checkBottleHitsEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             if (bottle.hasHit) return;
@@ -400,6 +396,12 @@ class World {
         });
     }
 
+     /**
+     * Handles a successful bottle hit.
+     *
+     * @param {ThrowableObjects} bottle - Bottle object hitting an enemy
+     * @param {MovableObject} enemy - Enemy being hit
+     */
     handleBottleHit(bottle, enemy) {
         if (bottle.hasHit || enemy.isDead) return;
         bottle.hasHit = true;
@@ -410,6 +412,11 @@ class World {
         }
     }
 
+    /**
+     * Damages the endboss and updates the boss health bar.
+     *
+     * @param {Endboss} enemy - Endboss instance
+     */
     hitEndboss(enemy) {
         enemy.hit();
         this.endbossBar.setPercentage(enemy.energy);
@@ -418,6 +425,12 @@ class World {
         }
     }
 
+    
+    /**
+     * Defeats a normal enemy after being hit by a bottle.
+     *
+     * @param {MovableObject} enemy - Enemy instance
+     */
     hitEnemy(enemy) {
         if (!enemy.isDead) {
             let newBottle = new Bottles(enemy.x);
@@ -426,6 +439,10 @@ class World {
         }
     }
 
+     /**
+     * Finishes the game successfully.
+     * Stops sounds, animations, and displays the win screen.
+     */
     winGame() {
         this.gameWon = true;
         hideMobileControls();
@@ -442,6 +459,9 @@ class World {
         }
     }
 
+     /**
+     * Stops the active game loop and animations.
+     */
     stopGame() {
         if (this.gameInterval) {
             clearInterval(this.gameInterval);
