@@ -1,4 +1,8 @@
 class HealthBar extends StatusBar {
+    /**
+     * Creates a new health status bar with all health
+     * status images and initializes the health value to 100%.
+     */
     constructor() {
         super([
             'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',

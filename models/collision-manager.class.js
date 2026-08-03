@@ -4,6 +4,11 @@
  */
 class CollisionManager {
 
+    /**
+     * Creates a new collision manager.
+     *
+     * @param {World} world - The game world containing all relevant objects.
+     */
     constructor(world) {
         this.world = world;
     }

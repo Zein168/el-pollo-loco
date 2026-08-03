@@ -42,11 +42,15 @@ class World {
     collisionManager;
 
     /**
-     * Creates a new game world.
-     *
-     * @param {HTMLCanvasElement} canvas - Canvas element used for rendering
-     * @param {Keyboard} keyboard - Keyboard input controller
-     */
+   * Creates a new game world.
+   *
+   * Initializes the canvas context, keyboard controls,
+   * game settings, collision management, game state images,
+   * sounds, and starts the game loop.
+   *
+   * @param {HTMLCanvasElement} canvas - Canvas element used for rendering the game.
+   * @param {Keyboard} keyboard - Keyboard input controller for player actions.
+   */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
