@@ -123,7 +123,11 @@
     }
 
     .game-buttons-container {
-        display: none;
+        position: absolute;
+        top: 17px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
     }
 
     h1 {
@@ -161,8 +165,7 @@
         padding-bottom: 0;
     }
 
-    h1,
-    .game-buttons-container {
+    h1 {
         display: none;
     }
 
