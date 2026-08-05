@@ -146,21 +146,27 @@
 
 @media (max-width:1024px) {
     h1 {
-        margin-top:0;
+        margin-top: 0;
     }
 
     #fullscreen {
-        padding-bottom:0;
+        padding-bottom: 0;
     }
 
     #rotateMessage div {
-        padding-left:0;
-        padding-right:0;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
 @media (width:412px) and (height:915px) {
     body {
         align-items: stretch;
+    }
+}
+
+@media (max-width: 1280px) and (max-height: 832px) and (orientation: landscape) {
+    h1 {
+        margin-top: 99px;
     }
 }
