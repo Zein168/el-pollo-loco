@@ -7,7 +7,7 @@ class Character extends MovableObject {
     jumpKillDone = false;
     wasAboveGround = false;
     offset = {
-        top: 40,
+        top: 120,
         bottom: 10,
         left: 35,
         right: 35
