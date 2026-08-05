@@ -4,6 +4,11 @@
  */
 class CollisionManager {
 
+    /**
+     * Creates a new collision manager.
+     *
+     * @param {World} world - The game world containing all relevant objects.
+     */
     constructor(world) {
         this.world = world;
     }
@@ -56,18 +61,17 @@ class CollisionManager {
     }
 
     /**
-     * Defeats an enemy by jumping on it.
-     * Creates a health item and bounces the player upwards.
-     *
-     * @param {MovableObject} enemy - Enemy that gets defeated
-     */
+    * Defeats an enemy by jumping on it.
+    * Creates a health item after the enemy is defeated.
+    *
+    * @param {MovableObject} enemy - Enemy that gets defeated
+    */
     killEnemyByJump(enemy) {
         if (this.world.character.jumpKillDone) {
             return;
         }
         this.world.character.jumpKillDone = true;
         enemy.die();
-        this.world.character.speedY = 15;
         this.world.level.hearts.push(
             new Heart(enemy.x, enemy.y)
         );

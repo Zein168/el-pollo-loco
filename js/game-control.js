@@ -3,9 +3,6 @@
  * Handles restarting, returning home, and starting the game.
  */
 function initGameButtons() {
-    document.getElementById("restartBtn").addEventListener("click", () => {
-        restartGame();
-    });
     document.getElementById("restartBtn2").addEventListener("click", (e) => {
         e.target.blur();
         restartGame();
