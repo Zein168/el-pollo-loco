@@ -34,7 +34,7 @@ class World {
     effectsOn = true;
     gameStarted = false;
     lastThrowTime = 0;
-    throwCooldown = 500;
+    throwCooldown = 1500;
     coinBonus = 0;
     coinsSinceBonus = false;
     gameInterval;
