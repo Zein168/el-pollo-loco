@@ -245,16 +245,11 @@ async function changeOrientation(mode) {
 
 /**
  * Checks the current device orientation.
- * Shows a message on mobile devices when the device is held vertically.
- * Hides the message when the device is already in landscape mode.
+ * Shows a message when the screen is in portrait mode.
+ * Hides the message when the screen is in landscape mode.
  */
 function checkOrientation() {
     const rotateMessage = document.getElementById("rotateMessage");
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (!isMobile) {
-        rotateMessage.style.display = "none";
-        return;
-    }
     if (window.innerHeight > window.innerWidth) {
         rotateMessage.style.display = "flex";
     } else {

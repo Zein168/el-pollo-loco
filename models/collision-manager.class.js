@@ -26,28 +26,27 @@ class CollisionManager {
 
     /**
      * Checks collisions between the player and enemies.
-     * Handles normal damage and jump attacks.
+     * Skips defeated enemies, applies damage on contact,
+     * and defeats enemies when the player jumps on them.
      */
     checkCollisions() {
         for (let enemy of this.world.level.enemies) {
             if (enemy.isDead) continue;
             if (!this.world.character.isColliding(enemy)) continue;
-
             if (this.isJumpingOnEnemy(enemy)) {
                 this.killEnemyByJump(enemy);
-                return;
+                continue;
             }
-
             this.characterHit();
             break;
         }
     }
 
     /**
-     * Checks if the player is jumping on top of an enemy.
+     * Checks if the player is positioned above an enemy during a jump.
      *
      * @param {MovableObject} enemy - Enemy to check
-     * @returns {boolean} True if enemy can be defeated by jumping
+     * @returns {boolean} True if the player is landing on the enemy
      */
     isJumpingOnEnemy(enemy) {
         let characterFeet = this.world.character.y + this.world.character.height;
@@ -55,8 +54,7 @@ class CollisionManager {
 
         return (
             this.world.character.speedY < 0 &&
-            characterFeet - enemyHead < 40 &&
-            !this.world.character.jumpKillDone
+            characterFeet - enemyHead < 40
         );
     }
 
@@ -67,10 +65,7 @@ class CollisionManager {
     * @param {MovableObject} enemy - Enemy that gets defeated
     */
     killEnemyByJump(enemy) {
-        if (this.world.character.jumpKillDone) {
-            return;
-        }
-        this.world.character.jumpKillDone = true;
+        if (enemy.isDead) return;
         enemy.die();
         this.world.level.hearts.push(
             new Heart(enemy.x, enemy.y)
