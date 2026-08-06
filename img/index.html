@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mobile.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
+    />
+    <title>El Pollo Loco</title>
+    <script src="models/drawable-object.class.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/chicken.class.js"></script>
+    <script src="models/small-chicken.class.js"></script>
+    <script src="models/endboss.class.js"></script>
+    <script src="models/cloud.class.js"></script>
+    <script src="models/coin.class.js"></script>
+    <script src="models/bottles.class.js"></script>
+    <script src="models/hearts.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/status-bar.class.js"></script>
+    <script src="models/health-bar.class.js"></script>
+    <script src="models/coin-bar.class.js"></script>
+    <script src="models/bottles-bar.class.js"></script>
+    <script src="models/endboss-bar.class.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="models/world.class.js"></script>
+    <script src="models/collision-manager.class.js"></script>
+    <script src="js/world/world-sounds.js"></script>
+    <script src="js/world/world-render.js"></script>
+    <script src="models/throwable-object.class.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/fullscreen.js"></script>
+    <script src="js/game-control.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/settings.js"></script>
+  </head>
+  <body onload="init()">
+    <div id="fullscreen">
+      <h1>El Pollo Loco</h1>
+      <div class="game-container">
+        <div class="intro-container">
+          <div class="canvas-wrapper">
+            <canvas id="canvas" width="720" height="480"></canvas>
+
+            <div id="fullscreenBtn" onclick="toggleFullscreen()">
+              <img
+                id="fullscreenIcon"
+                src="img/fullscreen.png"
+                alt="Fullscreen"
+              />
+              <img
+                class="hidden"
+                id="fullscreenIcon_exit"
+                src="img/fullscreen_exit.png"
+                alt="Exit Fullscreen"
+              />
+            </div>
+            <div id="mobileControls">
+        <div class="mobile-left">
+        <button id="jumpBtn">
+            <img src="img/space_bar.svg">
+        </button>
+        <button id="throwBtn">
+            <img src="img/d-solid.svg">
+        </button>
+    </div>
+
+    <div class="mobile-right">
+        <button id="leftBtn">
+            <img src="img/circle-arrow-left-solid-full.svg">
+        </button>
+        <button id="rightBtn">
+            <img src="img/circle-arrow-right-solid-full.svg">
+        </button>
+    </div>
+          </div>
+          <div class="sound-bar">
+            <img id="menu" src="img/menuicon.svg" alt="menu" />
+            <img id="restartIcon" src="img/restart.svg" alt="Restart" />
+            <img id="effectIcon" src="img/volume_up.svg" alt="Effects" />
+            <img id="musicIcon" src="img/music_note.svg" alt="Music" />
+          </div>
+          <button id="startBtn">Start Game</button>
+          <div class="end-buttons">
+            <button id="restartBtn2" style="display: none">Restart</button>
+            <button id="homePage" style="display: none">HomePage</button>
+          </div>
+        </div>
+        <div class="game-buttons-container">
+          <div class="game-buttons">
+          <button id="howToPlayBtn">How to Play</button>
+          <button id="storyBtn">Story</button>
+          <button id="impressumBtn">Impressum</button>
+          <button id="privacyBtn">Privacy</button>
+        </div>
+        
+      </div>
+      <div id="howToPlay" class="hidden">
+        <h2 class="colorRed">How to Play</h2>
+        <div class="control-row">
+          <div>
+            <img src="img/arrow_right.svg" alt="Right Arrow" />
+            Move right
+          </div>
+          <img src="img/gamepad_right.svg" alt="Gamepad Right" />
+        </div>
+        <div class="control-row">
+          <div>
+            <img src="img/arrow_left.svg" alt="Left Arrow" />
+            Move left
+          </div>
+          <img src="img/gamepad_left.svg" alt="Gamepad Left" />
+        </div>
+        <div class="control-row">
+          <div>
+            <img src="img/arrow_upward.svg" alt="Up Arrow" />
+            Jump
+          </div>
+          <img src="img/space_bar.svg" alt="Gamepad Up" />
+        </div>
+        <div class="control-row">
+          <div>
+            <strong>D</strong>
+            Throw bottle
+          </div>
+          <img src="img/d-solid.svg" alt="Gamepad Throw" />
+        </div>
+        <button id="closeHowToPlay">Close</button>
+      </div>
+
+      <div id="storyContainer" class="hidden">
+        <h2 class="colorRed">Story</h2>
+        <p>
+          Pepe lebt ein ruhiges Leben in einem kleinen Dorf in Mexiko. Er liebt
+          scharfes Essen und ist besonders stolz auf seine selbstgemachten
+          Salsa-Flaschen.
+        </p>
+        <p>
+          Eines Morgens stellt er fest, dass alle seine wertvollen
+          Salsa-Flaschen verschwunden sind. Die Spuren führen direkt in die
+          Wüste.
+        </p>
+        <p>
+          Entschlossen macht sich Pepe auf den Weg, um die gestohlenen Flaschen
+          zurückzuholen. Auf seiner Reise begegnet er vielen wilden Hühnern, die
+          ihm den Weg versperren.
+        </p>
+        <p>
+          Unterwegs sammelt Pepe Münzen, um seinen Mut zu beweisen, und findet
+          neue Flaschen, die er als Waffe gegen seine Gegner einsetzen kann.
+        </p>
+        <p>
+          Je näher er seinem Ziel kommt, desto gefährlicher werden die Feinde.
+          Schließlich erreicht er das Versteck des mächtigen Endbosses.
+        </p>
+        <p>
+          Nur wenn Pepe geschickt springt, den Angriffen ausweicht und seine
+          Flaschen klug einsetzt, kann er den Endboss besiegen und den Frieden
+          in seinem Dorf wiederherstellen.
+        </p>
+        <button id="closeStory">Close</button>
+      </div>
+      <div id="impressumContainer" class="hidden">
+        <h2 class="colorRed">Impressum</h2>
+
+        <p><strong>Angaben gemäß § 5 DDG</strong></p>
+
+        <p class="colorRed">Zein Natfaji</p>
+
+        <p class="colorRed">
+          Schozacher Straße 11<br />
+          74074 Heilbronn
+        </p>
+
+        <p>
+          <strong>Vertreten durch:</strong><br />
+          <span class="colorRed">Zein Natfaji</span>
+        </p>
+
+        <p>
+          <strong>Kontakt:</strong><br />
+          <span class="colorRed">Telefon: 0049-15226605951</span><br />
+          <span class="colorRed">E-Mail: zein.9494@outlook.com</span>
+        </p>
+
+        <p>
+          <strong>Umsatzsteuer-ID:</strong><br />
+          <span class="colorRed">
+            gemäß §27a Umsatzsteuergesetz: 23015674386
+          </span>
+        </p>
+
+        <p>
+          Wir nehmen nicht an Streitbeilegungsverfahren vor einer
+          Verbraucherschlichtungsstelle teil und sind dazu auch nicht
+          verpflichtet.
+        </p>
+
+        <p>
+          Erstellt mit dem Impressum-Generator von WebsiteWissen.com, dem
+          Ratgeber für Website-Erstellung, Homepage-Baukästen und Shopsysteme.
+          Rechtstext von der Kanzlei Hasselbach.
+        </p>
+
+        <button id="closeImpressum">Close</button>
+      </div>
+      <div id="privacyContainer" class="hidden">
+        <h2 class="colorRed">Datenschutzerklärung</h2>
+
+        <p><strong>1. Verantwortlicher</strong></p>
+
+        <p class="colorRed">Zein Natfaji</p>
+
+        <p class="colorRed">
+          Schozacher Straße 11<br />
+          74074 Heilbronn
+        </p>
+
+        <p>
+          <strong>Kontakt:</strong><br />
+          <span class="colorRed">E-Mail: zein.9494@outlook.com</span>
+        </p>
+
+        <p class="colorRed">
+          Diese Daten dienen ausschließlich der technischen Bereitstellung und
+          Sicherheit der Website.
+        </p>
+
+        <p><strong>2. Cookies</strong></p>
+
+        <p class="colorRed">Diese Website verwendet keine Cookies.</p>
+
+        <p><strong>3. Analyse- und Tracking-Tools</strong></p>
+
+        <p class="colorRed">
+          Es werden keine Analyse- oder Tracking-Dienste (z. B. Google
+          Analytics) verwendet.
+        </p>
+
+        <p><strong>4. Zweck der Website</strong></p>
+
+        <p class="colorRed">
+          Diese Website dient ausschließlich als Schulprojekt und wurde zu
+          Lernzwecken erstellt.
+        </p>
+
+        <p><strong>5. Kontakt</strong></p>
+
+        <p class="colorRed">
+          Bei Fragen zum Datenschutz können Sie mich jederzeit per E-Mail
+          kontaktieren:
+        </p>
+
+        <p class="colorRed">E-Mail: zein.9494@outlook.com</p>
+
+        <button id="closePrivacy">Close</button>
+      </div>
+    </div>
+    <div id="rotateMessage">
+      <div>
+          <img src="img/mobile_rotate.svg" alt="rotate"><br>
+          Bitte drehe dein Gerät ins Querformat, um El Pollo Loco zu spielen.
+      </div>
+    </div>
+  </body>
+</html>
