@@ -143,17 +143,22 @@ class Endboss extends MovableObject {
      * Handles death, hurt, attack, alert and walking animations.
      */
     updateAnimation() {
-        if (this.energy <= 0) {
-            this.playAnimation(this.IMAGES_DEAD);
-        } else if (this.isHurt) {
-            this.playAnimation(this.IMAGES_HURT);
-        } else if (this.isAttacking) {
-            this.playAnimation(this.IMAGES_ATTACK);
-        } else if (this.isAlert) {
-            this.playAnimation(this.IMAGES_ALERT);
-        } else {
-            this.playAnimation(this.IMAGES_WALKING);
-        }
+    if (this.energy <= 0) {
+        this.playAnimation(this.IMAGES_DEAD);
+
+    } else if (this.isAttacking) {
+         console.log("ATTACK ANIMATION");   
+        this.playAnimation(this.IMAGES_ATTACK);
+
+    } else if (this.isHurt) {
+        this.playAnimation(this.IMAGES_HURT);
+
+    } else if (this.isAlert) {
+        this.playAnimation(this.IMAGES_ALERT);
+
+    } else {
+        this.playAnimation(this.IMAGES_WALKING);
+    }
     }
 
     /**
